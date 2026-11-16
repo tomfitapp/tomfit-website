@@ -122,7 +122,6 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
 .shot img{height:235px;width:auto;max-width:none;border-radius:18px;border:2px solid #c9dcf7;box-shadow:0 10px 26px rgba(11,75,168,.2)}
 .sbtn{width:40px;height:40px;border-radius:50%;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;font-size:20px;cursor:pointer;line-height:1}
 .sbtn[disabled]{visibility:hidden}
-.photo{height:235px;width:auto;max-width:none;border-radius:18px;border:2px solid #c9dcf7;box-shadow:0 10px 26px rgba(11,75,168,.2)}
 .pq{margin:0;font-size:18px;line-height:1.55;font-style:italic;color:#0b3a85}
 .appnav{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:2px solid #e2eaf6;padding-top:24px}
 .appnav .btn{font-size:17px;padding:12px 22px}
@@ -210,11 +209,11 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
  .testers{padding:24px 18px}.bigh{font-size:34px}
  .steps,.feat{grid-template-columns:1fr}
  .gp{grid-template-columns:repeat(2,minmax(0,1fr))}
- .shot img,.photo{height:235px}
+ .shot img{height:235px}
 
  .h2{font-size:34px}.art .ah{font-size:34px}.sec h2{font-size:34px}
  .quote{padding:24px 20px}
 }
-@media (max-width:380px){.car .c0{height:360px}.shot img,.photo{height:220px}}
+@media (max-width:380px){.car .c0{height:360px}.shot img{height:220px}}
 .hd.slim .pills{border-top:none;padding-top:14px}
 @media (max-width:640px){.pics{gap:12px}.shot .row{gap:6px}.sbtn{width:34px;height:34px;font-size:18px}}
