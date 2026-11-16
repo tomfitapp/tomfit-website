@@ -1,2 +1,4 @@
-# tomfit-website
-TOMfit – the simple fitness app for adults 50+. Track your walks, health results, medication and supplements, 10 easy exercises. Free tools and articles.
+# tomfit.app
+
+Static website for TOMfit – a simple health & fitness app for adults 50+.
+Hosted on Cloudflare Pages (no build step: output directory is the repo root).
