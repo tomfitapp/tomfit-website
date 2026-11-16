@@ -217,3 +217,4 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
 @media (max-width:380px){.car .c0{height:360px}.shot img{height:220px}}
 .hd.slim .pills{border-top:none;padding-top:14px}
 @media (max-width:640px){.pics{gap:12px}.shot .row{gap:6px}.sbtn{width:34px;height:34px;font-size:18px}}
+.media .pq{border:2px solid #c9dcf7;border-left:6px solid #f5c400;border-radius:16px;padding:20px 24px;margin-top:4px}

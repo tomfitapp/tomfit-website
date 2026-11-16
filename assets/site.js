@@ -58,6 +58,7 @@
     document.querySelector('[data-prevtab]').addEventListener('click', function () { pick(cur - 1, true); window.scrollTo({ top: document.querySelector('.gp').offsetTop - 20, behavior: 'smooth' }); });
     document.querySelector('[data-nexttab]').addEventListener('click', function () { pick(cur + 1, true); window.scrollTo({ top: document.querySelector('.gp').offsetTop - 20, behavior: 'smooth' }); });
     secs.forEach(function (s) {
+      if (!s.dataset.imgs) return;
       var list = s.dataset.imgs.split('|'), k = 0, img = s.querySelector('.shot img'), no = s.querySelector('[data-no]');
       var set = function () { img.src = list[k]; no.textContent = 'Picture ' + (k + 1) + ' of ' + list.length; };
       s.querySelectorAll('.sbtn').forEach(function (b) {
