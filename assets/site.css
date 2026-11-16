@@ -213,3 +213,4 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
  .quote{padding:24px 20px}
 }
 @media (max-width:380px){.car .c0{height:360px}.shot img{height:340px}}
+.hd.slim .pills{border-top:none;padding-top:14px}
