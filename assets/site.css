@@ -169,7 +169,7 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
 .deal .p{font-size:30px;font-weight:800;color:#0b3a85;line-height:1.25}
 .deal .s{font-size:14px;color:#33496b}
 .pcard{border:2px solid #c9dcf7;border-radius:22px;padding:22px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:start}
-.pcard>img{width:100%;border-radius:6px;border:1px solid #c9dcf7;box-shadow:6px 7px 0 #7cb8f5}
+.pcard>img{width:100%;display:block}
 .pcard>div{display:flex;flex-direction:column;gap:10px;min-height:100%}
 .buy{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px}
 .buy b{font-size:26px;color:#0b3a85}
