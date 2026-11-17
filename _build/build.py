@@ -289,8 +289,9 @@ page('tools.html', '/tools', 'Free BMI Calculator & Health Tools for 50+ | TOMfi
      'tools', 'tools', tools)
 
 # ------------------------------------------------------------------ SHOP
-PR = [('Brisk walking and basic core exercises after 50', 'guide-book', 17, 'Walk more, build strength and make everyday movement easier. Brisk pace, weekly goals, three strength exercises and a simple combined weekly routine.'),
-      ('Kettlebells after 50', 'guide-book', 12, 'A practical guide for your first month of strength training: health checks, buying your first kettlebell, three key moves and a simple progress log.')]
+PR = [('Brisk walking and basic core exercises after 50', 'guide-book', 17, 'Walk more, build strength and make everyday movement easier. Brisk pace, weekly goals, three strength exercises and a simple combined weekly routine.', 'https://payhip.com/b/Y5toi'),
+      ('Kettlebells after 50', 'guide-book', 12, 'A practical guide for your first month of strength training: health checks, buying your first kettlebell, three key moves and a simple progress log.', 'https://payhip.com/b/ijs0r')]
+BUNDLE_URL = 'https://payhip.com/b/SBiJl'
 shop = f'''<main id="main" class="pg">
   <div class="shophd">
     <div>
@@ -298,9 +299,9 @@ shop = f'''<main id="main" class="pg">
       <h1 class="h2">Detailed guides you can keep and print</h1>
       <p class="lead">Clear, step-by-step PDF guides for adults over 50 – written in plain language, with pictures, plans and checklists.</p>
     </div>
-    <div class="deal"><div class="t">Both guides</div><div class="p">£4.95 · $5.95</div><div class="s">instead of £5.90 · $7.90</div></div>
+    <a class="deal" href="{BUNDLE_URL}" target="_blank" rel="noopener" style="display:block;text-decoration:none"><div class="t">Both guides</div><div class="p">£4.95 · $5.95</div><div class="s">instead of £5.90 · $7.90</div><div class="t" style="margin-top:6px;color:#0b4ba8">Buy both guides</div></a>
   </div>
-  <div class="g2 prods" style="gap:26px">{"".join(f'<div class="pcard"><div><span class="chip b">Exercises</span><h2 style="margin:0;font-size:26px;line-height:1.15;font-weight:800;color:#0b3a85">{t}</h2><p>{d}</p><span style="font-size:15px;color:#33496b">{p} pages · printable PDF · instant download</span><div class="buy"><b>£2.95 · $3.95</b><span class="soon">Coming soon</span></div></div></div>' for t, im, p, d in PR)}</div>
+  <div class="g2 prods" style="gap:26px">{"".join(f'<div class="pcard"><div><span class="chip b">Exercises</span><h2 style="margin:0;font-size:26px;line-height:1.15;font-weight:800;color:#0b3a85">{t}</h2><p>{d}</p><span style="font-size:15px;color:#33496b">{p} pages · printable PDF · instant download</span><div class="buy"><b>£2.95 · $3.95</b><a class="btn" href="{u}" target="_blank" rel="noopener">Buy now</a></div></div></div>' for t, im, p, d, u in PR)}</div>
   <div class="g2 trust">
     <div class="box"><b>Instant download</b><div>Your PDF is ready straight after payment, and the link is emailed to you too.</div></div>
     <div class="box"><b>Secure payment</b><div>Card or PayPal through Payhip, our secure checkout.</div></div>
