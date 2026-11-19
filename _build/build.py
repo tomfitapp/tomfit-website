@@ -233,6 +233,10 @@ page('puzzles.html', '/puzzles', 'Free Puzzles for Over-50s | TOMfit Puzzles',
      'Free puzzles to train your brain and memory: sudoku, memory match and matching games for adults 50+, with a new puzzle every week from TOMfit.',
      'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n')
 
+page('memory-match.html', '/memory-match', 'Free Memory Match Game – Flags | TOMfit Puzzles',
+     'Play Memory Match free: find the matching flags in 3 levels. A simple brain-training game for adults 50+ from TOMfit.',
+     'puzzles', 'puzzles', src_main('memory-match'), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n')
+
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
       ('My Health Numbers', 'tool-health-numbers', 'my-health-numbers', 'Type in a result from a home test or lab report and see what it means.', ['Blood pressure, blood sugar, HbA1c, cholesterol and more', 'Vitamin D, vitamin B12, ketones, waist and resting pulse', 'UK / EU and US units']),
@@ -310,7 +314,7 @@ page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/app', '/info-bank', '/tools', '/shop', '/puzzles', '/legal'] + ['/tools/' + t[2] for t in TL]
+urls = ['/', '/app', '/info-bank', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>2026-11-16</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*
