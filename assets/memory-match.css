@@ -1,5 +1,7 @@
 /* TOMfit Memory Match */
-.mm{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start}
+.mm{display:grid;grid-template-columns:270px 480px;gap:24px;align-items:start;justify-content:center;margin-top:-6px}
+.pg>.pzh{margin:0 0 6px;text-align:center;font-size:34px;line-height:1.2;font-weight:800;color:#1a56b0}
+@media (max-width:640px){.pg>.pzh{font-size:26px}}
 .mm-promo{order:-1;border:2px solid #c9dcf7;border-radius:18px;padding:16px;text-align:center;background:#fff}
 .mm-promo h2{margin:0 0 10px;font-size:34px;font-weight:800;color:#1a56b0}
 .mm-promo img{width:170px;max-width:100%;height:auto;border-radius:16px;border:2px solid #c9dcf7}
@@ -28,4 +30,4 @@
 .mm-done{width:100%;max-width:480px;border:3px solid #1fae4b;border-radius:16px;background:#eafaf0;padding:14px;text-align:center}
 .mm-done p{margin:0 0 10px;font-size:24px;font-weight:800;color:#137a33}
 @media (prefers-reduced-motion:reduce){.mm-card .in{transition:none}}
-@media (max-width:860px){.mm{grid-template-columns:1fr}.mm-promo{order:2}}
+@media (max-width:860px){.mm{grid-template-columns:minmax(0,1fr);margin-top:0}.mm-promo{order:2}}
