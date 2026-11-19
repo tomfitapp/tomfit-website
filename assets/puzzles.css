@@ -15,7 +15,7 @@
 @media (max-width:640px){.f4g{grid-template-columns:1fr}.f4promo{flex-direction:column;text-align:center}.f4promo img{width:170px}}
 .ibsub{margin:6px 0 0;font-size:20px;color:#33496b}
 .ibshop{display:flex;justify-content:center}
-.pzh{margin:0 0 22px;text-align:center;font-size:36px;line-height:1.2;font-weight:800;color:#1a56b0}
+.pzh{margin:0 0 4px;text-align:center;font-size:36px;line-height:1.2;font-weight:800;color:#1a56b0}
 .pz2{margin:38px 0 18px;font-size:32px}
 @media (max-width:640px){.pzh{font-size:26px}.pz2{font-size:24px}}
 .f4c.s2 .f4play{background:#1fae4b;color:#fff}

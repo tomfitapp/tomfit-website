@@ -38,7 +38,7 @@ a{color:#0b4ba8}a:hover{color:#083a85}
 .dots span.on{width:22px;background:#f5c400}
 .pills{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;padding:18px 0 26px;border-top:1px solid rgba(255,255,255,.45)}
 .pill{display:block;text-align:center;text-decoration:none;border-radius:12px;padding:11px 8px;font-size:17px;font-weight:600;border:2px solid rgba(255,255,255,.75);color:#fff;background:rgba(6,40,110,.35)}
-.pill.on{background:#f5c400;border-color:#f5c400;color:#10294f}
+.pill.on{background:#f5c400;border-color:#0b2f7a;box-shadow:inset 0 0 0 1px #0b2f7a;color:#10294f}
 .hd .pill.on{color:#10294f}
 .pill.on .py{color:#0b4ba8}
 
