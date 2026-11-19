@@ -1,0 +1,13 @@
+/* TOMfit shop: portrait card grid. To add a product, copy one .sc card. */
+.sg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:8px}
+.sc{border:2px solid #c9dcf7;border-radius:18px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:8px;text-align:center}
+.sc>img{width:100%;height:auto;aspect-ratio:520/736;object-fit:cover;border-radius:6px;border:1px solid #c9dcf7;box-shadow:5px 6px 0 #7cb8f5;margin:0 0 8px;background:#fff}
+.sc .chip{align-self:center}
+.sc h2{margin:0;font-size:19px;line-height:1.2;font-weight:800;color:#0b3a85}
+.sc .pr{font-size:22px;font-weight:800;color:#0b3a85}
+.sc .pr small{display:block;font-size:14px;font-weight:600;color:#33496b}
+.sc .bn{margin-top:auto;display:block;text-align:center;text-decoration:none;border-radius:12px;padding:11px 8px;font-size:17px;font-weight:800;font-family:inherit;background:#f5c400;color:#10294f}
+.sc a.bn:hover{background:#e3b500;color:#10294f}
+.sc .bn.soon{background:#fffdf3;border:2px solid #f5c400;padding:9px 8px}
+@media (max-width:1000px){.sg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.sc{padding:10px}.sc h2{font-size:16px}.sc .pr{font-size:19px}}

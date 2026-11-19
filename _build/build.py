@@ -43,10 +43,10 @@ def head(path, title, desc, extra=''):
 
 def header(page, pill):
     nav = [('home', 'Home', '', '/'), ('test', 'Test TOM', 'fit', '/#testers'), ('app', 'The App', '', '/app'),
-           ('info', 'Info-Bank', '', '/info-bank'), ('tools', 'Tools', '', '/tools'), ('shop', 'Shop', '', '/shop')]
+           ('info', 'Info-Bank', '', '/info-bank'), ('tools', 'Tools', '', '/tools'), ('shop', 'Shop', '', '/shop'), ('fun', 'Fun 4U', '', '/fun-4u')]
     navh = ''.join(f'<a href="{h}" class="navl{" on" if k == page else ""}"{" aria-current=\"page\"" if k == page else ""}>{a}{f"<span class=\"py\">{b}</span>" if b else ""}</a>' for k, a, b, h in nav)
     pills = [('app', 'TOM', 'fit', ' app', '/app'), ('info', 'Info-Bank', '', '', '/info-bank'), ('tools', 'Tools', '', '', '/tools'),
-             ('shop', 'Shop', '', '', '/shop'), ('tomtech', 'TOM', 'tech', '.news', 'https://tomtech.news')]
+             ('shop', 'Shop', '', '', '/shop'), ('fun', 'Fun 4U', '', '', '/fun-4u')]
     pillh = ''.join(f'<a href="{h}" class="pill{" on" if k == pill else ""}"{" target=\"_blank\" rel=\"noopener\"" if k == "tomtech" else ""}>{a}{f"<span class=\"py\">{b}</span>" if b else ""}{c}</a>' for k, a, b, c, h in pills)
     imgs = ''.join(f'<img src="/img/{m}.jpg" alt="" width="520" height="1127">' for m in ['08_exercise_kettlebell_swing', '09_settings', '01_walk', '02_walk_progress_charts', '03_health'])
     dots = '<span></span>' * 9
@@ -215,55 +215,22 @@ page('app.html', '/app', 'The TOMfit App – Walking, Health Numbers, Meds & Exe
      'See how TOMfit works: brisk-walk tracking, blood pressure and glucose logs, a medication checklist and 10 easy exercises. Your data stays on your phone.',
      'app', 'app', app)
 
-# ------------------------------------------------------------------ INFO-BANK
-D = '12 November 2026'
-T = [
- ('health', 'Health', [
-  ('sarcopenia', None, 'Sarcopenia: stop and reverse muscle loss', 5, 'After 50, muscle and strength slowly fade unless we use them. This guide explains why muscle matters for balance, bones, blood sugar and memory, gives a simple 30-second home self-check, and shows how strength exercise and protein can stop and even reverse the loss.', ['Muscle protects you from falls and fractures', 'Strength exercise 2–3 times a week is the key', 'Spread protein across every meal']),
-  ('intermittent-fasting', None, 'Intermittent fasting – a practical guide', 6, 'Gentle daily fasting windows such as 12:12 or 14:10 can help blood sugar, waistline and energy after 50. The guide compares the schedules, explains what changes for men and women, and gives a simple plan to start, keep going and break a fast gently.', ['Start gently – 12:12 before 14:10 or 16:8', 'Protect your muscles with protein at every meal', 'Who should not fast, and when to ask your doctor'])]),
- ('exercises', 'Exercises', [
-  ('brisk-walking', 'Brisk walking and basic core exercises after 50', 'Brisk walking – 100+ steps a minute', 5, 'Walking at 100 or more steps a minute turns an ordinary walk into real exercise for your heart, blood sugar and brain – without stressing your joints. Includes an easy weekly goal and a music playlist to keep your pace.', ['100+ steps a minute counts as moderate exercise', '150 minutes a week – for example 30 minutes, 5 days', 'Walk to the beat of the playlist']),
-  ('kettlebells', 'Kettlebells after 50', 'Kettlebells for beginners 50+', 5, 'One kettlebell trains strength, balance and posture together. The guide covers what to buy, sensible starting weights for men and women, the basic moves and a 3-day-a-week plan.', ['Start light and learn the moves first', 'Three 35-minute sessions a week', 'Breathe out on effort and stop when form slips'])]),
- ('supplements', 'Supplements', [
-  ('creatine', None, 'Creatine monohydrate for 50+', 5, 'Creatine is the most researched supplement for strength. After 50 it can support muscle, balance and mental sharpness. The guide explains how much to take, what to expect and the blood-test point to tell your doctor about.', ['3–5 g a day – no loading phase needed', 'Works best together with strength exercise', 'It can raise a kidney blood test on paper']),
-  ('magnesium-glycinate', None, 'Magnesium glycinate for 50+', 5, 'Many adults over 50 run low on magnesium. This guide explains why the glycinate form is gentle, how much elemental magnesium you need, how to read the label – 1,440 mg of glycinate is only about 200 mg of magnesium – and which medicines to space apart.', ['Daily target 420 mg men / 320 mg women, food included', 'Check the elemental magnesium on the label', 'Space it 2–4 hours from some medicines']),
-  ('vitamin-b12', None, 'Vitamin B12 for 50+', 5, 'Up to 1 in 5 adults over 50 run low on B12, often because the stomach absorbs less with age or because of common medicines. Includes the warning signs, which blood tests to ask for and how to read them.', ['Low B12 can feel like tiredness and brain fog', 'Ask for active B12 or MMA, not only basic B12', 'Some common medicines block B12']),
-  ('vitamin-d3-k2', None, 'Vitamin D3 & K2 (MK-7) for 50+', 5, 'After 50 the skin makes much less vitamin D. D3 helps you absorb calcium, and K2 helps direct it into bones rather than arteries. The guide covers the blood test, sensible daily amounts and an important medication warning.', ['Take D3 with a meal that contains some fat', 'Test your vitamin D level first', 'Blood-thinner users must ask their doctor before K2'])]),
-]
-tb = ''.join(f'<button class="tbtn{" on" if x == 0 else ""}" data-g="{g}">{n}</button>' for x, (g, n, _a) in enumerate(T))
-aside, arts, first = '', '', True
-for g, n, A in T:
-    aside += f'<button class="ghd{" on" if g == "health" else ""}" data-g="{g}">{n} <span>· {len(A)} articles</span></button>'
-    for slug, guide, title, mins, summ, pts in A:
-        aside += f'<a class="arow{" on" if first else ""}" href="#{slug}"><b>{E(title)}</b><span>{D} · {mins} min read · free PDF</span></a>'
-        more = ''
-        if guide:
-            more = f'''<div class="more"><div><b style="font-size:18px">Want more detail?</b><div style="margin-top:4px">Our printable guide <b>“{E(guide)}”</b> – <b>£2.95 · $3.95</b>, or both guides for <b>£4.95 · $5.95</b>.</div><div class="small">{CURRENCY}</div></div><a class="btn y" href="/shop" style="font-size:17px">See the Shop</a></div>'''
-        arts += f'''<article class="art" id="{slug}" data-g="{g}"{"" if first else " hidden"}>
-      <div class="meta"><span class="gtag">{n}</span><span>{D} · {mins} min read · Free</span></div>
-      <h2 class="ah">{E(title)}</h2>
-      <p>{E(summ)}</p>
-      <div class="short"><b>In short</b><ol>{"".join(f"<li>{E(p)}</li>" for p in pts)}</ol></div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center"><a class="btn" href="/articles/{slug}.pdf" target="_blank" rel="noopener">Read the article (PDF) – free</a><span class="small" style="font-size:15px">Opens in a new tab · easy to print</span></div>
-      {more}
-    </article>
-    '''
-        first = False
-ib = f'''<main id="main" class="pg" style="padding-top:40px">
-  <div class="sechd">
-    <div><div class="eyebrow">Info-Bank · free to read</div><h1 class="h2" style="margin-top:6px;font-size:40px">Short, clear articles for 50+</h1></div>
-    <div class="tbtns">{tb}</div>
-  </div>
-  <div class="lay">
-    <nav class="aside" aria-label="Articles">{aside}</nav>
-    <div>
-    {arts}</div>
-  </div>
-</main>
-'''
+# ------------------------------------------------------------------ INFO-BANK (panels + archives; articles live in assets/articles.js)
+def src_main(n):
+    return open(os.path.join(OUT, '_build', 'source', n + '.main.html'), encoding='utf-8').read()
+IBCSS = f'<link rel="stylesheet" href="/assets/info-bank.css?v={V("assets/info-bank.css")}">\n'
+IBJS = f'<script src="/assets/articles.js?v={V("assets/articles.js")}" defer></script>\n<script src="/assets/info-bank.js?v={V("assets/info-bank.js")}" defer></script>\n'
 page('info-bank.html', '/info-bank', 'Free Health Guides for Over-50s | TOMfit Info-Bank',
      'Free plain-English guides for adults 50+: muscle loss, intermittent fasting, brisk walking, kettlebells, creatine, magnesium, vitamin B12 and D3 & K2.',
-     'info', 'info', ib)
+     'info', 'info', src_main('info-bank') + IBJS, IBCSS)
+page('info-bank-archives.html', '/info-bank-archives', 'Info-Bank Archives | TOMfit',
+     'Older TOMfit Info-Bank health guides for adults 50+, listed A to Z.',
+     'info', 'info', src_main('info-bank-archives') + IBJS, IBCSS)
+
+# ------------------------------------------------------------------ FUN 4U
+page('fun-4u.html', '/fun-4u', 'Free Puzzles for Over-50s | TOMfit Fun 4U',
+     'Free puzzles for adults 50+: sudoku, memory match and matching games, with a new puzzle every week from TOMfit.',
+     'fun', 'fun', src_main('fun-4u'), f'<link rel="stylesheet" href="/assets/fun4u.css?v={V("assets/fun4u.css")}">\n')
 
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
@@ -292,6 +259,9 @@ page('tools.html', '/tools', 'Free BMI Calculator & Health Tools for 50+ | TOMfi
 PR = [('Brisk walking and basic core exercises after 50', 'guide-book', 17, 'Walk more, build strength and make everyday movement easier. Brisk pace, weekly goals, three strength exercises and a simple combined weekly routine.', 'https://payhip.com/b/Y5toi'),
       ('Kettlebells after 50', 'guide-book', 12, 'A practical guide for your first month of strength training: health checks, buying your first kettlebell, three key moves and a simple progress log.', 'https://payhip.com/b/ijs0r')]
 BUNDLE_URL = 'https://payhip.com/b/SBiJl'
+CARDS = [('guide-bundle', 'Both guides: Brisk walking and Kettlebells after 50', 'Bundle', '', 'Brisk walk, basic core &amp; kettlebells after 50', '£4.95', '$5.95 · both guides', BUNDLE_URL),
+         ('guide-walking', 'First page of Brisk walking and basic core exercises after 50', 'Exercises', ' b', 'Brisk walking and basic core exercises after 50', '£2.95', '$3.95 · 17 pages', PR[0][4]),
+         ('guide-kettlebells', 'First page of Kettlebells after 50', 'Exercises', ' b', 'Kettlebells after 50', '£2.95', '$3.95 · 12 pages', PR[1][4])]
 shop = f'''<main id="main" class="pg">
   <div class="shophd">
     <div>
@@ -301,7 +271,8 @@ shop = f'''<main id="main" class="pg">
     </div>
     <a class="deal" href="{BUNDLE_URL}" target="_blank" rel="noopener" style="display:block;text-decoration:none"><div class="t">Both guides</div><div class="p">£4.95 · $5.95</div><div class="s">instead of £5.90 · $7.90</div><div class="t" style="margin-top:6px;color:#0b4ba8">Buy both guides</div></a>
   </div>
-  <div class="g2 prods" style="gap:26px">{"".join(f'<div class="pcard"><div><span class="chip b">Exercises</span><h2 style="margin:0;font-size:26px;line-height:1.15;font-weight:800;color:#0b3a85">{t}</h2><p>{d}</p><span style="font-size:15px;color:#33496b">{p} pages · printable PDF · instant download</span><div class="buy"><b>£2.95 · $3.95</b><a class="btn" href="{u}" target="_blank" rel="noopener">Buy now</a></div></div></div>' for t, im, p, d, u in PR)}</div>
+  <div class="sg" aria-label="Guides">{"".join(f'<div class="sc"><img src="/img/{im}.jpg" alt="{E(al)}" width="520" height="736" loading="lazy"><span class="chip{cc}">{ch}</span><h2>{t}</h2><div class="pr">{pr} <small>{sm}</small></div><a class="bn" href="{u}" target="_blank" rel="noopener">Buy now</a></div>' for im, al, ch, cc, t, pr, sm, u in CARDS)}</div>
+  <p class="small" style="margin:14px 0 6px">All guides are printable PDFs with instant download. More guides are coming soon.</p>
   <div class="g2 trust">
     <div class="box"><b>Instant download</b><div>Your PDF is ready straight after payment, and the link is emailed to you too.</div></div>
     <div class="box"><b>Secure payment</b><div>Card or PayPal through Payhip, our secure checkout.</div></div>
@@ -312,7 +283,7 @@ shop = f'''<main id="main" class="pg">
 '''
 page('shop.html', '/shop', 'Walking & Kettlebell Guides for 50+ (PDF) | TOMfit Shop',
      'Printable step-by-step guides for adults over 50: brisk walking with core exercises, and kettlebells for beginners. £2.95 each, or both for £4.95.',
-     'shop', 'shop', shop)
+     'shop', 'shop', shop, f'<link rel="stylesheet" href="/assets/shop.css?v={V("assets/shop.css")}">\n')
 
 # ------------------------------------------------------------------ LEGAL (body copied from the approved canvas)
 import re
@@ -337,7 +308,7 @@ page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on
 
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/app', '/info-bank', '/tools', '/shop', '/legal'] + ['/tools/' + t[2] for t in TL]
+urls = ['/', '/app', '/info-bank', '/tools', '/shop', '/fun-4u', '/legal'] + ['/tools/' + t[2] for t in TL]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>2026-11-16</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*

@@ -1,0 +1,32 @@
+/* TOMfit Info-Bank layout */
+.ibsub{margin:6px 0 0;font-size:20px;color:#33496b}
+.ibp{display:grid;grid-template-columns:repeat(4,128px);gap:10px}
+.ibpb{display:block;box-sizing:border-box;width:128px;text-align:center;text-decoration:none;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;border-radius:10px;padding:8px 0;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.ibpb:hover{background:#eaf2fd;color:#0b4ba8}
+.ibpb:focus-visible,.ibe a:focus-visible{outline:3px solid #f5c400;outline-offset:2px}
+.ibg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:start}
+.ibc{border:2px solid #c9dcf7;border-radius:18px;padding:12px;background:#fff;scroll-margin-top:14px;transition:box-shadow .2s}
+.ibc.flash{box-shadow:0 0 0 4px #f5c400}
+.ibh{margin:0 0 6px;font-size:16px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:10px;padding:9px 12px;color:#fff;background:#0b4ba8}
+.ibc-new .ibh{background:#f5c400;color:#10294f}
+.ibe{padding:14px 8px;border-bottom:1px dashed #b8c8e0}
+.ibe:last-child{border-bottom:none}
+.ibe b{display:block;font-size:18px;line-height:1.25;color:#10294f}
+.ibe .s{display:block;margin-top:2px;font-size:15px;color:#33496b}
+.ibe .d,.ibr .d{display:block;margin-top:6px;font-size:14px;color:#33496b}
+.ibe a,.ibr a{display:inline-block;margin-top:8px;font-size:15px;font-weight:700;color:#0b4ba8;border:2px solid #0b4ba8;border-radius:10px;padding:6px 12px;text-decoration:none}
+.ibe a:hover,.ibr a:hover{background:#eaf2fd;color:#0b4ba8}
+.ibempty{margin:10px 8px 8px;font-size:15px;color:#33496b}
+.ibshop{display:flex;justify-content:center;padding-top:6px}
+.ibar{border:2px solid #c9dcf7;border-radius:18px;padding:12px;background:#fff}
+.ibr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:12px 8px;border-bottom:1px dashed #b8c8e0}
+.ibr:last-child{border-bottom:none}
+.ibr b{font-size:18px;color:#10294f}
+.ibr .d,.ibr a{margin-top:0}
+.ibback{font-size:18px;font-weight:700}
+@media (max-width:1000px){.ibg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .ibg{grid-template-columns:1fr}
+  .ibp{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .ibpb{width:100%}
+}
