@@ -6,6 +6,18 @@ SITE = 'https://tomfit.app'
 import hashlib
 V = lambda f: hashlib.md5(open(os.path.join(OUT, f), 'rb').read()).hexdigest()[:8]
 E = html.escape
+import datetime, re as _re
+TODAY = datetime.date.today().isoformat()
+ORG = {"@type": "Organization", "@id": SITE + "/#org", "name": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"]}
+def LD(*nodes):
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False) + '</script>\n'
+def CRUMB(*pairs):
+    items = [("Home", "/")] + list(pairs)
+    return {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u} for i, (n, u) in enumerate(items)]}
+def PAGE(path, name, desc, typ="WebPage", **kw):
+    d = {"@type": typ, "@id": SITE + path, "url": SITE + path, "name": name, "description": desc, "inLanguage": "en-GB", "isPartOf": {"@id": SITE + "/#site"}, "publisher": {"@id": SITE + "/#org"}}
+    d.update(kw); return d
+FREE = {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
 
 MAILTO = 'mailto:hello@tomfit.app?subject=I%20would%20like%20to%20be%20a%20TOMfit%20tester'
 CURRENCY = 'Payment is taken in pounds (£). Dollar prices are a guide only – your bank converts the amount, so the final charge may be slightly different (often a little lower).'
@@ -114,9 +126,10 @@ steps = [('1', '', 'Register by email', 'Send your name and the Gmail address on
          ('2', '', 'Get the test app', 'We send you a link to install TOMfit from Google Play.'),
          ('3', '', 'Open it every day', 'Use it as you like and answer one short question each week.'),
          ('4', ' y', 'Finish all 8 weeks', 'Complete the evaluation and your free 1 year subscription is activated after launch.')]
-ld = {"@context": "https://schema.org", "@graph": [
-    {"@type": "Organization", "name": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"]},
-    {"@type": "WebSite", "name": "TOMfit", "url": SITE + "/"}]}
+HOME_T = 'TOMfit – Simple Health App, Free Health Tools & Puzzles for 50+'
+HOME_D = 'Walk more, track blood pressure, blood sugar and weight, and never miss your meds with the TOMfit app for over-50s. Plus a free BMI calculator, plain-English health guides and brain puzzles.'
+HOME_LD = LD(ORG, {"@type": "WebSite", "@id": SITE + "/#site", "name": "TOMfit", "alternateName": "TOMfit.app", "url": SITE + "/", "description": "Health and fitness for adults over 50: a simple health app, free health tools, free health guides and free puzzles.", "inLanguage": "en-GB", "publisher": {"@id": SITE + "/#org"}},
+    PAGE("/", HOME_T, HOME_D))
 home = f'''<main id="main" class="pg home">
 <section id="testers" class="testers" aria-labelledby="th">
   <div class="tcols">
@@ -154,9 +167,8 @@ home = f'''<main id="main" class="pg home">
 </section>
 </main>
 '''
-page('index.html', '/', 'TOMfit – Simple Health & Fitness App for Adults 50+',
-     'Walk more, track blood pressure, blood sugar and weight, and never miss your meds. A simple Android app for over-50s. Test it and earn 1 year free.',
-     'home', 'none', home, f'<script type="application/ld+json">{json.dumps(ld)}</script>\n')
+page('index.html', '/', HOME_T, HOME_D,
+     'home', 'none', home, HOME_LD)
 
 # ------------------------------------------------------------------ APP
 S = [
@@ -211,31 +223,52 @@ app = f'''<div class="band">Step-by-step guide to your TOMfit app</div>
   </div>
 </main>
 '''
-page('app.html', '/app', 'The TOMfit App – Walking, Health Numbers, Meds & Exercises',
-     'See how TOMfit works: brisk-walk tracking, blood pressure and glucose logs, a medication checklist and 10 easy exercises. Your data stays on your phone.',
-     'app', 'app', app)
+APP_T = 'Health App for Over-50s – Walking, Blood Pressure & Meds | TOMfit'
+APP_D = 'TOMfit is a simple Android health app for over-50s: brisk-walk tracker, blood pressure, blood sugar and weight log, medication reminder checklist and 10 easy exercises. Data stays on your phone.'
+page('app.html', '/app', APP_T, APP_D, 'app', 'app', app,
+     LD(PAGE("/app", APP_T, APP_D, mainEntity={"@id": SITE + "/app#app"}),
+        {"@type": "MobileApplication", "@id": SITE + "/app#app", "name": "TOMfit", "operatingSystem": "Android", "applicationCategory": "HealthApplication",
+         "description": APP_D, "url": SITE + "/app", "image": SITE + "/img/01_walk.jpg", "publisher": {"@id": SITE + "/#org"},
+         "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50},
+         "featureList": ["Brisk walking tracker: time, distance, steps and speed", "Blood pressure log", "Blood sugar (glucose) log", "Weight and fasting log", "Health report for your doctor", "Medication and supplement reminder checklist", "10 easy exercises with large pictures", "Data stays on your phone"]},
+        CRUMB(("The App", "/app"))))
 
 # ------------------------------------------------------------------ INFO-BANK (panels + archives; articles live in assets/articles.js)
 def src_main(n):
     return open(os.path.join(OUT, '_build', 'source', n + '.main.html'), encoding='utf-8').read()
+ARTS = [dict(_re.findall(r'(\w+): "([^"]*)"', '{ id:' + m)) for m in _re.findall(r'\{ id:([^}]*)\}', open(os.path.join(OUT, 'assets', 'articles.js'), encoding='utf-8').read())]
+def ARTLIST(name):
+    return {"@type": "ItemList", "name": name, "numberOfItems": len(ARTS), "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "item": {"@type": "Article", "headline": a["full"], "url": SITE + a["pdf"], "encodingFormat": "application/pdf", "datePublished": a["added"], "isAccessibleForFree": True, "inLanguage": "en-GB", "author": {"@id": SITE + "/#org"}, "publisher": {"@id": SITE + "/#org"}}} for i, a in enumerate(ARTS)]}
+ARTNOS = '<noscript><ul>' + ''.join(f'<li><a href="{a["pdf"]}">{E(a["full"])}</a> – free PDF</li>' for a in ARTS) + '</ul></noscript>\n'
 IBCSS = f'<link rel="stylesheet" href="/assets/info-bank.css?v={V("assets/info-bank.css")}">\n'
 IBJS = f'<script src="/assets/articles.js?v={V("assets/articles.js")}" defer></script>\n<script src="/assets/info-bank.js?v={V("assets/info-bank.js")}" defer></script>\n'
-page('info-bank.html', '/info-bank', 'Free Health Guides for Over-50s | TOMfit Info-Bank',
-     'Free plain-English guides for adults 50+: muscle loss, intermittent fasting, brisk walking, kettlebells, creatine, magnesium, vitamin B12 and D3 & K2.',
-     'info', 'info', src_main('info-bank') + IBJS, IBCSS)
-page('info-bank-archives.html', '/info-bank-archives', 'Info-Bank Archives | TOMfit',
-     'Older TOMfit Info-Bank health guides for adults 50+, listed A to Z.',
-     'info', 'info', src_main('info-bank-archives') + IBJS, IBCSS)
+IB_T = 'Free Health Guides for Over-50s – Vitamin B12, D3, Creatine & More | TOMfit'
+IB_D = 'Free plain-English health guides for adults 50+: sarcopenia (muscle loss), intermittent fasting, brisk walking, kettlebells, creatine, magnesium glycinate, vitamin B12 and vitamin D3 & K2. Free PDF downloads.'
+page('info-bank.html', '/info-bank', IB_T, IB_D,
+     'info', 'info', src_main('info-bank') + ARTNOS + IBJS, IBCSS + LD(PAGE("/info-bank", IB_T, IB_D, "CollectionPage", mainEntity=ARTLIST("TOMfit Info-Bank health guides")), CRUMB(("Info-Bank", "/info-bank"))))
+IBA_T = 'Health Guides Archive for Over-50s, A to Z | TOMfit Info-Bank'
+IBA_D = 'All older TOMfit Info-Bank health guides for adults 50+, listed A to Z – supplements, exercise and healthy ageing. Free PDF downloads.'
+page('info-bank-archives.html', '/info-bank-archives', IBA_T, IBA_D,
+     'info', 'info', src_main('info-bank-archives') + IBJS, IBCSS + LD(PAGE("/info-bank-archives", IBA_T, IBA_D, "CollectionPage"), CRUMB(("Info-Bank", "/info-bank"), ("Archives", "/info-bank-archives"))))
 
 # ------------------------------------------------------------------ PUZZLES
 FEATH = '<div class="feat">' + ''.join(f'<a class="fcard" href="/app#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS) + '</div>'
-page('puzzles.html', '/puzzles', 'Free Puzzles for Over-50s | TOMfit Puzzles',
-     'Free puzzles to train your brain and memory: sudoku, memory match and matching games for adults 50+, with a new puzzle every week from TOMfit.',
-     'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n')
+PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TOMfit'
+PZ_D = 'Free brain-training puzzles for adults 50+: play the flag memory game now, with sudoku, killer sudoku, word puzzles and matching games coming soon. No sign-up.'
+page('puzzles.html', '/puzzles', PZ_T, PZ_D,
+     'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n'
+     + LD(PAGE("/puzzles", PZ_T, PZ_D, "CollectionPage", hasPart=[{"@id": SITE + "/memory-match#game"}]), CRUMB(("Puzzles", "/puzzles"))))
 
-page('memory-match.html', '/memory-match', 'Free Memory Match Game – Flags | TOMfit Puzzles',
-     'Play Memory Match free: find the matching flags in 3 levels. A simple brain-training game for adults 50+ from TOMfit.',
-     'puzzles', 'puzzles', src_main('memory-match'), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n')
+MM_T = 'Free Flag Memory Game – 100 Flags of the World | TOMfit Puzzles'
+MM_D = 'Play a free memory match game with 100 flags from Europe, Asia, Africa, the Americas and Oceania. Turn the cards, find the pairs – 3 levels of brain training for adults 50+. No sign-up.'
+page('memory-match.html', '/memory-match', MM_T, MM_D,
+     'puzzles', 'puzzles', src_main('memory-match'), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n'
+     + LD(PAGE("/memory-match", MM_T, MM_D, mainEntity={"@id": SITE + "/memory-match#game"}),
+          {"@type": ["WebApplication", "Game"], "@id": SITE + "/memory-match#game", "name": "Memory Match – Flags of the World", "url": SITE + "/memory-match", "description": MM_D,
+           "applicationCategory": "GameApplication", "genre": ["Memory game", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
+           "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
+          CRUMB(("Puzzles", "/puzzles"), ("Memory Match", "/memory-match"))))
 
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
@@ -256,9 +289,11 @@ tools = f'''<main id="main" class="pg">
   <p class="small" style="margin:-10px 0 0">The tools give general information only and are not medical advice. If a result worries you, talk to your doctor. <a href="/legal#health">Health notice</a></p>
 </main>
 '''
-page('tools.html', '/tools', 'Free BMI Calculator & Health Tools for 50+ | TOMfit',
-     'Free, private health tools: BMI calculator, a checker for blood pressure, blood sugar and cholesterol results, and a metric–imperial converter.',
-     'tools', 'tools', tools)
+TO_T = 'Free BMI Calculator, Blood Pressure & Cholesterol Checker for 50+ | TOMfit'
+TO_D = 'Free, private health tools for adults over 50: BMI calculator, a checker for blood pressure, blood sugar, HbA1c, cholesterol, vitamin D and B12 results, and a kg–stone–lb unit converter.'
+page('tools.html', '/tools', TO_T, TO_D, 'tools', 'tools', tools,
+     LD(PAGE("/tools", TO_T, TO_D, "CollectionPage", mainEntity={"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": SITE + "/tools/" + t[2], "name": t[0]} for i, t in enumerate(TL)]}),
+        CRUMB(("Tools", "/tools"))))
 
 # ------------------------------------------------------------------ SHOP
 PR = [('Brisk walking and basic core exercises after 50', 'guide-book', 17, 'Walk more, build strength and make everyday movement easier. Brisk pace, weekly goals, three strength exercises and a simple combined weekly routine.', 'https://payhip.com/b/Y5toi'),
@@ -286,9 +321,16 @@ shop = f'''<main id="main" class="pg">
   <p class="small" style="margin:-10px 0 0;font-size:15px">Digital downloads cannot be returned once delivered. If your PDF does not arrive or will not open, we will fix it or refund you. <a href="/legal#terms">Terms of sale</a></p>
 </main>
 '''
-page('shop.html', '/shop', 'Walking & Kettlebell Guides for 50+ (PDF) | TOMfit Shop',
-     'Printable step-by-step guides for adults over 50: brisk walking with core exercises, and kettlebells for beginners. £2.95 each, or both for £4.95.',
-     'shop', 'shop', shop, f'<link rel="stylesheet" href="/assets/shop.css?v={V("assets/shop.css")}">\n')
+SH_T = 'Walking & Kettlebell Guides for Over-50s (Printable PDF) | TOMfit Shop'
+SH_D = 'Printable step-by-step exercise guides for adults over 50: brisk walking with core exercises, and kettlebells for beginners. Instant PDF download – £2.95 each, or both for £4.95.'
+def PROD(name, img, desc, price, url):
+    return {"@type": "Product", "name": name, "image": SITE + "/img/" + img + ".jpg", "description": desc, "brand": {"@type": "Brand", "name": "TOMfit"}, "category": "Digital download (PDF guide)",
+            "offers": {"@type": "Offer", "price": price, "priceCurrency": "GBP", "availability": "https://schema.org/InStock", "url": url, "seller": {"@id": SITE + "/#org"}}}
+page('shop.html', '/shop', SH_T, SH_D, 'shop', 'shop', shop, f'<link rel="stylesheet" href="/assets/shop.css?v={V("assets/shop.css")}">\n'
+     + LD(PAGE("/shop", SH_T, SH_D, "CollectionPage"), CRUMB(("Shop", "/shop")),
+          PROD(PR[0][0] + " (PDF guide)", "guide-walking", PR[0][3], "2.95", PR[0][4]),
+          PROD(PR[1][0] + " (PDF guide)", "guide-kettlebells", PR[1][3], "2.95", PR[1][4]),
+          PROD("Both guides: Brisk walking and Kettlebells after 50 (PDF bundle)", "guide-bundle", "Both printable guides together: brisk walking with basic core exercises, and kettlebells for beginners over 50.", "4.95", BUNDLE_URL)))
 
 # ------------------------------------------------------------------ LEGAL (body copied from the approved canvas)
 import re
@@ -314,9 +356,9 @@ page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/app', '/info-bank', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL]
+urls = ['/', '/app', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>2026-11-16</lastmod></url>\n' for u in urls) + '</urlset>\n')
+    ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
