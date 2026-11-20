@@ -141,8 +141,8 @@ home = f'''<main id="main" class="pg home">
       <p class="why"><b>Why a reward?</b> Testing takes real time and care. The free 1 year subscription is our thank you for a job well done. It is earned by completing the full 8 weeks, not given for signing up.</p>
     </div>
     <div class="qrbox">
-      <img src="/img/site-qr.png" alt="QR code: scan with your phone camera to open www.tomfit.app" width="240" height="240">
-      <div style="font-size:17px;line-height:1.45">Scan with your phone camera<br>to open <b>www.tomfit.app</b>.<br>To register as a tester, tap the button:</div>
+      <img src="/img/tester-qr.png" alt="QR code: scan to email us and register as a TOMfit tester" width="240" height="240">
+      <div style="font-size:17px;line-height:1.45">Scan with your phone camera,<br>or tap the button:</div>
       <a class="btn y" href="{MAILTO}">Register as a tester</a>
       <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Gmail address.<br>Places are limited.</div>
     </div>
@@ -354,7 +354,7 @@ page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on
      '<meta name="robots" content="noindex">\n')
 
 # ------------------------------------------------------------------ robots, sitemap, headers
-open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n')
+open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
 urls = ['/', '/app', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
