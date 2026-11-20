@@ -1,18 +1,8 @@
 /* TOMfit Memory Match (flags). Levels: easy 12 cards (3x4), medium 16 (4x4), hard 20 (4x5). */
 (function () {
-  var R = '<rect width="1" height="2" fill="', T = '<rect width="3" height=".67" fill="';
-  var FL = {
-    'France': ['0 0 3 2', R + '#0055a4"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ef4135"/>'],
-    'Italy': ['0 0 3 2', R + '#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/>'],
-    'Poland': ['0 0 3 2', '<rect width="3" height="1" fill="#fff"/><rect y="1" width="3" height="1" fill="#dc143c"/>'],
-    'Germany': ['0 0 3 2', T + '#000"/><rect y=".67" width="3" height=".67" fill="#d00"/><rect y="1.33" width="3" height=".67" fill="#ffce00"/>'],
-    'Ireland': ['0 0 3 2', R + '#169b62"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ff883e"/>'],
-    'Spain': ['0 0 3 2', '<rect width="3" height="2" fill="#aa151b"/><rect y=".5" width="3" height="1" fill="#f1bf00"/>'],
-    'Netherlands': ['0 0 3 2', T + '#ae1c28"/><rect y=".67" width="3" height=".67" fill="#fff"/><rect y="1.33" width="3" height=".67" fill="#21468b"/>'],
-    'Sweden': ['0 0 3 2', '<rect width="3" height="2" fill="#006aa7"/><rect x=".9" width=".4" height="2" fill="#fecc00"/><rect y=".8" width="3" height=".4" fill="#fecc00"/>'],
-    'Ukraine': ['0 0 3 2', '<rect width="3" height="1" fill="#0057b7"/><rect y="1" width="3" height="1" fill="#ffd700"/>'],
-    'United Kingdom': ['0 0 60 30', '<rect width="60" height="30" fill="#012169"/><path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0L60 30M60 0L0 30" stroke="#c8102e" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#c8102e" stroke-width="6"/>']
-  };
+  /* 100 flags: 20 each from Europe, Asia, Africa, South America & Oceania, North & Central America.
+     Flag images: flag-icons (MIT licence), /img/flags/. */
+  var FL = {"United Kingdom":"gb","France":"fr","Germany":"de","Italy":"it","Spain":"es","Poland":"pl","Netherlands":"nl","Sweden":"se","Ireland":"ie","Portugal":"pt","Greece":"gr","Austria":"at","Belgium":"be","Switzerland":"ch","Norway":"no","Denmark":"dk","Finland":"fi","Czechia":"cz","Hungary":"hu","Croatia":"hr","Japan":"jp","China":"cn","India":"in","South Korea":"kr","Thailand":"th","Vietnam":"vn","Indonesia":"id","Philippines":"ph","Malaysia":"my","Singapore":"sg","Pakistan":"pk","Bangladesh":"bd","Nepal":"np","Sri Lanka":"lk","Mongolia":"mn","Kazakhstan":"kz","Turkey":"tr","Saudi Arabia":"sa","United Arab Emirates":"ae","Qatar":"qa","South Africa":"za","Egypt":"eg","Nigeria":"ng","Kenya":"ke","Ghana":"gh","Morocco":"ma","Ethiopia":"et","Tanzania":"tz","Uganda":"ug","Senegal":"sn","Côte d'Ivoire":"ci","Cameroon":"cm","Algeria":"dz","Tunisia":"tn","Rwanda":"rw","Botswana":"bw","Namibia":"na","Zambia":"zm","Zimbabwe":"zw","Madagascar":"mg","Brazil":"br","Argentina":"ar","Chile":"cl","Colombia":"co","Peru":"pe","Venezuela":"ve","Ecuador":"ec","Bolivia":"bo","Paraguay":"py","Uruguay":"uy","Guyana":"gy","Suriname":"sr","Australia":"au","New Zealand":"nz","Fiji":"fj","Papua New Guinea":"pg","Samoa":"ws","Tonga":"to","Vanuatu":"vu","Solomon Islands":"sb","United States":"us","Canada":"ca","Mexico":"mx","Guatemala":"gt","Belize":"bz","Honduras":"hn","El Salvador":"sv","Nicaragua":"ni","Costa Rica":"cr","Panama":"pa","Cuba":"cu","Jamaica":"jm","Haiti":"ht","Dominican Republic":"do","Bahamas":"bs","Barbados":"bb","Trinidad and Tobago":"tt","Saint Lucia":"lc","Grenada":"gd","Dominica":"dm"};
   var LEVELS = { easy: [6, 3], medium: [8, 4], hard: [10, 4] };
   var NAMES = Object.keys(FL);
   var board = document.getElementById('mm-board'); if (!board) return;
@@ -22,7 +12,7 @@
   var level = 'easy', first = null, lock = false, moves = 0, found = 0, total = 0;
 
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function svg(n) { return '<svg viewBox="' + FL[n][0] + '" preserveAspectRatio="none" aria-hidden="true">' + FL[n][1] + '</svg>'; }
+  function svg(n) { return '<img src="/img/flags/' + FL[n] + '.svg" alt="" width="120" height="90">'; }
 
   function start(lv) {
     level = lv || level; first = null; lock = false; moves = 0; found = 0;

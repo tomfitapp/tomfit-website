@@ -24,9 +24,9 @@
 .mm-card .bk i{font-style:normal;background:#f5c400;color:#0b3a85;border-radius:5px;padding:0 5px}
 .mm-card .fc{transform:rotateY(180deg);background:#fff;border:3px solid #c9dcf7;color:#10294f}
 .mm-card.ok .fc{background:#eafaf0;border-color:#1fae4b}
-.mm-card .fc svg{width:78%;height:auto;aspect-ratio:3/2;border:1px solid #c9dcf7}
+.mm-card .fc img{object-fit:contain;background:#fff;width:78%;height:auto;aspect-ratio:3/2;border:1px solid #c9dcf7}
 .mm-card .fc b{font-size:clamp(10px,2.6vw,14px);line-height:1.1;text-align:center;padding:0 2px}
-.mm-board.c4 .fc svg{width:84%}
+.mm-board.c4 .fc img{width:84%}
 .mm-done{width:100%;max-width:480px;border:3px solid #1fae4b;border-radius:16px;background:#eafaf0;padding:14px;text-align:center}
 .mm-done p{margin:0 0 10px;font-size:24px;font-weight:800;color:#137a33}
 @media (prefers-reduced-motion:reduce){.mm-card .in{transition:none}}
