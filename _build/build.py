@@ -141,8 +141,8 @@ home = f'''<main id="main" class="pg home">
       <p class="why"><b>Why a reward?</b> Testing takes real time and care. The free 1 year subscription is our thank you for a job well done. It is earned by completing the full 8 weeks, not given for signing up.</p>
     </div>
     <div class="qrbox">
-      <img src="/img/tester-qr.png" alt="QR code: scan to email us and register as a TOMfit tester" width="240" height="240">
-      <div style="font-size:17px;line-height:1.45">Scan with your phone camera,<br>or tap the button:</div>
+      <img src="/img/site-qr.png" alt="QR code: scan with your phone camera to open tomfit.app" width="240" height="240">
+      <div style="font-size:17px;line-height:1.45">Scan with your phone camera<br>to open <b>tomfit.app</b>.<br>To register as a tester, tap the button:</div>
       <a class="btn y" href="{MAILTO}">Register as a tester</a>
       <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Gmail address.<br>Places are limited.</div>
     </div>
