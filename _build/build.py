@@ -8,7 +8,7 @@ V = lambda f: hashlib.md5(open(os.path.join(OUT, f), 'rb').read()).hexdigest()[:
 E = html.escape
 import datetime, re as _re
 TODAY = datetime.date.today().isoformat()
-ORG = {"@type": "Organization", "@id": SITE + "/#org", "name": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"]}
+ORG = {"@type": "Organization", "@id": SITE + "/#org", "name": "TOMfit.app", "alternateName": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"]}
 def LD(*nodes):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False) + '</script>\n'
 def CRUMB(*pairs):
@@ -33,7 +33,7 @@ def head(path, title, desc, extra=''):
 <meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="TOMfit">
+<meta property="og:site_name" content="TOMfit.app">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:url" content="{url}">
@@ -127,9 +127,9 @@ steps = [('1', '', 'Register by email', 'Send your name and the Gmail address on
          ('2', '', 'Get the test app', 'We send you a link to install TOMfit from Google Play.'),
          ('3', '', 'Open it every day', 'Use it as you like and answer one short question each week.'),
          ('4', ' y', 'Finish all 8 weeks', 'Complete the evaluation and your free 1 year subscription is activated after launch.')]
-HOME_T = 'TOMfit – Simple Health App, Free Health Tools & Puzzles for 50+'
+HOME_T = 'TOMfit.app – Simple Health App, Free Health Tools & Puzzles for 50+'
 HOME_D = 'Walk more, track blood pressure, blood sugar and weight, and never miss your meds with the TOMfit app for over-50s. Plus a free BMI calculator, plain-English health guides and brain puzzles.'
-HOME_LD = LD(ORG, {"@type": "WebSite", "@id": SITE + "/#site", "name": "TOMfit", "alternateName": "TOMfit.app", "url": SITE + "/", "description": "Health and fitness for adults over 50: a simple health app, free health tools, free health guides and free puzzles.", "inLanguage": "en-GB", "publisher": {"@id": SITE + "/#org"}},
+HOME_LD = LD(ORG, {"@type": "WebSite", "@id": SITE + "/#site", "name": "TOMfit.app", "alternateName": "TOMfit", "url": SITE + "/", "description": "Health and fitness for adults over 50: a simple health app, free health tools, free health guides and free puzzles.", "inLanguage": "en-GB", "publisher": {"@id": SITE + "/#org"}},
     PAGE("/", HOME_T, HOME_D))
 
 # ------------------------------------------------------------------ APP
@@ -243,7 +243,7 @@ app = f'''<main id="main" class="pg" style="padding-top:40px;gap:34px">
   </div>
 </main>
 '''
-APP_T = 'Health App for Over-50s – Walking, Blood Pressure & Meds | TOMfit'
+APP_T = 'Health App for Over-50s – Walking, Blood Pressure & Meds | TOMfit.app'
 APP_D = 'TOMfit is a simple, private Android health app for over-50s: brisk-walk tracker, blood pressure, blood sugar and weight log, meds and supplements list and easy exercises. Guide, questions and answers.'
 HOMEQUOTE = '''<main class="pg home" style="padding-top:0">
 <section>
@@ -253,6 +253,10 @@ HOMEQUOTE = '''<main class="pg home" style="padding-top:0">
     <p>At 64, after years of desk work and almost no exercise, I had a serious problem with my weight, type 2 diabetes, high blood pressure, sleep apnoea and more. My health was in dire straits, and I could not ignore it any longer. TOMfit begins where many people over 50 actually are. Taking the first step can be difficult – but it is possible.</p>
     <figcaption class="who"><span>T</span><div><b>Tom</b> <span style="font-size:15px;opacity:.85">· Founder of TOMfit</span></div></figcaption>
   </figure>
+</section>
+<section style="text-align:center;max-width:860px;margin:34px auto 10px">
+  <h2 class="h2" style="font-size:32px;margin:0 0 14px">TOMfit.app – the health app and website for over-50s</h2>
+  <p class="lead">TOMfit.app is a simple, private Android health app for people over 50: a brisk-walk tracker, blood pressure, blood sugar and weight logs, a meds and supplements list, and easy exercises. This website adds free health tools, plain-English guides and brain puzzles. Everything stays easy to read and easy to use.</p>
 </section>
 </main>
 '''
@@ -282,7 +286,7 @@ testpage = f'''<main id="main" class="pg home">
 </section>
 </main>
 '''
-TT_T = 'Test the TOMfit App for 8 Weeks – Earn 1 Year Free | TOMfit'
+TT_T = 'Test the TOMfit App for 8 Weeks – Earn 1 Year Free | TOMfit.app'
 TT_D = 'Test the TOMfit health app for 8 weeks and earn a free 1 year subscription. For adults over 50 with an Android phone. Register by email.'
 page('test-tomfit.html', '/test-tomfit', TT_T, TT_D, 'test', 'none', testpage, LD(PAGE("/test-tomfit", TT_T, TT_D), CRUMB(("Test TOMfit", "/test-tomfit"))))
 
@@ -296,7 +300,7 @@ def ARTLIST(name):
 ARTNOS = '<noscript><ul>' + ''.join(f'<li><a href="{a["pdf"]}">{E(a["full"])}</a> – free PDF</li>' for a in ARTS) + '</ul></noscript>\n'
 IBCSS = f'<link rel="stylesheet" href="/assets/info-bank.css?v={V("assets/info-bank.css")}">\n'
 IBJS = f'<script src="/assets/articles.js?v={V("assets/articles.js")}" defer></script>\n<script src="/assets/info-bank.js?v={V("assets/info-bank.js")}" defer></script>\n'
-IB_T = 'Free Health Guides for Over-50s – Vitamin B12, D3, Creatine & More | TOMfit'
+IB_T = 'Free Health Guides for Over-50s – Vitamin B12, D3, Creatine & More | TOMfit.app'
 IB_D = 'Free plain-English health guides for adults 50+: sarcopenia (muscle loss), intermittent fasting, brisk walking, kettlebells, creatine, magnesium glycinate, vitamin B12 and vitamin D3 & K2. Free PDF downloads.'
 page('info-bank.html', '/info-bank', IB_T, IB_D,
      'info', 'info', src_main('info-bank') + ARTNOS + IBJS, IBCSS + LD(PAGE("/info-bank", IB_T, IB_D, "CollectionPage", mainEntity=ARTLIST("TOMfit Info-Bank health guides")), CRUMB(("Info-Bank", "/info-bank"))))
@@ -307,7 +311,7 @@ page('info-bank-archives.html', '/info-bank-archives', IBA_T, IBA_D,
 
 # ------------------------------------------------------------------ PUZZLES
 FEATH = '<div class="feat">' + ''.join(f'<a class="fcard" href="/#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS) + '</div>'
-PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TOMfit'
+PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TOMfit.app'
 PZ_D = 'Free brain-training puzzles for adults 50+: play the flag memory game now, with sudoku, killer sudoku, word puzzles and matching games coming soon. No sign-up.'
 page('puzzles.html', '/puzzles', PZ_T, PZ_D,
      'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n'
@@ -342,7 +346,7 @@ tools = f'''<main id="main" class="pg">
   <p class="small" style="margin:-10px 0 0">The tools give general information only and are not medical advice. If a result worries you, talk to your doctor. <a href="/legal#health">Health notice</a></p>
 </main>
 '''
-TO_T = 'Free BMI Calculator, Blood Pressure & Cholesterol Checker for 50+ | TOMfit'
+TO_T = 'Free BMI Calculator, Blood Pressure & Cholesterol Checker for 50+ | TOMfit.app'
 TO_D = 'Free, private health tools for adults over 50: BMI calculator, a checker for blood pressure, blood sugar, HbA1c, cholesterol, vitamin D and B12 results, and a kg–stone–lb unit converter.'
 page('tools.html', '/tools', TO_T, TO_D, 'tools', 'tools', tools,
      LD(PAGE("/tools", TO_T, TO_D, "CollectionPage", mainEntity={"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": SITE + "/tools/" + t[2], "name": t[0]} for i, t in enumerate(TL)]}),
@@ -397,12 +401,12 @@ body = re.sub(r'<div style="font-size: 14px; font-weight: 700; letter-spacing: 0
 body = re.sub(r'<div style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #0b4ba8">', '<div class="eyebrow">', body)
 body = body.replace('<h2>Important health notice</h2>', '<h1 style="margin:6px 0 4px;font-size:38px;font-weight:800;letter-spacing:-.02em">Important health notice</h1>')
 assert 'style="' not in body.replace('style="margin-top: 10px"', '').replace('style="margin:6px 0 4px;font-size:38px;font-weight:800;letter-spacing:-.02em"', ''), re.findall(r'style="[^"]*"', body)
-page('legal.html', '/legal', 'Health Notice, Privacy & Terms | TOMfit',
+page('legal.html', '/legal', 'Health Notice, Privacy & Terms | TOMfit.app',
      "TOMfit's health notice, privacy policy and terms of sale. Your app data stays on your phone. General information only – not medical advice.",
      'none', 'none', f'<main id="main" class="lg">{body}</main>\n')
 
 # ------------------------------------------------------------------ 404
-page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on tomfit.app.', 'none', 'none',
+page('404.html', '/404', 'Page not found | TOMfit.app', 'This page does not exist on tomfit.app.', 'none', 'none',
      '''<main id="main" class="pg" style="text-align:center;align-items:center"><h1 class="h2">Sorry – that page is not here</h1><p class="lead">It may have moved. Try the menu above, or go back to the <a href="/">home page</a>.</p></main>\n''',
      '<meta name="robots" content="noindex">\n')
 
