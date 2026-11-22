@@ -13,5 +13,7 @@ window.TOMFIT_ARTICLES = [
   { id: "creatine", group: "supplements", title: "Creatine monohydrate", sub: "Energy for muscle and brain", full: "Creatine monohydrate for 50+", pdf: "/articles/creatine.pdf", added: "2026-11-12", legacy: true },
   { id: "magnesium-glycinate", group: "supplements", title: "Magnesium glycinate", sub: "Basic user guide", full: "Magnesium glycinate for 50+", pdf: "/articles/magnesium-glycinate.pdf", added: "2026-11-12", legacy: true },
   { id: "vitamin-b12", group: "supplements", title: "Vitamin B12", sub: "Basic user guide", full: "Vitamin B12 for 50+", pdf: "/articles/vitamin-b12.pdf", added: "2026-11-12", legacy: true },
-  { id: "vitamin-d3-k2", group: "supplements", title: "Vitamin D3 & K2 (MK-7)", sub: "Basic user guide", full: "Vitamin D3 & K2 (MK-7) for 50+", pdf: "/articles/vitamin-d3-k2.pdf", added: "2026-11-12", legacy: true }
+  { id: "vitamin-d3-k2", group: "supplements", title: "Vitamin D3 & K2 (MK-7)", sub: "Basic user guide", full: "Vitamin D3 & K2 (MK-7) for 50+", pdf: "/articles/vitamin-d3-k2.pdf", added: "2026-11-12", legacy: true },
+  { id: "cholesterol-heart-health", group: "health", title: "Cholesterol", sub: "Heart health guide", full: "Cholesterol and heart health for 50+", pdf: "/articles/cholesterol-heart-health.pdf", added: "2026-11-22" },
+  { id: "sleep-apnoea", group: "health", title: "Sleep apnoea", sub: "Causes and natural improvement", full: "Sleep apnoea: causes and a natural improvement guide for 50+", pdf: "/articles/sleep-apnoea.pdf", added: "2026-11-22" }
 ];
