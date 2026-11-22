@@ -1,0 +1,23 @@
+<main id="main" class="pg" style="padding-top:26px;gap:14px">
+  <h1 class="pzh">Picture Swap – rebuild the picture</h1>
+  <p class="pp-how">Click one piece, then click another. They swap places. Rebuild the finished picture shown above or beside the game.</p>
+  <div class="pp">
+    <aside class="pp-side" aria-label="The finished picture">
+      <div class="pp-sidebox"><b>The finished picture</b><img id="pp-ref" src="" alt="The picture you are rebuilding" width="600" height="450"><span id="pp-name"></span></div>
+    </aside>
+    <section class="pp-main" aria-label="Picture Swap game">
+      <div class="mm-bar" style="max-width:none">
+        <div class="mm-lv" role="group" aria-label="Choose a level"><button type="button" data-level="easy" aria-pressed="true">Easy<small>16 pieces</small></button><button type="button" data-level="hard" aria-pressed="false">Hard<small>20 pieces</small></button></div>
+        <div class="mm-st"><span>Moves: <b id="pp-moves">0</b></span><span>In place: <b id="pp-ok">0</b></span></div>
+      </div>
+      <div id="pp-board" class="pp-board" aria-label="Picture pieces"></div>
+      <div id="pp-done" class="mm-done" hidden style="max-width:none"><p id="pp-donetxt"></p><button type="button" id="pp-next" class="btn y">Another picture</button></div>
+      <div class="pp-tools"><button type="button" id="pp-new" class="btn o">New picture</button><button type="button" id="pp-shuffle" class="btn o">Shuffle again</button></div>
+      <p id="pp-live" class="small" role="status" aria-live="polite" style="margin:0;min-height:1em"></p>
+    </section>
+  </div>
+  <h2 class="pzh pz2">Mobile app for all your health needs</h2>
+  <!--FEAT-->
+  <div class="ibshop" style="margin-top:26px;gap:16px;flex-wrap:wrap"><a class="btn y" href="/shop">Visit our Shop</a><a class="btn o" href="/puzzles">← All puzzles</a></div>
+</main>
+<script src="/assets/picture-puzzle.js?v=3" defer></script>

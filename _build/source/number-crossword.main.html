@@ -1,0 +1,22 @@
+<main id="main" class="pg" style="padding-top:26px;gap:14px">
+  <h1 class="pzh">Number Crossword – fill in the missing numbers</h1>
+  <p class="pp-how">Tap an empty square, then tap a number below it. Every sum must be correct, across and down. Green means correct, red means try again.</p>
+  <div class="nx">
+    <div class="nx-bar">
+      <div class="mm-lv" role="group" aria-label="Choose a level"><button type="button" data-level="easy" aria-pressed="true">Easy<small>14 blanks</small></button><button type="button" data-level="medium" aria-pressed="false">Medium<small>20 blanks</small></button><button type="button" data-level="hard" aria-pressed="false">Hard<small>26 blanks</small></button></div>
+      <div class="mm-st"><span>Moves: <b id="nx-moves">0</b></span><span>Correct: <b id="nx-ok">0</b></span></div>
+    </div>
+    <div class="nx-board" id="nx-board" aria-label="Number crossword"></div>
+    <div class="nx-poolbox"><b>Numbers to place</b><div id="nx-pool" class="nx-pool" aria-label="Numbers to place"></div></div>
+    <div class="nx-side2">
+      <div id="nx-done" class="mm-done" hidden style="max-width:none"><p id="nx-donetxt"></p><button type="button" id="nx-next" class="btn y">Another puzzle</button></div>
+      <div class="pp-tools"><button type="button" id="nx-new" class="btn o">New puzzle</button><button type="button" id="nx-restart" class="btn o">Start again</button></div>
+      <p id="nx-live" class="small" role="status" aria-live="polite" style="margin:0;min-height:1em"></p>
+    </div>
+  </div>
+  <h2 class="pzh pz2">Mobile app for all your health needs</h2>
+  <!--FEAT-->
+  <div class="ibshop" style="margin-top:26px;gap:16px;flex-wrap:wrap"><a class="btn y" href="/shop">Visit our Shop</a><a class="btn o" href="/puzzles">← All puzzles</a></div>
+</main>
+<script src="/assets/number-crossword-data.js?v=1" defer></script>
+<script src="/assets/number-crossword.js?v=2" defer></script>

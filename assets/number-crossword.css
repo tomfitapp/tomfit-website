@@ -1,0 +1,24 @@
+/* TOMfit Number Crossword (also uses memory-match.css and picture-puzzle.css for shared parts) */
+.nx{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;width:100%;max-width:1136px;margin:0 auto;justify-items:center}
+.nx-bar,.nx-poolbox,.nx-side2{width:100%;max-width:560px;display:flex;flex-direction:column;gap:10px}
+.nx-board{width:100%;max-width:560px;display:grid;grid-template-columns:repeat(11,1fr);gap:2px;background:#fff;border:3px solid #c9dcf7;border-radius:12px;padding:6px;box-sizing:border-box;aspect-ratio:1/1;touch-action:manipulation}
+.nx-c{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(11px,3.6vw,22px);line-height:1;border-radius:5px;min-width:0;min-height:0;padding:0;font-family:inherit}
+.nx-n{background:#fff;border:2px solid #0b4ba8;color:#10294f}
+.nx-o{background:#dbe8ff;border:2px solid #dbe8ff;color:#0b4ba8}
+.nx-b{background:#fff6c9;border:2px dashed #c99a00;color:#10294f;cursor:pointer}
+.nx-b:focus-visible,.nx-pb:focus-visible{outline:4px solid #0b4ba8;outline-offset:1px}
+.nx-b.sel{background:#f5c400;border:2px solid #10294f;box-shadow:0 0 0 3px #f5c400}
+.nx-b.ok{background:#cdf3d6;border:2px solid #1fae4b;color:#137a33;cursor:default}
+.nx-b.bad{background:#ffd0d0;border:2px solid #e07a7a;color:#9a1f1f}
+.nx-poolbox b{font-size:20px;color:#10294f}
+.nx-pool{display:flex;flex-wrap:wrap;gap:8px;min-height:54px}
+.nx-pb{min-width:52px;height:52px;padding:0 8px;font:inherit;font-size:22px;font-weight:800;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;border-radius:10px;cursor:pointer}
+.nx-pb.sel{background:#f5c400;border-color:#10294f;color:#10294f;box-shadow:0 0 0 3px #f5c400}
+@media (min-width:900px){
+ .nx{grid-template-columns:minmax(0,560px) 340px;justify-content:center;align-items:start;column-gap:28px;justify-items:stretch}
+ .nx-board{grid-column:1;grid-row:1/4;max-width:none}
+ .nx-bar{grid-column:2;grid-row:1;max-width:none}
+ .nx-poolbox{grid-column:2;grid-row:2;max-width:none}
+ .nx-side2{grid-column:2;grid-row:3;max-width:none}
+ .nx .mm-lv{grid-template-columns:repeat(3,1fr)}
+}

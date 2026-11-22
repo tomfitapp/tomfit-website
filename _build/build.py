@@ -315,7 +315,7 @@ PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TO
 PZ_D = 'Free brain-training puzzles for adults 50+: play the flag memory game now, with sudoku, killer sudoku, word puzzles and matching games coming soon. No sign-up.'
 page('puzzles.html', '/puzzles', PZ_T, PZ_D,
      'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n'
-     + LD(PAGE("/puzzles", PZ_T, PZ_D, "CollectionPage", hasPart=[{"@id": SITE + "/memory-match#game"}]), CRUMB(("Puzzles", "/puzzles"))))
+     + LD(PAGE("/puzzles", PZ_T, PZ_D, "CollectionPage", hasPart=[{"@id": SITE + "/memory-match#game"}, {"@id": SITE + "/picture-puzzle#game"}, {"@id": SITE + "/number-crossword#game"}]), CRUMB(("Puzzles", "/puzzles"))))
 
 MM_T = 'Free Flag Memory Game – 100 Flags of the World | TOMfit Puzzles'
 MM_D = 'Play a free memory match game with 100 flags from Europe, Asia, Africa, the Americas and Oceania. Turn the cards, find the pairs – 3 levels of brain training for adults 50+. No sign-up.'
@@ -326,6 +326,26 @@ page('memory-match.html', '/memory-match', MM_T, MM_D,
            "applicationCategory": "GameApplication", "genre": ["Memory game", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
            "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
           CRUMB(("Puzzles", "/puzzles"), ("Memory Match", "/memory-match"))))
+
+PP_T = 'Free Picture Puzzle – Swap the Pieces to Rebuild the Picture | TOMfit.app'
+PP_D = 'Play a free picture swap puzzle: click two pieces to swap them and rebuild a beautiful picture. 16 or 20 pieces, easy to play for adults 50+. No sign-up.'
+page('picture-puzzle.html', '/picture-puzzle', PP_T, PP_D,
+     'puzzles', 'puzzles', src_main('picture-puzzle').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n<link rel="stylesheet" href="/assets/picture-puzzle.css?v={V("assets/picture-puzzle.css")}">\n'
+     + LD(PAGE("/picture-puzzle", PP_T, PP_D, mainEntity={"@id": SITE + "/picture-puzzle#game"}),
+          {"@type": ["WebApplication", "Game"], "@id": SITE + "/picture-puzzle#game", "name": "Picture Swap", "url": SITE + "/picture-puzzle", "description": PP_D,
+           "applicationCategory": "GameApplication", "genre": ["Picture puzzle", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
+           "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
+          CRUMB(("Puzzles", "/puzzles"), ("Picture Swap", "/picture-puzzle"))))
+
+NX_T = 'Free Number Crossword – Fill In the Missing Numbers | TOMfit.app'
+NX_D = 'Play a free number crossword: fill in the missing numbers so every sum across and down is correct. Easy, medium and hard levels, made for adults 50+. No sign-up.'
+page('number-crossword.html', '/number-crossword', NX_T, NX_D,
+     'puzzles', 'puzzles', src_main('number-crossword').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n<link rel="stylesheet" href="/assets/picture-puzzle.css?v={V("assets/picture-puzzle.css")}">\n<link rel="stylesheet" href="/assets/number-crossword.css?v={V("assets/number-crossword.css")}">\n'
+     + LD(PAGE("/number-crossword", NX_T, NX_D, mainEntity={"@id": SITE + "/number-crossword#game"}),
+          {"@type": ["WebApplication", "Game"], "@id": SITE + "/number-crossword#game", "name": "Number Crossword", "url": SITE + "/number-crossword", "description": NX_D,
+           "applicationCategory": "GameApplication", "genre": ["Number puzzle", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
+           "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
+          CRUMB(("Puzzles", "/puzzles"), ("Number Crossword", "/number-crossword"))))
 
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
@@ -413,7 +433,7 @@ page('404.html', '/404', 'Page not found | TOMfit.app', 'This page does not exis
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n/app / 301\n/app.html / 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
+urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/picture-puzzle', '/number-crossword', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*
