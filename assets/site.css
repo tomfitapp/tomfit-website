@@ -104,6 +104,8 @@ main.pg{max-width:1200px;margin:0 auto;padding:44px 32px 64px;display:flex;flex-
 
 /* ---------- app ---------- */
 .band{background:#0b3a85;color:#fff;text-align:center;padding:18px 24px;font-size:24px;font-weight:600}
+.tbanner{display:block;background:#f5c400;color:#0b3a85;text-align:center;padding:18px 24px;font-size:26px;font-weight:800;text-decoration:none;border-bottom:3px solid #0b3a85}
+.tbanner:hover{background:#ffd633}
 .gp{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
 .gbtn{border:2px solid #1fae4b;background:#fff;color:#137a33;border-radius:12px;padding:12px 6px;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
 .gbtn[aria-selected=true]{background:#1fae4b;color:#fff}

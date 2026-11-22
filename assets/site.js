@@ -7,7 +7,6 @@
   if (car) {
     var IM = [
       ['/img/01_walk.jpg', 'Walk – today'],
-      ['/img/02_walk_progress_charts.jpg', 'Walk – progress charts'],
       ['/img/03_health.jpg', 'Health – your numbers'],
       ['/img/04_health_report.jpg', 'Health – report for your doctor'],
       ['/img/05_meds.jpg', 'Meds & supps – today'],

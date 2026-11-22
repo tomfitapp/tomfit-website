@@ -54,13 +54,13 @@ def head(path, title, desc, extra=''):
 '''
 
 def header(page, pill):
-    nav = [('home', 'Home', '', '/'), ('test', 'Test TOM', 'fit', '/#testers'), ('app', 'The App', '', '/app'),
+    nav = [('home', 'Home', '', '/'), ('test', 'Test TOM', 'fit', '/test-tomfit'), ('app', 'The App', '', '/#walk'),
            ('info', 'Info-Bank', '', '/info-bank'), ('tools', 'Tools', '', '/tools'), ('shop', 'Shop', '', '/shop'), ('puzzles', 'Puzzles', '', '/puzzles')]
     navh = ''.join(f'<a href="{h}" class="navl{" on" if k == page else ""}"{" aria-current=\"page\"" if k == page else ""}>{a}{f"<span class=\"py\">{b}</span>" if b else ""}</a>' for k, a, b, h in nav)
-    pills = [('app', 'TOM', 'fit', ' app', '/app'), ('info', 'Info-Bank', '', '', '/info-bank'), ('tools', 'Tools', '', '', '/tools'),
+    pills = [('app', 'TOM', 'fit', ' app', '/'), ('info', 'Info-Bank', '', '', '/info-bank'), ('tools', 'Tools', '', '', '/tools'),
              ('shop', 'Shop', '', '', '/shop'), ('puzzles', 'Puzzles', '', '', '/puzzles')]
     pillh = ''.join(f'<a href="{h}" class="pill{" on" if k == pill else ""}"{" target=\"_blank\" rel=\"noopener\"" if k == "tomtech" else ""}>{a}{f"<span class=\"py\">{b}</span>" if b else ""}{c}</a>' for k, a, b, c, h in pills)
-    imgs = ''.join(f'<img src="/img/{m}.jpg" alt="" width="520" height="1127">' for m in ['08_exercise_kettlebell_swing', '09_settings', '01_walk', '03_health'])
+    imgs = ''.join(f'<img src="/img/{m}.jpg" alt="" width="520" height="1127">' for m in ['08_exercise_kettlebell_swing', '09_settings', '01_walk', '03_health', '05_meds'])
     dots = '<span></span>' * 9
     slim = page != 'home'
     return f'''<header class="hd{' slim' if slim else ''}">
@@ -99,7 +99,7 @@ FOOTER = '''<footer class="ft">
   <div class="fcols">
     <div><b>Contact</b><a href="mailto:hello@tomfit.app" style="font-size:18px;font-weight:600">hello@tomfit.app</a><span>Questions, ideas or want to be a tester? Just email us.</span></div>
     <div><b>Good to know</b><span><b style="font-size:16px">Not medical advice.</b> TOMfit is for general fitness and personal logging only. <a href="/legal#health">Read our health notice</a>.</span><span>Your health data stays on your phone.</span></div>
-    <div><b>Legal</b><a href="/legal#privacy">Privacy policy</a><a href="/legal#health">Health notice &amp; disclaimer</a><a href="/legal#terms">Terms of sale</a><a href="/#testers">Tester terms</a></div>
+    <div><b>Legal</b><a href="/legal#privacy">Privacy policy</a><a href="/legal#health">Health notice &amp; disclaimer</a><a href="/legal#terms">Terms of sale</a><a href="/test-tomfit">Tester terms</a></div>
   </div>
   <div class="fbar"><span>© 2026 TOMfit · tomfit.app</span><span>Made for people 50+ who want to start, not to compete.</span></div>
   <p class="fdisc">Disclaimer: all information on this website is general information only. It is not medical advice and is not designed to replace advice from your doctor or another qualified healthcare professional. TOMfit is not a medical device.</p>
@@ -130,45 +130,6 @@ HOME_T = 'TOMfit – Simple Health App, Free Health Tools & Puzzles for 50+'
 HOME_D = 'Walk more, track blood pressure, blood sugar and weight, and never miss your meds with the TOMfit app for over-50s. Plus a free BMI calculator, plain-English health guides and brain puzzles.'
 HOME_LD = LD(ORG, {"@type": "WebSite", "@id": SITE + "/#site", "name": "TOMfit", "alternateName": "TOMfit.app", "url": SITE + "/", "description": "Health and fitness for adults over 50: a simple health app, free health tools, free health guides and free puzzles.", "inLanguage": "en-GB", "publisher": {"@id": SITE + "/#org"}},
     PAGE("/", HOME_T, HOME_D))
-home = f'''<main id="main" class="pg home">
-<section id="testers" class="testers" aria-labelledby="th">
-  <div class="tcols">
-    <div>
-      <span class="tag">We are looking for testers</span>
-      <h2 id="th" class="bigh">Test TOM<span class="fit">fit</span> for 8 weeks.<br><span class="b">Earn 1 year free.</span></h2>
-      <p style="font-size:20px;line-height:1.55">Help us make TOMfit the best simple health app for people over 50. Use it every day for 8 weeks, tell us what you think, and when you finish, a free 1 year subscription is yours, <b>worth £29.95 / US$39.95</b>.</p>
-      <div class="steps">{"".join(f'<div class="step"><span class="{c.strip()}">{n}</span><div><b>{t}</b><div>{d}</div></div></div>' for n, c, t, d in steps)}</div>
-      <p class="why"><b>Why a reward?</b> Testing takes real time and care. The free 1 year subscription is our thank you for a job well done. It is earned by completing the full 8 weeks, not given for signing up.</p>
-    </div>
-    <div class="qrbox">
-      <img src="/img/tester-qr.png" alt="QR code: scan to email us and register as a TOMfit tester" width="240" height="240">
-      <div style="font-size:17px;line-height:1.45">Scan with your phone camera,<br>or tap the button:</div>
-      <a class="btn y" href="{MAILTO}">Register as a tester</a>
-      <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Gmail address.<br>Places are limited.</div>
-    </div>
-  </div>
-</section>
-
-<section aria-labelledby="fh">
-  <div class="sechd">
-    <div><div class="eyebrow g">What the app does</div><h2 id="fh">Five simple parts. One app.</h2></div>
-    <a href="/app">See the full guide to the app →</a>
-  </div>
-  <div class="feat">{"".join(f'<a class="fcard" href="/app#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS)}</div>
-</section>
-
-<section>
-  <figure class="quote" style="margin:0 auto">
-    <div class="eyebrow">Why TOMfit exists · built from experience, not perfection</div>
-    <blockquote>“I couldn’t pretend any longer that my health was OK. I needed help – and I had to act.”</blockquote>
-    <p>At 64, after years of desk work and almost no exercise, I had a serious problem with my weight, type 2 diabetes, high blood pressure, sleep apnoea and more. My health was in dire straits, and I could not ignore it any longer. TOMfit begins where many people over 50 actually are. Taking the first step can be difficult – but it is possible.</p>
-    <figcaption class="who"><span>T</span><div><b>Tom</b> <span style="font-size:15px;opacity:.85">· Founder of TOMfit</span></div></figcaption>
-  </figure>
-</section>
-</main>
-'''
-page('index.html', '/', HOME_T, HOME_D,
-     'home', 'none', home, HOME_LD)
 
 # ------------------------------------------------------------------ APP
 S = [
@@ -198,7 +159,7 @@ WEL = [('Walk, Health, Meds &amp; Supps, Exercises, Settings', 'The five parts o
        ('Tools', 'A free BMI calculator, a health-numbers checker and a unit converter.', '/tools', ''),
        ('Shop', 'Printable step-by-step guides with instant download.', '/shop', ''),
        ('Puzzles', 'Free brain-training games. No sign-up.', '/puzzles', ''),
-       ('Test TOMfit', 'Test the app for 8 weeks and earn 1 year free.', '/#testers', ' y')]
+       ('Test TOMfit', 'Test the app for 8 weeks and earn 1 year free.', '/test-tomfit', ' y')]
 welcome = f'''<section class="sec wide" id="welcome" role="tabpanel" data-name="Welcome">
     <div class="col">
       <h2>Welcome to TOM<span style="color:#d99a00">fit</span></h2>
@@ -271,26 +232,59 @@ for x, (i, l, t, intro, pts, imgs, ph, q) in enumerate(S):
     </div>
   </section>
   '''
-app = f'''<div class="band">Step-by-step guide to your TOMfit app</div>
+app = f'''<a class="tbanner" href="/test-tomfit">Test TOMfit app &amp; get 1 year free of charge.</a>
 <main id="main" class="pg" style="padding-top:40px;gap:34px">
   <div class="gp" role="tablist" aria-label="Parts of the app">{tabs}</div>
   {welcome}{secs}{qa}
   <div class="appnav">
     <button class="btn o" data-prevtab>← Q &amp; A</button>
-    <a class="btn y" href="/#testers">Become a tester – earn 1 year free</a>
+    <a class="btn y" href="/test-tomfit">Become a tester – earn 1 year free</a>
     <button class="btn o" data-nexttab>Walk →</button>
   </div>
 </main>
 '''
 APP_T = 'Health App for Over-50s – Walking, Blood Pressure & Meds | TOMfit'
 APP_D = 'TOMfit is a simple, private Android health app for over-50s: brisk-walk tracker, blood pressure, blood sugar and weight log, meds and supplements list and easy exercises. Guide, questions and answers.'
-page('app.html', '/app', APP_T, APP_D, 'app', 'app', app,
-     LD(PAGE("/app", APP_T, APP_D, mainEntity={"@id": SITE + "/app#app"}),
-        {"@type": "MobileApplication", "@id": SITE + "/app#app", "name": "TOMfit", "operatingSystem": "Android", "applicationCategory": "HealthApplication",
-         "description": APP_D, "url": SITE + "/app", "image": SITE + "/img/01_walk.jpg", "publisher": {"@id": SITE + "/#org"},
+HOMEQUOTE = '''<main class="pg home" style="padding-top:0">
+<section>
+  <figure class="quote" style="margin:0 auto">
+    <div class="eyebrow">Why TOMfit exists · built from experience, not perfection</div>
+    <blockquote>“I couldn’t pretend any longer that my health was OK. I needed help – and I had to act.”</blockquote>
+    <p>At 64, after years of desk work and almost no exercise, I had a serious problem with my weight, type 2 diabetes, high blood pressure, sleep apnoea and more. My health was in dire straits, and I could not ignore it any longer. TOMfit begins where many people over 50 actually are. Taking the first step can be difficult – but it is possible.</p>
+    <figcaption class="who"><span>T</span><div><b>Tom</b> <span style="font-size:15px;opacity:.85">· Founder of TOMfit</span></div></figcaption>
+  </figure>
+</section>
+</main>
+'''
+APPLD = {"@type": "MobileApplication", "@id": SITE + "/#app", "name": "TOMfit", "operatingSystem": "Android", "applicationCategory": "HealthApplication",
+         "description": APP_D, "url": SITE + "/", "image": SITE + "/img/01_walk.jpg", "publisher": {"@id": SITE + "/#org"},
          "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50},
-         "featureList": ["Brisk walking tracker: time, distance, steps and speed", "Blood pressure log", "Blood sugar (glucose) log", "Weight and fasting log", "Health report for your doctor", "Medication and supplement reminder checklist", "10 easy exercises with large pictures", "Data stays on your phone"]},
-        CRUMB(("The App", "/app"))))
+         "featureList": ["Brisk walking tracker: time, distance, steps and speed", "Blood pressure log", "Blood sugar (glucose) log", "Weight and fasting log", "Health report for your doctor", "Meds and supplements list with reminders", "10 easy exercises with large pictures", "Data stays on your phone"]}
+page('index.html', '/', HOME_T, HOME_D, 'home', 'none', app + HOMEQUOTE, HOME_LD + LD(APPLD))
+
+testpage = f'''<main id="main" class="pg home">
+<section id="testers" class="testers" aria-labelledby="th">
+  <div class="tcols">
+    <div>
+      <span class="tag">We are looking for testers</span>
+      <h2 id="th" class="bigh">Test TOM<span class="fit">fit</span> for 8 weeks.<br><span class="b">Earn 1 year free.</span></h2>
+      <p style="font-size:20px;line-height:1.55">Help us make TOMfit the best simple health app for people over 50. Use it every day for 8 weeks, tell us what you think, and when you finish, a free 1 year subscription is yours, <b>worth £29.95 / US$39.95</b>.</p>
+      <div class="steps">{"".join(f'<div class="step"><span class="{c.strip()}">{n}</span><div><b>{t}</b><div>{d}</div></div></div>' for n, c, t, d in steps)}</div>
+      <p class="why"><b>Why a reward?</b> Testing takes real time and care. The free 1 year subscription is our thank you for a job well done. It is earned by completing the full 8 weeks, not given for signing up.</p>
+    </div>
+    <div class="qrbox">
+      <img src="/img/tester-qr.png" alt="QR code: scan to email us and register as a TOMfit tester" width="240" height="240">
+      <div style="font-size:17px;line-height:1.45">Scan with your phone camera,<br>or tap the button:</div>
+      <a class="btn y" href="{MAILTO}">Register as a tester</a>
+      <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Gmail address.<br>Places are limited.</div>
+    </div>
+  </div>
+</section>
+</main>
+'''
+TT_T = 'Test the TOMfit App for 8 Weeks – Earn 1 Year Free | TOMfit'
+TT_D = 'Test the TOMfit health app for 8 weeks and earn a free 1 year subscription. For adults over 50 with an Android phone. Register by email.'
+page('test-tomfit.html', '/test-tomfit', TT_T, TT_D, 'test', 'none', testpage, LD(PAGE("/test-tomfit", TT_T, TT_D), CRUMB(("Test TOMfit", "/test-tomfit"))))
 
 # ------------------------------------------------------------------ INFO-BANK (panels + archives; articles live in assets/articles.js)
 def src_main(n):
@@ -312,7 +306,7 @@ page('info-bank-archives.html', '/info-bank-archives', IBA_T, IBA_D,
      'info', 'info', src_main('info-bank-archives') + IBJS, IBCSS + LD(PAGE("/info-bank-archives", IBA_T, IBA_D, "CollectionPage"), CRUMB(("Info-Bank", "/info-bank"), ("Archives", "/info-bank-archives"))))
 
 # ------------------------------------------------------------------ PUZZLES
-FEATH = '<div class="feat">' + ''.join(f'<a class="fcard" href="/app#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS) + '</div>'
+FEATH = '<div class="feat">' + ''.join(f'<a class="fcard" href="/#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS) + '</div>'
 PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TOMfit'
 PZ_D = 'Free brain-training puzzles for adults 50+: play the flag memory game now, with sudoku, killer sudoku, word puzzles and matching games coming soon. No sign-up.'
 page('puzzles.html', '/puzzles', PZ_T, PZ_D,
@@ -413,9 +407,9 @@ page('404.html', '/404', 'Page not found | TOMfit', 'This page does not exist on
      '<meta name="robots" content="noindex">\n')
 
 # ------------------------------------------------------------------ robots, sitemap, headers
-open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n')
+open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n/app / 301\n/app.html / 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/app', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
+urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*
