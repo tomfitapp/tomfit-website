@@ -73,6 +73,7 @@ def header(page, pill):
   <nav class="pills" aria-label="Sections">{pillh}</nav>
 </div>
 </header>
+{'<a class="tbanner" href="/test-tomfit">Test TOMfit app &amp; get 1 year free of charge.</a>' if (page == 'home' or pill in ('info', 'tools', 'shop', 'puzzles')) else ''}
 '''
 
 def hero(page, imgs, dots):
@@ -232,8 +233,7 @@ for x, (i, l, t, intro, pts, imgs, ph, q) in enumerate(S):
     </div>
   </section>
   '''
-app = f'''<a class="tbanner" href="/test-tomfit">Test TOMfit app &amp; get 1 year free of charge.</a>
-<main id="main" class="pg" style="padding-top:40px;gap:34px">
+app = f'''<main id="main" class="pg" style="padding-top:40px;gap:34px">
   <div class="gp" role="tablist" aria-label="Parts of the app">{tabs}</div>
   {welcome}{secs}{qa}
   <div class="appnav">
