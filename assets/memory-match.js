@@ -18,7 +18,7 @@
     level = lv || level; first = null; lock = false; moves = 0; found = 0;
     var cfg = LEVELS[level], names = shuffle(NAMES.slice()).slice(0, cfg[0]);
     total = cfg[0]; var deck = shuffle(names.concat(names));
-    board.style.setProperty('--cols', cfg[1]); board.className = 'mm-board c' + cfg[1];
+    board.style.setProperty('--cols', cfg[1]); board.className = 'mm-board c' + cfg[1] + ' lv-' + level;
     board.innerHTML = deck.map(function (n, i) {
       return '<button type="button" class="mm-card" data-n="' + n + '" aria-label="Card ' + (i + 1) + ', face down"><span class="in"><span class="bk" aria-hidden="true">TOM<i>fit</i></span><span class="fc">' + svg(n) + '<b>' + n + '</b></span></span></button>';
     }).join('');

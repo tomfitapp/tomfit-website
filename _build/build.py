@@ -316,7 +316,7 @@ page('puzzles.html', '/puzzles', PZ_T, PZ_D,
 MM_T = 'Free Flag Memory Game – 100 Flags of the World | TOMfit Puzzles'
 MM_D = 'Play a free memory match game with 100 flags from Europe, Asia, Africa, the Americas and Oceania. Turn the cards, find the pairs – 3 levels of brain training for adults 50+. No sign-up.'
 page('memory-match.html', '/memory-match', MM_T, MM_D,
-     'puzzles', 'puzzles', src_main('memory-match'), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n'
+     'puzzles', 'puzzles', src_main('memory-match').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n'
      + LD(PAGE("/memory-match", MM_T, MM_D, mainEntity={"@id": SITE + "/memory-match#game"}),
           {"@type": ["WebApplication", "Game"], "@id": SITE + "/memory-match#game", "name": "Memory Match – Flags of the World", "url": SITE + "/memory-match", "description": MM_D,
            "applicationCategory": "GameApplication", "genre": ["Memory game", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
