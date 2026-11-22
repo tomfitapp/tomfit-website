@@ -60,7 +60,7 @@ def header(page, pill):
     pills = [('app', 'TOM', 'fit', ' app', '/app'), ('info', 'Info-Bank', '', '', '/info-bank'), ('tools', 'Tools', '', '', '/tools'),
              ('shop', 'Shop', '', '', '/shop'), ('puzzles', 'Puzzles', '', '', '/puzzles')]
     pillh = ''.join(f'<a href="{h}" class="pill{" on" if k == pill else ""}"{" target=\"_blank\" rel=\"noopener\"" if k == "tomtech" else ""}>{a}{f"<span class=\"py\">{b}</span>" if b else ""}{c}</a>' for k, a, b, c, h in pills)
-    imgs = ''.join(f'<img src="/img/{m}.jpg" alt="" width="520" height="1127">' for m in ['08_exercise_kettlebell_swing', '09_settings', '01_walk', '02_walk_progress_charts', '03_health'])
+    imgs = ''.join(f'<img src="/img/{m}.jpg" alt="" width="520" height="1127">' for m in ['08_exercise_kettlebell_swing', '09_settings', '01_walk', '03_health'])
     dots = '<span></span>' * 9
     slim = page != 'home'
     return f'''<header class="hd{' slim' if slim else ''}">
@@ -172,9 +172,9 @@ page('index.html', '/', HOME_T, HOME_D,
 
 # ------------------------------------------------------------------ APP
 S = [
- ('walk', 'walk', 'Walk', 'TOMfit promotes brisk walking – a moderate-intensity form of walking, typically around 5–6.5 km/h (3–4 mph). One big button starts your walk.',
-  ['Start and pause your walk with one button', 'Walking time, brisk minutes, distance, steps and speed', 'Simple daily goals: 30 min, 2 km, 3,000 steps – change them in Settings', 'Charts for today, this week and the last 12 weeks', 'Brisk walking means 100 or more steps a minute'],
-  ['01_walk', '02_walk_progress_charts'], 'people-walk', 'Brisk walking is a moderate-intensity form of walking. The WHO recommends 150–300 minutes a week. Keep an eye on your pace: 100+ steps a minute, or about 5 km/h. TOMfit starts you at the easier end.'),
+ ('walk', 'walk', 'Walk', 'TOMfit promotes brisk walking – a moderate-intensity form of walking: 100 steps a minute or more, around 4–5 km/h (2.5–3 mph). One big button starts your walk.',
+  ['Start and pause your walk with one button', 'Walking time, brisk minutes, distance, steps and speed', 'Simple daily goals: 30 min, 2 km, 3,000 steps – change them in Settings', 'Brisk walking means 100 or more steps a minute, around 4–5 km/h (2.5–3 mph)'],
+  ['01_walk'], 'people-walk', 'Brisk walking is a moderate-intensity form of walking. The WHO recommends 150–300 minutes a week. Keep an eye on your pace: 100 or more steps a minute, around 4–5 km/h (2.5–3 mph). TOMfit starts you at the easier end.'),
  ('health', 'health', 'Health', 'Keep your important numbers in one place and see at a glance whether you are going in the right direction.',
   ['Record your blood glucose', 'Record your blood pressure and pulse', 'Record your weight – BMI is worked out for you', 'Log your fasting time between last and first meal', 'A health report to show your doctor'],
   ['03_health', '04_health_report'], 'people-health', 'I check my blood glucose and blood pressure at least once a day, I keep an eye on my weight and BMI, and I like to check the time between my last and first meal – all to be sure I am going in the right direction.'),
@@ -188,11 +188,70 @@ S = [
   ['Switch off the parts you don’t need', 'Set your walking goals', 'Units set automatically – metric or imperial', 'Choose your kettlebell weight', 'All your data stays on your phone – back it up any time'],
   ['09_settings'], 'people-settings', 'The TOMfit app is very flexible – it is designed to work for you and with you. Adjust your baseline goals, switch off any part of the app you don’t use, set your kettlebell weight, and more.'),
 ]
-tabs = ''.join(f'<button class="gbtn" role="tab" data-tab aria-controls="{i}" aria-selected="{"true" if x == 0 else "false"}">{E(l)}</button>' for x, (i, l, *_r) in enumerate(S))
+def _tab(i, l, cls=''):
+    return f'<button class="gbtn{cls}" role="tab" data-tab aria-controls="{i}" aria-selected="false">{E(l)}</button>'
+tabs = _tab('welcome', 'Welcome', ' bl') + ''.join(_tab(i, l) for (i, l, *_r) in S) + _tab('qa', 'Q & A', ' og')
+
+WEL = [('Walk, Health, Meds &amp; Supps, Exercises, Settings', 'The five parts of the TOMfit app, with pictures. Use the green tabs above.', '#walk', ''),
+       ('Q &amp; A', 'Quick answers to “How” and “Where” questions about using the app.', '#qa', ' o'),
+       ('Info-Bank', 'Free plain-English guides to read and download as PDF.', '/info-bank', ''),
+       ('Tools', 'A free BMI calculator, a health-numbers checker and a unit converter.', '/tools', ''),
+       ('Shop', 'Printable step-by-step guides with instant download.', '/shop', ''),
+       ('Puzzles', 'Free brain-training games. No sign-up.', '/puzzles', ''),
+       ('Test TOMfit', 'Test the app for 8 weeks and earn 1 year free.', '/#testers', ' y')]
+welcome = f'''<section class="sec wide" id="welcome" role="tabpanel" data-name="Welcome">
+    <div class="col">
+      <h2>Welcome to TOM<span style="color:#d99a00">fit</span></h2>
+      <p>TOMfit is a simple, private health app for people over 50. Walk, keep your health numbers, keep your list of meds and supplements, and follow easy exercises – all in one place, with large buttons and no sign-up. Your data stays on your phone.</p>
+      <p>This website is your guide to the app. Here is what you will find:</p>
+      <div class="wcards">{"".join(f'<a class="wcard{c}" href="{h}"><b>{t}</b><span>{d}</span></a>' for t, d, h, c in WEL)}</div>
+      <p class="small">TOMfit is not a medical device. The website gives general information about the app and does not give medical advice.</p>
+    </div>
+  </section>
+  '''
+QA = [('Getting started', [
+        ('How do I install TOMfit?', 'TOMfit is being tested now. Register as a tester (see Test TOMfit on the Home page) and we send you a link to install it from Google Play.'),
+        ('Where is my information stored?', 'Only on your phone. Nothing is sent anywhere.'),
+        ('Can I use TOMfit without an account?', 'Yes. There is no sign-up or login.'),
+        ('How do I switch off a part I don’t use?', 'Settings &gt; page 1 – your app. Switch off walking, health, meds &amp; supps or exercises.'),
+        ('Can I use TOMfit on an iPhone?', 'TOMfit is made for Android phones.')]),
+      ('Walk', [
+        ('How do I start a walk?', 'On the Walk page, tap the big start button. Tap it again to pause.'),
+        ('How do I change my walking goals?', 'Settings &gt; page 2 – your goals &gt; adjust your walking goals.'),
+        ('Can I walk with the screen off?', 'Yes. TOMfit keeps counting your steps.'),
+        ('How do I make distance and speed more exact?', 'Settings &gt; page 2 – your goals &gt; your step length.'),
+        ('Where do I see my walking progress?', 'On the Walk page, in the charts for today, this week and the last 12 weeks.')]),
+      ('Health', [
+        ('How do I record my blood pressure?', 'Health page &gt; blood pressure &gt; add new entry.'),
+        ('Where do I see my earlier results?', 'Health page &gt; recent logs.'),
+        ('Can I record blood sugar in mg/dL?', 'Yes. Settings &gt; page 1 – your app &gt; blood glucose unit.'),
+        ('How do I log my fasting time?', 'Health page &gt; fasting time &gt; add new entry, then choose the day on the calendar.'),
+        ('How do I show my results to my doctor?', 'Use the health report on the Health page.')]),
+      ('Meds &amp; Supps and Exercises', [
+        ('How do I add a medication or supplement to my list?', 'Meds &amp; Supps page &gt; add new entry. Type the name and choose the time.'),
+        ('How do I get a reminder?', 'Choose a time for your item. TOMfit shows a reminder when it is due.'),
+        ('Can I switch the reminders off?', 'Yes. Tap “reminder off” on the reminder, or switch them off in Settings.'),
+        ('How do I choose my kettlebell weight?', 'Settings &gt; page 2 – your goals &gt; adjust your preferred weight.'),
+        ('Where do I find the exercise safety notes?', 'On the Exercises page, before you start.')]),
+      ('Settings and your data', [
+        ('How do I change between km and miles?', 'Settings &gt; page 1 – your app &gt; units.'),
+        ('How do I make the text bigger?', 'Settings &gt; page 3 – your data &gt; text size.'),
+        ('How do I back up my data?', 'Settings &gt; page 3 – your data &gt; backup &amp; restore.'),
+        ('How do I delete all my data?', 'Settings &gt; page 3 – your data &gt; delete my data.'),
+        ('Can I move my data to a new phone?', 'Yes, through Google Drive – not directly from phone to phone. On the old phone, save a backup (Settings &gt; page 3 – your data &gt; backup &amp; restore) and keep it on your Google Drive. On the new phone, install TOMfit, then restore the backup from your Google Drive.')])]
+qa = f'''<section class="sec wide" id="qa" role="tabpanel" data-name="Q &amp; A" hidden>
+    <div class="col">
+      <h2>Questions &amp; answers</h2>
+      <p class="why2"><b>Why TOMfit app:</b> a simple, private health app for people over 50. Walk, keep your health numbers and follow easy exercises in one place. Large buttons, no sign-up, and your data stays on your phone.</p>
+      {"".join(f'<div class="qg"><h3>{g}</h3>' + "".join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q, a in items) + '</div>' for g, items in QA)}
+      <p class="qnote">If you can’t find the answer to your question, please contact our team: <a href="mailto:hello@tomfit.app">hello@tomfit.app</a></p>
+    </div>
+  </section>
+  '''
 secs = ''
 for x, (i, l, t, intro, pts, imgs, ph, q) in enumerate(S):
     one = len(imgs) == 1
-    secs += f'''<section class="sec" id="{i}" role="tabpanel" data-name="{E(t)}" data-imgs="{"|".join("/img/" + m + ".jpg" for m in imgs)}"{" hidden" if x else ""}>
+    secs += f'''<section class="sec" id="{i}" role="tabpanel" data-name="{E(t)}" data-imgs="{"|".join("/img/" + m + ".jpg" for m in imgs)}" hidden>
     <div class="col">
       <h2>{E(t)}</h2>
       <p>{E(intro)}</p>
@@ -215,16 +274,16 @@ for x, (i, l, t, intro, pts, imgs, ph, q) in enumerate(S):
 app = f'''<div class="band">Step-by-step guide to your TOMfit app</div>
 <main id="main" class="pg" style="padding-top:40px;gap:34px">
   <div class="gp" role="tablist" aria-label="Parts of the app">{tabs}</div>
-  {secs}
+  {welcome}{secs}{qa}
   <div class="appnav">
-    <button class="btn o" data-prevtab>← Settings</button>
+    <button class="btn o" data-prevtab>← Q &amp; A</button>
     <a class="btn y" href="/#testers">Become a tester – earn 1 year free</a>
-    <button class="btn o" data-nexttab>Health →</button>
+    <button class="btn o" data-nexttab>Walk →</button>
   </div>
 </main>
 '''
 APP_T = 'Health App for Over-50s – Walking, Blood Pressure & Meds | TOMfit'
-APP_D = 'TOMfit is a simple Android health app for over-50s: brisk-walk tracker, blood pressure, blood sugar and weight log, medication reminder checklist and 10 easy exercises. Data stays on your phone.'
+APP_D = 'TOMfit is a simple, private Android health app for over-50s: brisk-walk tracker, blood pressure, blood sugar and weight log, meds and supplements list and easy exercises. Guide, questions and answers.'
 page('app.html', '/app', APP_T, APP_D, 'app', 'app', app,
      LD(PAGE("/app", APP_T, APP_D, mainEntity={"@id": SITE + "/app#app"}),
         {"@type": "MobileApplication", "@id": SITE + "/app#app", "name": "TOMfit", "operatingSystem": "Android", "applicationCategory": "HealthApplication",
