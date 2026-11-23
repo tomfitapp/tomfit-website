@@ -312,10 +312,10 @@ page('info-bank-archives.html', '/info-bank-archives', IBA_T, IBA_D,
 # ------------------------------------------------------------------ PUZZLES
 FEATH = '<div class="feat">' + ''.join(f'<a class="fcard" href="/#{a}"><div class="im"><img src="/img/{i}.jpg" alt="{n} page of the TOMfit app" width="520" height="1127" loading="lazy"></div><div class="tx"><span class="gtag">{n}</span><span>{t}</span></div></a>' for n, i, t, a in FEATS) + '</div>'
 PZ_T = 'Free Puzzles for Over-50s – Memory Games, Sudoku & Brain Training | TOMfit.app'
-PZ_D = 'Free brain-training puzzles for adults 50+: play the flag memory game now, with sudoku, killer sudoku, word puzzles and matching games coming soon. No sign-up.'
+PZ_D = 'Free brain-training puzzles for adults 50+: play sudoku, killer sudoku, the flag memory game, picture swap and number crossword now, with word puzzles and matching games coming soon. No sign-up.'
 page('puzzles.html', '/puzzles', PZ_T, PZ_D,
      'puzzles', 'puzzles', src_main('puzzles').replace('<!--FEAT-->', FEATH), f'<link rel="stylesheet" href="/assets/puzzles.css?v={V("assets/puzzles.css")}">\n'
-     + LD(PAGE("/puzzles", PZ_T, PZ_D, "CollectionPage", hasPart=[{"@id": SITE + "/memory-match#game"}, {"@id": SITE + "/picture-puzzle#game"}, {"@id": SITE + "/number-crossword#game"}]), CRUMB(("Puzzles", "/puzzles"))))
+     + LD(PAGE("/puzzles", PZ_T, PZ_D, "CollectionPage", hasPart=[{"@id": SITE + "/memory-match#game"}, {"@id": SITE + "/picture-puzzle#game"}, {"@id": SITE + "/number-crossword#game"}, {"@id": SITE + "/sudoku#game"}, {"@id": SITE + "/killer-sudoku#game"}]), CRUMB(("Puzzles", "/puzzles"))))
 
 MM_T = 'Free Flag Memory Game – 100 Flags of the World | TOMfit Puzzles'
 MM_D = 'Play a free memory match game with 100 flags from Europe, Asia, Africa, the Americas and Oceania. Turn the cards, find the pairs – 3 levels of brain training for adults 50+. No sign-up.'
@@ -346,6 +346,23 @@ page('number-crossword.html', '/number-crossword', NX_T, NX_D,
            "applicationCategory": "GameApplication", "genre": ["Number puzzle", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
            "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
           CRUMB(("Puzzles", "/puzzles"), ("Number Crossword", "/number-crossword"))))
+
+
+SD_CSS = f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n<link rel="stylesheet" href="/assets/picture-puzzle.css?v={V("assets/picture-puzzle.css")}">\n<link rel="stylesheet" href="/assets/sudoku.css?v={V("assets/sudoku.css")}">\n'
+def SD_JS(data):
+    return f'<script src="/assets/{data}?v={V("assets/" + data)}" defer></script>\n<script src="/assets/sudoku.js?v={V("assets/sudoku.js")}" defer></script>\n'
+def SDLD(slug, name, t, d):
+    return LD(PAGE("/" + slug, t, d, mainEntity={"@id": SITE + "/" + slug + "#game"}),
+          {"@type": ["WebApplication", "Game"], "@id": SITE + "/" + slug + "#game", "name": name, "url": SITE + "/" + slug, "description": d,
+           "applicationCategory": "GameApplication", "genre": ["Number puzzle", "Brain training", "Puzzle"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
+           "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
+          CRUMB(("Puzzles", "/puzzles"), (name, "/" + slug)))
+SU_T = 'Free Sudoku – Easy 6-Number and 9-Number Puzzles | TOMfit.app'
+SU_D = 'Play free sudoku online: an easy 6-number grid plus medium and hard 9-number puzzles. 100 puzzles with big, clear numbers, made for adults 50+. No sign-up.'
+page('sudoku.html', '/sudoku', SU_T, SU_D, 'puzzles', 'puzzles', src_main('sudoku').replace('<!--FEAT-->', FEATH) + SD_JS('sudoku-data.js'), SD_CSS + SDLD('sudoku', 'Sudoku', SU_T, SU_D))
+KS_T = 'Free Killer Sudoku – Add Up the Cages | TOMfit.app'
+KS_D = 'Play free killer sudoku online: sudoku with a twist, add up each dotted group. 100 medium and hard puzzles with big, clear numbers for adults 50+. No sign-up.'
+page('killer-sudoku.html', '/killer-sudoku', KS_T, KS_D, 'puzzles', 'puzzles', src_main('killer-sudoku').replace('<!--FEAT-->', FEATH) + SD_JS('killer-data.js'), SD_CSS + SDLD('killer-sudoku', 'Killer Sudoku', KS_T, KS_D))
 
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
@@ -433,7 +450,7 @@ page('404.html', '/404', 'Page not found | TOMfit.app', 'This page does not exis
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n/app / 301\n/app.html / 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/picture-puzzle', '/number-crossword', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
+urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/picture-puzzle', '/number-crossword', '/sudoku', '/killer-sudoku', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*

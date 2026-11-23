@@ -1,0 +1,56 @@
+/* TOMfit Sudoku & Killer Sudoku (uses site.css, memory-match.css and picture-puzzle.css for shared parts) */
+.sd{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"bar" "board" "pad" "tools";gap:14px;width:100%;max-width:1136px;margin:0 auto;justify-items:center}
+.sd-bar{grid-area:bar;min-width:0;width:100%;max-width:620px;display:flex;flex-direction:column;gap:10px}
+.sd-bar .mm-lv{grid-template-columns:repeat(3,1fr)}
+.sd-bar .mm-lv.two{grid-template-columns:repeat(2,1fr)}
+.sd-pick{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:8px;align-items:center}
+.sd-pick button,.sd-pick select{font:inherit;font-size:19px;font-weight:700;height:50px;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;border-radius:10px;cursor:pointer}
+.sd-pick select{width:100%;min-width:0;padding:0 6px;text-align:center;text-align-last:center;color:#10294f}
+.sd-info{text-align:center;font-size:17px;font-weight:600;color:#33496b;margin:0}
+.sd-board{grid-area:board;width:100%;max-width:620px;aspect-ratio:1/1;display:grid;background:#fff;border:3px solid #0b4ba8;border-radius:12px;overflow:hidden;box-sizing:border-box;touch-action:manipulation}
+.sd-c{position:relative;display:flex;align-items:center;justify-content:center;padding:0;margin:0;border:1px solid #c9dcf7;border-radius:0;background:#fff;font:inherit;font-weight:800;font-size:clamp(21px,6.4vw,40px);line-height:1;color:#0b3a85;cursor:pointer;min-width:0;min-height:0;overflow:hidden}
+.sd-board.n6 .sd-c{font-size:clamp(26px,8.6vw,52px)}
+.sd-c.g{background:#eaf2ff;color:#1f6fe0}
+.sd-c.bR{border-right:3px solid #0b4ba8}
+.sd-c.bB{border-bottom:3px solid #0b4ba8}
+.sd-c.same{background:#fff6c9}
+.sd-c.sel{background:#f5c400;color:#10294f;box-shadow:inset 0 0 0 3px #10294f;z-index:3}
+.sd-c.bad{background:#ffd0d0;color:#9a1f1f}
+.sd-c:focus-visible{outline:4px solid #0b4ba8;outline-offset:-4px;z-index:4}
+.sd-nt{position:absolute;inset:2px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);font-size:clamp(8px,2.4vw,14px);font-weight:700;color:#5f7390;line-height:1}
+.sd-board.n6 .sd-nt{grid-template-rows:repeat(2,1fr);font-size:clamp(10px,3vw,17px)}
+.sd-nt i{font-style:normal;display:flex;align-items:center;justify-content:center}
+.sd-cg{position:absolute;inset:3px;pointer-events:none;border:0 dashed #d27a1f}
+.sd-sum{position:absolute;left:3px;top:1px;z-index:2;font-size:clamp(9px,2.5vw,14px);font-weight:800;line-height:1.1;color:#a85c10;background:rgba(255,255,255,.9);padding:0 2px;border-radius:3px}
+.sd-c.sel .sd-sum,.sd-c.same .sd-sum{background:transparent}
+.sd-pad{grid-area:pad;width:100%;max-width:620px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sd-pad.p6{grid-template-columns:repeat(6,1fr)}
+.sd-pad button{font:inherit;font-size:28px;font-weight:800;height:58px;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;border-radius:10px;cursor:pointer;padding:0}
+.sd-pad button:active,.sd-pad button:hover{background:#dbe8ff}
+.sd-pad button:focus-visible,.sd-tools button:focus-visible,.sd-pick :focus-visible{outline:4px solid #f5c400;outline-offset:2px}
+.sd-tools{grid-area:tools;width:100%;max-width:620px;display:flex;flex-direction:column;gap:10px}
+.sd-trow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sd-trow button{font:inherit;font-size:18px;font-weight:700;height:52px;border:2px solid #0b4ba8;background:#fff;color:#0b4ba8;border-radius:10px;cursor:pointer;padding:0 4px}
+.sd-trow button[aria-pressed=true]{background:#f5c400;border-color:#f5c400;color:#10294f}
+.sd-trow button.y{background:#f5c400;border-color:#f5c400;color:#10294f}
+.sd-msg{min-height:30px;margin:0;text-align:center;font-size:20px;font-weight:800}
+.sd-msg.ok{color:#137a33}.sd-msg.no{color:#9a1f1f}
+.sd-done{width:100%;max-width:none}
+.sd-how{max-width:760px;margin:0 auto}
+@media (min-width:561px){.sd-pad{grid-template-columns:repeat(9,1fr)}.sd-pad.p6{grid-template-columns:repeat(6,1fr)}}
+@media (min-width:700px){
+ .sd{grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"board bar" "board pad" "board tools" "board .";grid-template-rows:auto auto auto 1fr;column-gap:24px;align-items:start;justify-items:stretch}
+ .sd-board{max-width:none}
+ .sd-bar,.sd-pad,.sd-tools{max-width:none}
+ .sd-pad,.sd-pad.p6{grid-template-columns:repeat(3,1fr);gap:10px}
+ .sd-pad button{height:64px;font-size:32px}
+ .sd-trow button{font-size:17px}
+}
+@media (min-width:900px){
+ .sd{grid-template-columns:minmax(0,620px) 360px;column-gap:32px;justify-content:center}
+ .sd-pad button{height:72px;font-size:34px}
+ .sd-c{font-size:42px}.sd-board.n6 .sd-c{font-size:54px}
+ .sd-nt{font-size:14px}.sd-board.n6 .sd-nt{font-size:18px}
+ .sd-sum{font-size:14px}
+}
+@media (prefers-reduced-motion:no-preference){.sd-c{transition:background .12s}}

@@ -1,0 +1,26 @@
+<main id="main" class="pg" style="padding-top:26px;gap:14px">
+  <h1 class="pzh">Sudoku – fill every row, column and box</h1>
+  <p class="pp-how">Tap an empty square, then tap a number. Each number must appear once in every row, column and box.</p>
+  <div class="sd" id="sd" data-game="sudoku">
+    <div class="sd-bar">
+      <div class="mm-lv" id="sd-lv" role="group" aria-label="Choose a level"></div>
+      <div class="sd-pick"><button type="button" id="sd-prev" aria-label="Previous puzzle">&#9664;</button><select id="sd-sel" aria-label="Choose a puzzle"></select><button type="button" id="sd-next" aria-label="Next puzzle">&#9654;</button></div>
+      <p class="sd-info" id="sd-info"></p>
+    </div>
+    <div class="sd-board" id="sd-board" aria-label="Sudoku board"></div>
+    <div class="sd-pad" id="sd-pad" aria-label="Numbers"></div>
+    <div class="sd-tools">
+      <div class="sd-trow"><button type="button" id="sd-notes" aria-pressed="false">Notes: off</button><button type="button" id="sd-erase">Erase</button><button type="button" id="sd-undo">Undo</button></div>
+      <div class="sd-trow"><button type="button" id="sd-check">Check</button><button type="button" id="sd-hint">Hint</button><button type="button" id="sd-reset">Start again</button></div>
+      <p id="sd-msg" class="sd-msg" role="status" aria-live="polite"></p>
+      <div id="sd-done" class="mm-done sd-done" hidden><p id="sd-donetxt"></p><button type="button" id="sd-nextopen" class="btn y">Another puzzle</button></div>
+    </div>
+  </div>
+  <section class="sd-how" aria-labelledby="sd-h2">
+    <h2 class="pzh pz2" id="sd-h2" style="margin-top:30px">How to play</h2>
+    <p class="pp-how" style="text-align:left">Every row, every column and every box must contain each number once. Easy puzzles use a small 6-number grid (numbers 1 to 6, boxes two squares wide and three tall). Medium and hard puzzles use the classic 9-number grid.</p><p class="pp-how" style="text-align:left">Use <b>Notes</b> to jot small pencil marks, <b>Check</b> to see any wrong numbers in red, and <b>Hint</b> to fill in the selected square. Your progress is saved on this device.</p>
+  </section>
+  <h2 class="pzh pz2">Mobile app for all your health needs</h2>
+  <!--FEAT-->
+  <div class="ibshop" style="margin-top:26px;gap:16px;flex-wrap:wrap"><a class="btn y" href="/shop">Visit our Shop</a><a class="btn o" href="/puzzles">← All puzzles</a></div>
+</main>
