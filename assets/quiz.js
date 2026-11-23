@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 var Q=window.TF_QUIZ,root=document.getElementById('qz');if(!Q||!root)return;
-var PTS=[10,20,30,50,100,200,400,800,1500,3000,6000,12000,25000,50000,100000],SAFE=[4,9],N=15;
+var PTS=[10,20,30,50,100,200,300,500,750,1000,1500,2000,3000,5000,7500,10000,15000,25000,50000,100000],SAFE=[4,9,14],N=20,LVN=[7,7,6];
 var LET=['A','B','C','D'],uid=0,S=null;
 var byId={};Q.items.forEach(function(it,i){byId[it.id]=it;it._i=i});
 function rnd(n){return Math.floor(Math.random()*n)}
@@ -33,8 +33,8 @@ function art(it){return Q.type==='space'?planetArt(it):Q.type==='elem'?elemArt(i
 /* ---------- building a game ---------- */
 function pool(fact,cor){var q=fact[1],t=Q.type,it=Q.items;
  function g(){var gs=[].slice.call(arguments);return it.filter(function(x){return gs.indexOf(x.g)>-1})}
- if(t==='space'){if(/^Which moon/.test(q))return g('moon');if(/^Which dwarf planet/.test(q))return g('dwarf','planet');if(/^Which planet/.test(q))return g('planet');if(/^Which world/.test(q))return g('planet','dwarf','moon')}
- if(t==='elem'){if(/metal/.test(q))return g('lmet','metal');if(/gas/.test(q))return g('gas')}
+ if(t==='space'){if(/^Which dwarf planet/.test(q))return g('dwarf','planet');if(/^Which planet/.test(q))return g('planet');if(/^Which (world|object)/.test(q))return g('planet','dwarf','moon','star');if(/moon/.test(q))return g('moon')}
+ if(t==='elem'){if(/metal/.test(q))return it.filter(function(x){return x.m});if(/gas/.test(q))return it.filter(function(x){return x.st==='gas'})}
  return it}
 function distractors(cor,fact){var P=pool(fact,cor).filter(function(x){return x.id!==cor.id&&!(fact[3]||[]).concat(cor.x||[]).some(function(e){return e===x.id})});
  var near=shuf((cor.nr&&cor.nr.length?cor.nr.map(function(i){return byId[i]}).filter(Boolean):P.filter(function(x){return x.g===cor.g})).filter(function(x,i,a){return P.indexOf(x)>-1&&a.indexOf(x)===i}));
@@ -44,61 +44,53 @@ function distractors(cor,fact){var P=pool(fact,cor).filter(function(x){return x.
  if(!far.length)far=shuf(P).filter(function(x){return ch.indexOf(x)<0});
  return {near:ch,far:far[0]}}
 function buildGame(){var used={},qs=[];
- for(var lv=1;lv<=3;lv++){var cand=[];Q.items.forEach(function(it){it.f.forEach(function(f,k){if(f[0]===lv)cand.push([it,f])})});
+ for(var lv=1;lv<=3;lv++){var NEED=LVN[lv-1],cand=[];Q.items.forEach(function(it){it.f.forEach(function(f,k){if(f[0]===lv)cand.push([it,f])})});
   var lst=shuf(cand),got=0;
-  lst.forEach(function(c){if(got<5&&!used[c[0].id]){used[c[0].id]=1;qs.push({it:c[0],f:c[1],lv:lv});got++}});
-  if(got<5){shuf(Q.items).forEach(function(it){if(got<5&&!used[it.id]){var f=it.f[rnd(it.f.length)];used[it.id]=1;qs.push({it:it,f:f,lv:lv});got++}})}}
+  lst.forEach(function(c){if(got<NEED&&!used[c[0].id]){used[c[0].id]=1;qs.push({it:c[0],f:c[1],lv:lv});got++}});
+  if(got<NEED){shuf(Q.items).forEach(function(it){if(got<NEED&&!used[it.id]){var f=it.f[rnd(it.f.length)];used[it.id]=1;qs.push({it:it,f:f,lv:lv});got++}})}}
  qs.forEach(function(q){var d=distractors(q.it,q.f);q.dn=d.near;q.df=d.far;q.opts=shuf([q.it].concat(d.near,[d.far]))});
  return qs}
 
 /* ---------- screens ---------- */
+function cap1(t){return t.charAt(0).toUpperCase()+t.slice(1)}
+function heroCards(){var ids=Q.hero&&Q.hero.length?shuf(Q.hero).slice(0,4):shuf(Q.items.map(function(x){return x.id})).slice(0,4),rot=[-5,-1.5,1.5,5],h='';
+ ids.forEach(function(id,k){var it=byId[id];if(!it)return;h+='<div class="qz-hc" style="--r:'+rot[k]+'deg">'+(Q.type==='elem'?'<div class="qz-hrow"><span>'+it.num+'</span><span>'+it.wt+'</span></div>':'')+'<div class="qz-ha">'+art(it)+'</div><div class="qz-hn">'+esc(it.n)+'</div><div class="qz-hu">'+esc(Q.type==='elem'?cap1(FAMN[it.fam]):(it.u||it.l||''))+'</div></div>'});return h}
 function start(){var best=lsGet(BEST);
- root.innerHTML='<div class="qz-box qz-start"><p class="qz-intro">'+Q.intro+'</p><p class="qz-rules"><b>15 questions</b> · 4 pictures to choose from · <b>3 helpers</b> · safe points at questions 5 and 10</p>'+(best?'<p class="qz-best">Your best score: <b>'+fmt(best)+' points</b></p>':'')+'<button type="button" class="btn y qz-go" id="qz-play">Start the quiz</button></div>';
+ root.innerHTML='<div class="qz-box qz-start"><div class="qz-hl"><p class="qz-hero">'+esc(Q.hook)+'</p><p class="qz-rules">'+N+' questions · 4 pictures to choose from · a 50 : 50 helper · safe points at questions 5, 10 and 15</p><button type="button" class="btn y qz-go" id="qz-play">Start the quiz</button>'+(best?'<p class="qz-best">Your best score: <b>'+fmt(best)+' points</b></p>':'')+'</div><div class="qz-hr" aria-hidden="true">'+heroCards()+'</div></div>';
  el('qz-play').onclick=newGame}
-function newGame(){S={qs:buildGame(),i:0,sel:-1,locked:false,life:{fifty:1,aud:1,friend:1},hid:[],done:false};render()}
+function place(){var b=root.querySelector('.qz-box');if(!b)return;var r=b.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0){window.scrollTo(0,Math.max(0,r.top+window.pageYOffset-(r.height<window.innerHeight-16?8:0)))}}
+function newGame(){S={qs:buildGame(),i:0,sel:-1,locked:false,life:{fifty:1},hid:[],done:false};render()}
 function ladder(){var h='<div class="qz-lad" role="img" aria-label="Question '+(S.i+1)+' of '+N+'">';for(var k=0;k<N;k++){h+='<i class="'+(k<S.i?'d':k===S.i?'c':'')+(SAFE.indexOf(k)>-1?' s':'')+'"></i>'}return h+'</div>'}
 function render(){var q=S.qs[S.i],won=S.i>0?PTS[S.i-1]:0,h='';
- h+='<div class="qz-box"><div class="qz-top"><span class="qz-n">Question <b>'+(S.i+1)+'</b> of '+N+'</span><span class="qz-p">Playing for <b>'+fmt(PTS[S.i])+'</b> points</span></div>'+ladder();
+ h+='<div class="qz-box"><div class="qz-top"><span class="qz-n">Question <b>'+(S.i+1)+'</b> of '+N+'</span><span class="qz-p">Playing for <b>'+fmt(PTS[S.i])+'</b> points'+(S.i>0?' · <button type="button" class="qz-stop" id="qz-walk">Stop and keep '+fmt(won)+'</button>':'')+'</span></div>'+ladder();
  h+='<h2 class="qz-q" id="qz-q">'+esc(q.f[1])+'</h2><div class="qz-opts" id="qz-opts" role="group" aria-labelledby="qz-q">';
  q.opts.forEach(function(o,k){h+='<button type="button" class="qz-o" data-k="'+k+'" aria-label="'+LET[k]+': '+esc(o.n)+'"><span class="qz-l">'+LET[k]+'</span><span class="qz-a">'+art(o)+'</span><span class="qz-nm">'+esc(o.n)+'</span></button>'});
- h+='</div><div class="qz-life" id="qz-life"><button type="button" id="qz-fifty">50 : 50</button><button type="button" id="qz-aud">Ask the crowd</button><button type="button" id="qz-friend">Ask a friend</button></div>';
- h+='<div class="qz-help" id="qz-help" role="status" aria-live="polite" hidden></div>';
- h+='<div class="qz-act"><button type="button" class="btn y" id="qz-final" disabled>Final answer</button>'+(S.i>0?'<button type="button" class="btn o" id="qz-walk">Stop and keep '+fmt(won)+' points</button>':'')+'</div><div id="qz-res" class="qz-res" role="status" aria-live="polite" hidden></div></div>';
+ h+='</div><div class="qz-bot"><div class="qz-act" id="qz-act"><button type="button" class="qz-fifty" id="qz-fifty">50 : 50</button><button type="button" class="btn y qz-fin" id="qz-final" disabled>Final answer</button></div><div id="qz-res" class="qz-res" role="status" aria-live="polite" hidden></div></div><p id="qz-help" class="qz-help" role="status" aria-live="polite" hidden></p></div>';
  root.innerHTML=h;
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.onclick=function(){pick(+b.getAttribute('data-k'))}});
- el('qz-final').onclick=lock;el('qz-fifty').onclick=fifty;el('qz-aud').onclick=aud;el('qz-friend').onclick=friend;
+ el('qz-final').onclick=lock;el('qz-fifty').onclick=fifty;place();
  var w=el('qz-walk');if(w)w.onclick=function(){finish('walk',won)};
  syncLife()}
-function syncLife(){['fifty','aud','friend'].forEach(function(k){var b=el('qz-'+k);if(!b)return;var u=!S.life[k];b.disabled=u||S.locked;b.className=u?'used':''})}
+function syncLife(){var b=el('qz-fifty');if(!b)return;var u=!S.life.fifty;b.disabled=u||S.locked;b.className='qz-fifty'+(u?' used':'')}
 function pick(k){if(S.locked||S.hid.indexOf(k)>-1)return;S.sel=k;[].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.classList.toggle('sel',+b.getAttribute('data-k')===k)});el('qz-final').disabled=false;el('qz-final').textContent='Final answer: '+LET[k]}
+var FAMN={nonmetal:'nonmetal',noble:'noble gas',halogen:'halogen',alkali:'alkali metal',earth:'alkaline earth metal',trans:'transition metal',post:'post-transition metal',metalloid:'metalloid',actinide:'actinide'};
 function lock(){if(S.locked||S.sel<0)return;S.locked=true;var q=S.qs[S.i],ok=q.opts[S.sel]===q.it,cor=q.opts.indexOf(q.it);
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){var k=+b.getAttribute('data-k');b.disabled=true;b.classList.remove('sel');if(k===cor)b.classList.add('ok');else if(k===S.sel)b.classList.add('bad')});
- syncLife();el('qz-final').hidden=true;var wk=el('qz-walk');if(wk)wk.hidden=true;el('qz-help').hidden=true;
- var r=el('qz-res'),last=S.i===N-1;
+ syncLife();el('qz-act').hidden=true;var wk=el('qz-walk');if(wk)wk.hidden=true;el('qz-help').hidden=true;
+ var r=el('qz-res'),last=S.i===N-1,it=q.it,extra=Q.type==='elem'?' <span class="qz-tag">'+esc(it.sym)+' · no. '+it.num+' · '+FAMN[it.fam]+'</span>':'';
  r.hidden=false;r.className='qz-res '+(ok?'ok':'bad');
- r.innerHTML='<p class="qz-v">'+(ok?'✔ Correct!':'✘ Not this time.')+'</p><p class="qz-fact"><b>'+esc(q.it.n)+'</b> – '+esc(q.f[2])+'</p><button type="button" class="btn y" id="qz-next">'+(ok?(last?'See my score':'Next question'):'See my score')+'</button>';
- el('qz-next').onclick=function(){if(ok){if(last)finish('win',PTS[N-1]);else{S.i++;S.sel=-1;S.locked=false;S.hid=[];render();window.scrollTo({top:root.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'})}}else finish('lose',S.i>=10?PTS[9]:S.i>=5?PTS[4]:0)};
- r.scrollIntoView({block:'nearest',behavior:'smooth'});el('qz-next').focus({preventScroll:true})}
+ r.innerHTML='<p class="qz-fact"><b>'+(ok?'✔ Correct!':'✘ Not this time.')+'</b> '+esc(it.n)+' – '+esc(q.f[2])+extra+'</p><button type="button" class="btn y" id="qz-next">'+(ok?(last?'See my score':'Next question'):'See my score')+'</button>';
+ el('qz-next').onclick=function(){if(ok){if(last)finish('win',PTS[N-1]);else{S.i++;S.sel=-1;S.locked=false;S.hid=[];render()}}else finish('lose',S.i>=15?PTS[14]:S.i>=10?PTS[9]:S.i>=5?PTS[4]:0)};
+ el('qz-next').focus({preventScroll:true})}
 function finish(kind,pts){var b=+lsGet(BEST)||0;if(pts>b)lsSet(BEST,pts);
  var T=kind==='win'?'Brilliant – you reached the top!':kind==='walk'?'You stopped and kept your points.':'Game over – but you learned something new.';
- root.innerHTML='<div class="qz-box qz-end"><h2 class="qz-q">'+T+'</h2><p class="qz-score"><b>'+fmt(pts)+'</b> points</p><p class="qz-best">Your best score: <b>'+fmt(Math.max(b,pts))+' points</b></p><div class="qz-act"><button type="button" class="btn y" id="qz-again">Play again</button><a class="btn o" href="/puzzles">← All puzzles</a></div></div>';
+ root.innerHTML='<div class="qz-box qz-end"><h2 class="qz-q qz-endh">'+T+'</h2><p class="qz-score"><b>'+fmt(pts)+'</b> points</p><p class="qz-best">Your best score: <b>'+fmt(Math.max(b,pts))+' points</b></p><div class="qz-act"><button type="button" class="btn y" id="qz-again">Play again</button><a class="btn o" href="/puzzles">← All puzzles</a></div></div>';
  el('qz-again').onclick=newGame}
-/* ---------- helpers ---------- */
-function help(h){var e=el('qz-help');e.hidden=false;e.innerHTML=h}
+/* ---------- helper: 50:50 ---------- */
 function fifty(){if(!S.life.fifty||S.locked)return;S.life.fifty=0;var q=S.qs[S.i],cor=q.opts.indexOf(q.it),keepIdx=q.opts.indexOf(q.dn[rnd(2)]);
  q.opts.forEach(function(o,k){if(k!==cor&&k!==keepIdx){S.hid.push(k);var b=root.querySelector('.qz-o[data-k="'+k+'"]');b.classList.add('gone');b.disabled=true}});
  if(S.sel>-1&&S.hid.indexOf(S.sel)>-1){S.sel=-1;el('qz-final').disabled=true;el('qz-final').textContent='Final answer'}
- help('Two wrong answers have been taken away.');syncLife()}
-function aud(){if(!S.life.aud||S.locked)return;S.life.aud=0;var q=S.qs[S.i],cor=q.opts.indexOf(q.it),left=[0,1,2,3].filter(function(k){return S.hid.indexOf(k)<0});
- var base=[0,.75,.55,.42][q.lv]+(Math.random()*.2-.1),w={};left.forEach(function(k){w[k]=k===cor?0:(q.opts[k]===q.df?.4:1)});
- var tot=0;left.forEach(function(k){if(k!==cor)tot+=w[k]});var out={},sum=0;
- left.forEach(function(k){if(k===cor)out[k]=Math.round(base*100);else out[k]=Math.round((1-base)*100*w[k]/tot);sum+=out[k]});
- out[cor]+=100-sum;var h='<p><b>The crowd says:</b></p><div class="qz-bars">';
- left.forEach(function(k){h+='<div><span>'+LET[k]+'</span><i style="width:'+Math.max(out[k],2)+'%"></i><em>'+out[k]+'%</em></div>'});
- help(h+'</div><p class="qz-sm">The crowd is not always right!</p>');syncLife()}
-function friend(){if(!S.life.friend||S.locked)return;S.life.friend=0;var q=S.qs[S.i],cor=q.opts.indexOf(q.it),left=[0,1,2,3].filter(function(k){return S.hid.indexOf(k)<0}),acc=[0,.9,.75,.6][q.lv],right=Math.random()<acc,k,conf;
- if(right){k=cor;conf=[0,80,65,50][q.lv]+rnd(15)}else{var w=left.filter(function(x){return x!==cor&&q.opts[x]!==q.df});k=w.length?w[rnd(w.length)]:left.filter(function(x){return x!==cor})[0];conf=40+rnd(12)}
- help('<p><b>Your friend says:</b> “I think it is <b>'+LET[k]+' – '+esc(q.opts[k].n)+'</b>. I am about '+conf+'% sure.”</p><p class="qz-sm">Friends can be wrong too.</p>');syncLife()}
+ var h=el('qz-help');h.hidden=false;h.textContent='Two wrong answers have been taken away.';syncLife()}
 if(location.hash==="#qzdebug")window.__qzc=function(){return S.qs[S.i].opts.indexOf(S.qs[S.i].it)};window.__qzs=function(){return S.qs.map(function(q){return {lv:q.lv,q:q.f[1],o:q.opts.map(function(o){return o.id}),c:q.it.id}})};
 start();
 })();
