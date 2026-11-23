@@ -52,8 +52,8 @@ function render(){
   var inner='';
   if(m.kl){var k=P.cg[i],st='';
    var nb=function(rr,cc){return rr<0||cc<0||rr>=N||cc>=N||P.cg[rr*N+cc]!==k};
-   if(nb(r-1,c))st+='border-top-width:2px;';if(nb(r+1,c))st+='border-bottom-width:2px;';
-   if(nb(r,c-1))st+='border-left-width:2px;';if(nb(r,c+1))st+='border-right-width:2px;';
+   if(nb(r-1,c))st+='border-top-width:1px;';if(nb(r+1,c))st+='border-bottom-width:1px;';
+   if(nb(r,c-1))st+='border-left-width:1px;';if(nb(r,c+1))st+='border-right-width:1px;';
    inner+='<span class="sd-cg" style="'+st+'"></span>';
    if(P.first[k]===i)inner+='<span class="sd-sum">'+P.c[k][1]+'</span>'}
   if(S.v[i])inner+=S.v[i];

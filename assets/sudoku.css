@@ -20,8 +20,8 @@
 .sd-nt{position:absolute;inset:2px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);font-size:clamp(8px,2.4vw,14px);font-weight:700;color:#5f7390;line-height:1}
 .sd-board.n6 .sd-nt{grid-template-rows:repeat(2,1fr);font-size:clamp(10px,3vw,17px)}
 .sd-nt i{font-style:normal;display:flex;align-items:center;justify-content:center}
-.sd-cg{position:absolute;inset:3px;pointer-events:none;border:0 dashed #d27a1f}
-.sd-sum{position:absolute;left:3px;top:1px;z-index:2;font-size:clamp(9px,2.5vw,14px);font-weight:800;line-height:1.1;color:#a85c10;background:rgba(255,255,255,.9);padding:0 2px;border-radius:3px}
+.sd-cg{position:absolute;inset:3px;pointer-events:none;border:0 dashed #6ea8ee}
+.sd-sum{position:absolute;left:3px;top:1px;z-index:2;font-size:clamp(9px,2.5vw,14px);font-weight:400;line-height:1.1;color:#0b3a85;background:rgba(255,255,255,.9);padding:0 2px;border-radius:3px}
 .sd-c.sel .sd-sum,.sd-c.same .sd-sum{background:transparent}
 .sd-pad{grid-area:pad;width:100%;max-width:620px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .sd-pad.p6{grid-template-columns:repeat(6,1fr)}
@@ -54,3 +54,8 @@
  .sd-sum{font-size:14px}
 }
 @media (prefers-reduced-motion:no-preference){.sd-c{transition:background .12s}}
+/* Killer: player numbers bold blue, given numbers dark blue */
+#sd[data-game="killer"] .sd-c{color:#1f6fe0;font-weight:800}
+#sd[data-game="killer"] .sd-c.g{color:#0b3a85}
+#sd[data-game="killer"] .sd-c.sel{color:#10294f}
+#sd[data-game="killer"] .sd-c.bad{color:#9a1f1f}
