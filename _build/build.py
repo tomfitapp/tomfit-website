@@ -364,6 +364,25 @@ KS_T = 'Free Killer Sudoku – Add Up the Cages | TOMfit.app'
 KS_D = 'Play free killer sudoku online: sudoku with a twist, add up each dotted group. 100 medium and hard puzzles with big, clear numbers for adults 50+. No sign-up.'
 page('killer-sudoku.html', '/killer-sudoku', KS_T, KS_D, 'puzzles', 'puzzles', src_main('killer-sudoku').replace('<!--FEAT-->', FEATH) + SD_JS('killer-data.js'), SD_CSS + SDLD('killer-sudoku', 'Killer Sudoku', KS_T, KS_D))
 
+# ------------------------------------------------------------------ QUIZZES
+QZ_CSS = f'<link rel="stylesheet" href="/assets/memory-match.css?v={V("assets/memory-match.css")}">\n<link rel="stylesheet" href="/assets/quiz.css?v={V("assets/quiz.css")}">\n'
+def QZ_JS(data):
+    return f'<script src="/assets/quiz-{data}.js?v={V("assets/quiz-" + data + ".js")}" defer></script>\n<script src="/assets/quiz.js?v={V("assets/quiz.js")}" defer></script>\n'
+def QZLD(slug, name, t, d):
+    return LD(PAGE("/" + slug, t, d, mainEntity={"@id": SITE + "/" + slug + "#game"}),
+          {"@type": ["WebApplication", "Game"], "@id": SITE + "/" + slug + "#game", "name": name, "url": SITE + "/" + slug, "description": d,
+           "applicationCategory": "GameApplication", "genre": ["Quiz", "Brain training", "Educational"], "operatingSystem": "Any (web browser)", "offers": FREE, "isAccessibleForFree": True,
+           "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
+          CRUMB(("Puzzles", "/puzzles"), (name, "/" + slug)))
+QUIZZES = [
+ ('presidential-quiz', 'presidents', 'Presidential Quiz', 'Presidential Quiz – US Presidents Trivia, Free | TOMfit.app', 'Free US presidents quiz: 15 questions about famous firsts, quotes and deeds, with 3 helpers and safe points. Learn as you play. No sign-up.'),
+ ('space-quiz', 'space', 'Space Quiz', 'Space Quiz – Planets, Moons and the Solar System | TOMfit.app', 'Free space quiz: 15 questions about the Sun, planets, dwarf planets and moons, with 3 helpers and safe points. Learn as you play. No sign-up.'),
+ ('usa-states-quiz', 'usa-states', 'USA States Quiz', 'USA States Quiz – Capitals, Nicknames and Maps | TOMfit.app', 'Free US states quiz: spot the state from its outline and learn capitals, nicknames and landmarks. 15 questions, 3 helpers, safe points. No sign-up.'),
+ ('elemental-quiz', 'elements', 'Elemental Quiz', 'Elemental Quiz – The Periodic Table Elements | TOMfit.app', 'Free chemical elements quiz: 15 questions about metals, gases and more, with 3 helpers and safe points. Learn as you play. No sign-up.'),
+]
+for _slug, _data, _name, _t, _d in QUIZZES:
+    page(_slug + '.html', '/' + _slug, _t, _d, 'puzzles', 'puzzles', src_main(_slug).replace('<!--FEAT-->', FEATH) + QZ_JS(_data), QZ_CSS + QZLD(_slug, _name, _t, _d))
+
 # ------------------------------------------------------------------ TOOLS
 TL = [('BMI Calculator', 'tool-bmi', 'bmi-calculator', 'Check whether your weight suits your height – in metric or imperial.', ['Your BMI with a clear colour scale', 'The healthy weight range for your height', 'Good-to-know notes for people over 50']),
       ('My Health Numbers', 'tool-health-numbers', 'my-health-numbers', 'Type in a result from a home test or lab report and see what it means.', ['Blood pressure, blood sugar, HbA1c, cholesterol and more', 'Vitamin D, vitamin B12, ketones, waist and resting pulse', 'UK / EU and US units']),
@@ -450,7 +469,7 @@ page('404.html', '/404', 'Page not found | TOMfit.app', 'This page does not exis
 # ------------------------------------------------------------------ robots, sitemap, headers
 open(os.path.join(OUT, '_redirects'), 'w').write('/fun-4u /puzzles 301\n/fun-4u.html /puzzles 301\n/go / 302\n/app / 301\n/app.html / 301\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
-urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/picture-puzzle', '/number-crossword', '/sudoku', '/killer-sudoku', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
+urls = ['/', '/test-tomfit', '/info-bank', '/info-bank-archives', '/tools', '/shop', '/puzzles', '/memory-match', '/picture-puzzle', '/number-crossword', '/sudoku', '/killer-sudoku', '/presidential-quiz', '/space-quiz', '/usa-states-quiz', '/elemental-quiz', '/legal'] + ['/tools/' + t[2] for t in TL] + [a['pdf'] for a in ARTS]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 open(os.path.join(OUT, '_headers'), 'w').write('''/*
