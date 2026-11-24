@@ -17,6 +17,7 @@
 .qz-l{position:absolute;left:3px;top:3px;width:clamp(18px,4.4vw,26px);height:clamp(18px,4.4vw,26px);border-radius:50%;background:#dbe8ff;color:#0b4ba8;font-weight:700;font-size:clamp(11px,2.8vw,15px);display:flex;align-items:center;justify-content:center;z-index:2}
 .qz-a{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;max-height:min(24vh,190px)}
 .qz-a svg,.qz-a img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+.qz-a img{object-fit:cover;object-position:50% 18%}
 .qz-nm{font-weight:600;font-size:clamp(11px,2.9vw,16px);line-height:1.15;text-align:center;min-height:2.3em;display:flex;align-items:center;justify-content:center}
 .qz-o.sel{border-color:#f5c400;background:#fff6c9}
 .qz-o.sel .qz-l{background:#f5c400;color:#10294f}
