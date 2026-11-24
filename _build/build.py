@@ -159,15 +159,15 @@ WEL = [('Walk, Health, Meds &amp; Supps, Exercises, Settings', 'The five parts o
        ('Info-Bank', 'Free plain-English guides to read and download as PDF.', '/info-bank', ''),
        ('Tools', 'A free BMI calculator, a health-numbers checker and a unit converter.', '/tools', ''),
        ('Shop', 'Printable step-by-step guides with instant download.', '/shop', ''),
-       ('Puzzles', 'Free brain-training games. No sign-up.', '/puzzles', ''),
+       ('Puzzles', 'Free memory and concentration exercises for your brain. Games and puzzles keep you sharp and engaged.', '/puzzles', ''),
        ('Test TOMfit', 'Test the app for 8 weeks and earn 1 year free.', '/test-tomfit', ' y')]
 welcome = f'''<section class="sec wide" id="welcome" role="tabpanel" data-name="Welcome">
     <div class="col">
       <h2>Welcome to TOM<span style="color:#d99a00">fit</span></h2>
-      <p>TOMfit is a simple, private health app for people over 50. Walk, keep your health numbers, keep your list of meds and supplements, and follow easy exercises – all in one place, with large buttons and no sign-up. Your data stays on your phone.</p>
-      <p>This website is your guide to the app. Here is what you will find:</p>
+      <p>TOMfit is a simple health companion for people aged 50+. The app promotes medium-intensity brisk walking; keeps your blood glucose, blood pressure, weight and BMI; holds your list of medications and supplements with personal reminders of when to take them; and encourages basic exercises to keep you strong. TOMfit collects no personal data – no complicated registration, no passwords and no logging in.</p>
+      <p>This website is your guide to the app and more. Here is what you will find:</p>
       <div class="wcards">{"".join(f'<a class="wcard{c}" href="{h}"><b>{t}</b><span>{d}</span></a>' for t, d, h, c in WEL)}</div>
-      <p class="small">TOMfit is not a medical device. The website gives general information about the app and does not give medical advice.</p>
+      <p class="small">TOMfit is not a medical device. Our website and app are not designed to give medical advice, and it is NOT our intention to do so. If you have concerns about your health, please speak to your doctor.</p>
     </div>
   </section>
   '''
