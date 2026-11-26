@@ -1,5 +1,5 @@
 /* TOMfit Puzzles */
-.f4g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
+.f4g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 .f4c{border:2px solid #c9dcf7;border-radius:18px;padding:12px;background:#fff;display:flex;flex-direction:column}
 .f4c h2{margin:0 0 8px;font-size:16px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:10px;padding:9px 12px;color:#fff;background:#0b4ba8}
 .f4c.s2 h2{background:#1f9e55}.f4c.s3 h2{background:#7a4cc2}.f4c.s4 h2{background:#d27a1f}
@@ -11,7 +11,7 @@
 .f4promo img{width:150px;height:auto;border-radius:16px;border:2px solid #c9dcf7;flex:none}
 .f4promo h2{margin:0 0 8px;font-size:26px;color:#10294f}
 .f4promo p{margin:0 0 14px;font-size:18px;line-height:1.45;color:#33496b}
-@media (max-width:1000px){.f4g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1000px){.f4g{gap:14px}.f4c h2{font-size:14.5px;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 @media (max-width:640px){.f4g{grid-template-columns:1fr}.f4promo{flex-direction:column;text-align:center}.f4promo img{width:170px}}
 .ibsub{margin:6px 0 0;font-size:20px;color:#33496b}
 .ibshop{display:flex;justify-content:center}
