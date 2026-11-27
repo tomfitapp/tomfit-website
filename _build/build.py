@@ -436,7 +436,7 @@ shop = f'''<main id="main" class="pg">
 
   <section class="shs" aria-labelledby="sh-cal">
     <div class="shh"><h2 id="sh-cal">2027 wall calendars</h2><p>“Beauty of Old Europe” – 12 famous places, printed on quality paper and posted to you. Choose the week to start on Monday or Sunday.</p></div>
-    <div class="sg sg3">{"".join(f'<div class="sc"><img src="/img/cal-2027-{k}.jpg" alt="Cover of the 2027 Beauty of Old Europe wall calendar, {n}" width="520" height="723" loading="lazy"><span class="chip">Wall calendar</span><h3>Beauty of Old Europe 2027 · {n}</h3><p class="sd">{d}</p><div class="pr">£29.50 <small>printed &amp; posted · 28 × 43 cm</small></div><div class="bn2"><a class="bn" href="{um}" target="_blank" rel="noopener">Monday start {EB}</a><a class="bn" href="{us}" target="_blank" rel="noopener">Sunday start {EB}</a></div></div>' for k, n, d, um, us in CALS)}</div>
+    <div class="sg sg3">{"".join(f'<div class="sc"><img src="/img/cal-2027-{k}.jpg" alt="Cover of the 2027 Beauty of Old Europe wall calendar, {n}" width="520" height="723" loading="lazy"><span class="chip">Wall calendar</span><h3>Beauty of Old Europe 2027 · {n}</h3><p class="sd">{d}</p><div class="pr">£22.50 <small>$29.50 · printed &amp; posted · 28 × 43 cm</small></div><div class="bn2"><a class="bn" href="{um}" target="_blank" rel="noopener">Monday start {EB}</a><a class="bn" href="{us}" target="_blank" rel="noopener">Sunday start {EB}</a></div></div>' for k, n, d, um, us in CALS)}</div>
   </section>
 
   <section class="shs" aria-labelledby="sh-pr">
