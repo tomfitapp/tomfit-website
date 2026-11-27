@@ -130,3 +130,9 @@
 .qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{top:0;right:0;width:34%;max-width:64px}
 .qz-map svg{max-width:760px;margin:0 auto}.qz-key{gap:6px 18px}
 .qz-key{display:block;text-align:center;line-height:1.8}.qz-key i{margin:0 6px 0 16px}.qz-key i:first-child{margin-left:0}
+/* 27 Nov 2026: no A–D letters; larger flag at top left of state cards */
+.qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{left:0;right:auto;width:46%;max-width:92px}
+.qz-a .qz-st svg,.qz-ha .qz-st svg{top:28%;height:72%}
+.qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{left:50%;right:auto;transform:translateX(-50%)}
+.qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{width:62%;max-width:112px}
+.qz-a .qz-st svg,.qz-ha .qz-st svg{top:40%;height:60%}

@@ -65,12 +65,12 @@ function newGame(){S={qs:buildGame(),i:0,sel:-1,locked:false,ok:0,wrong:[]};rend
 function render(){var q=S.qs[S.i],h='';
  h+='<div class="qz-box"><div class="qz-top"><span class="qz-n">Question <b>'+(S.i+1)+'</b> of '+N+'</span></div><div class="qz-prog" aria-hidden="true"><i style="width:'+(S.i/N*100)+'%"></i></div>';
  h+='<h2 class="qz-q" id="qz-q">'+esc(q.f[1])+'</h2><div class="qz-opts" id="qz-opts" role="group" aria-labelledby="qz-q">';
- q.opts.forEach(function(o,k){h+='<button type="button" class="qz-o'+(Q.type==='space'?' dk':'')+'" data-k="'+k+'" aria-label="'+LET[k]+': '+esc(o.n)+'"><span class="qz-l">'+LET[k]+'</span><span class="qz-a">'+art(o)+'</span><span class="qz-nm">'+esc(o.n)+'</span>'+(Q.type==='elem'?'<span class="qz-fm" hidden>'+FAMN[o.fam]+'</span>':'')+'</button>'});
+ q.opts.forEach(function(o,k){h+='<button type="button" class="qz-o'+(Q.type==='space'?' dk':'')+'" data-k="'+k+'" aria-label="'+esc(o.n)+'"><span class="qz-a">'+art(o)+'</span><span class="qz-nm">'+esc(o.n)+'</span>'+(Q.type==='elem'?'<span class="qz-fm" hidden>'+FAMN[o.fam]+'</span>':'')+'</button>'});
  h+='</div><div class="qz-bot"><div class="qz-act" id="qz-act"><button type="button" class="btn y qz-fin" id="qz-final" disabled>Final answer</button></div><div id="qz-res" class="qz-res" role="status" aria-live="polite" hidden></div></div></div>';
  root.innerHTML=h;
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.onclick=function(){pick(+b.getAttribute('data-k'))}});
  el('qz-final').onclick=lock;place()}
-function pick(k){if(S.locked)return;S.sel=k;[].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.classList.toggle('sel',+b.getAttribute('data-k')===k)});el('qz-final').disabled=false;el('qz-final').textContent='Final answer: '+LET[k]}
+function pick(k){if(S.locked)return;S.sel=k;[].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.classList.toggle('sel',+b.getAttribute('data-k')===k)});el('qz-final').disabled=false;el('qz-final').textContent='Final answer'}
 var FAMN={nonmetal:'nonmetal',noble:'noble gas',halogen:'halogen',alkali:'alkali metal',earth:'alkaline earth metal',trans:'transition metal',post:'post-transition metal',metalloid:'metalloid',actinide:'actinide'};
 function lock(){if(S.locked||S.sel<0)return;S.locked=true;var q=S.qs[S.i],ok=q.opts[S.sel]===q.it,cor=q.opts.indexOf(q.it);
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){var k=+b.getAttribute('data-k');b.disabled=true;b.classList.remove('sel');if(k===cor)b.classList.add('ok');else if(k===S.sel)b.classList.add('bad');var fm=b.querySelector('.qz-fm');if(fm)fm.hidden=false});
