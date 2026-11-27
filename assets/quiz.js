@@ -25,7 +25,7 @@ function planetArt(it){var a=it.a,id='g'+(++uid),c=a.c,r=40,s='<svg viewBox="0 0
  if(a.ring)s+='<g transform="rotate(-18 60 60)"><path d="M3 60A57 15 0 0 0 117 60" fill="none" stroke="'+a.ring+'" stroke-width="7"/></g>';
  return s+'</svg>'}
 function elemArt(it){return '<div class="qz-el" style="background:'+it.col+'"><b>'+esc(it.sym)+'</b></div>'}
-function stateArt(it){var v=it.vb,pad=Math.max(v[2],v[3])*.06;return '<span class="qz-st"><img class="qz-sf" src="/img/quiz/state-flags/'+it.id+'.svg" alt="" loading="lazy"><svg viewBox="'+[v[0]-pad,v[1]-pad,v[2]+2*pad,v[3]+2*pad].join(' ')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="'+it.d+'" fill="#dbe8ff" stroke="#0b4ba8" stroke-width="2.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></span>'}
+function stateArt(it){var v=it.vb,pad=Math.max(v[2],v[3])*.06;return '<span class="qz-st"><img class="qz-sf" src="/img/quiz/state-flags/'+it.id+'.png" alt="" loading="lazy"><svg viewBox="'+[v[0]-pad,v[1]-pad,v[2]+2*pad,v[3]+2*pad].join(' ')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="'+it.d+'" fill="#dbe8ff" stroke="#0b4ba8" stroke-width="2.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></span>'}
 function initials(n){var w=n.replace(/\./g,'').split(' ').filter(Boolean);return (w[0][0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase()}
 function presArt(it){return '<img src="/img/quiz/presidents/'+it.id+'.jpg" alt="" onerror="this.outerHTML=\'<div class=&quot;qz-ph&quot;><b>'+esc(initials(it.n))+'</b></div>\'">'}
 function spaceArt(it){return '<img class="qz-sp" src="/img/quiz/space/'+it.id+'.jpg" alt="" loading="lazy">'}
