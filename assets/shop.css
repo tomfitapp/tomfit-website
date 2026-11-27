@@ -35,3 +35,5 @@
 .sg .sc>img{width:50%;align-self:center;margin:4px auto 10px;box-shadow:3px 4px 0 #7cb8f5}
 .sg.sgl .sc>img{width:60%}
 @media (max-width:760px){.sg.sg3 .sc>img{width:40%}.sg.sgl .sc>img{width:70%}}
+/* no bold text on the shop page (27 Nov) */
+main.pg,main.pg *{font-weight:400 !important}
