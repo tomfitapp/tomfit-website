@@ -92,4 +92,15 @@
     var hh = location.hash.slice(1);
     openArt(document.getElementById(hh) && document.getElementById(hh).classList.contains('art') ? hh : arts[0].id, false);
   }
+
+  /* ---- Christmas decoration: 15 Dec – 15 Jan every year (preview with ?xmas=1) ---- */
+  (function () {
+    var d = new Date(), m = d.getMonth() + 1, day = d.getDate();
+    var on = (m === 12 && day >= 15) || (m === 1 && day <= 15) || /[?&]xmas=/.test(location.search);
+    if (!on) return;
+    var x = document.createElement('script');
+    x.src = '/assets/xmas.js?v=2';
+    x.defer = true;
+    document.head.appendChild(x);
+  })();
 })();
