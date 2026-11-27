@@ -83,3 +83,24 @@
 .qz-o.dk.bad{background:#0a0f1f;border-color:#d93f3f;box-shadow:0 0 0 2px #d93f3f}
 .qz-o.dk .qz-a svg{border-radius:8px;background:#0a0f1f}
 .qz-hr .qz-hc{flex:1 1 0;min-width:0;max-width:118px}
+
+/* 27 Nov 2026: centred titles, no points; results review */
+.qz-title{text-align:center;display:grid;gap:4px;margin:4px 0 6px}
+.qz-title .qz-h1{font-size:clamp(26px,5.4vw,38px);font-weight:800;margin:0;display:inline-flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.qz-flag{height:.62em;width:auto;border-radius:3px;box-shadow:0 0 0 1px #c9dcf7}
+.qz-emo{font-size:.8em;line-height:1}
+.qz-sub{margin:0;font-size:clamp(16px,3.6vw,20px);font-weight:400;color:#33496b}
+.qz-start{display:grid;gap:16px;justify-items:center;grid-template-columns:1fr!important;text-align:center}
+.qz-start .qz-hr{width:100%}.qz-start .qz-hr .qz-hc{max-width:150px}
+.qz-hn{font-size:clamp(11px,2.9vw,14px)!important;overflow-wrap:anywhere}
+.qz-go{font-size:18px;padding:12px 26px}
+.qz-prog{height:8px;border-radius:4px;background:#dbe8ff;overflow:hidden}.qz-prog i{display:block;height:100%;background:#1f9e55;border-radius:4px}
+.qz-score{margin:4px 0 0;font-size:22px;font-weight:600;color:#10294f;text-align:center}.qz-score b{font-size:40px;color:#0b4ba8;margin-left:6px}
+.qz-perfect{margin:0;text-align:center;font-size:18px;color:#1f9e55;font-weight:600}
+.qz-revh{margin:10px 0 2px;font-size:20px;color:#1a56b0}
+.qz-rev{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.qz-rev li{border:2px solid #c9dcf7;border-radius:14px;padding:12px 14px;background:#fff}
+.qz-rq,.qz-ra{margin:0;font-size:16px;line-height:1.45;color:#10294f}.qz-ra{margin-top:6px}
+.qz-rq b{color:#0b4ba8}.qz-ra b{color:#1f9e55}
+.qz-end{text-align:left}.qz-end .qz-act{justify-content:center;margin-top:6px}
+.qz+.pzh{margin-top:26px}

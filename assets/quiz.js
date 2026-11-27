@@ -1,8 +1,8 @@
-/* TOMfit quiz: 15 questions, 4 picture answers, 3 lifelines, safe levels */
+/* TOMfit quiz: 20 questions, 4 picture answers, no points or helpers; review of wrong answers at the end */
 (function(){
 'use strict';
 var Q=window.TF_QUIZ,root=document.getElementById('qz');if(!Q||!root)return;
-var PTS=[10,20,30,50,100,200,300,500,750,1000,1500,2000,3000,5000,7500,10000,15000,25000,50000,100000],SAFE=[4,9,14],N=20,LVN=[7,7,6];
+var N=20,LVN=[7,7,6];
 var LET=['A','B','C','D'],uid=0,S=null;
 var byId={};Q.items.forEach(function(it,i){byId[it.id]=it;it._i=i});
 function rnd(n){return Math.floor(Math.random()*n)}
@@ -56,42 +56,41 @@ function cap1(t){return t.charAt(0).toUpperCase()+t.slice(1)}
 function heroCards(){var ids=Q.hero&&Q.hero.length?shuf(Q.hero).slice(0,4):shuf(Q.items.map(function(x){return x.id})).slice(0,4),h='';
  ids.forEach(function(id,k){var it=byId[id];if(!it)return;var sub=Q.type==='elem'?FAMN[it.fam]:(it.l||'');
   h+='<div class="qz-hc'+(Q.type==='space'?' dk':'')+'">'+(Q.type==='elem'?'<div class="qz-hrow"><span>'+it.num+'</span><span>'+it.st+'</span></div>':'')+'<div class="qz-ha">'+art(it)+'</div><div class="qz-hn">'+esc(it.n)+'</div><div class="qz-hu">'+esc(sub)+'</div></div>'});return h}
-function start(){var best=lsGet(BEST);
- root.innerHTML='<div class="qz-box qz-start"><div class="qz-hl"><p class="qz-hero">'+esc(Q.hook)+'</p><p class="qz-rules">'+N+' questions · 4 pictures to choose from · a 50 : 50 helper · safe points at questions 5, 10 and 15</p><button type="button" class="btn y qz-go" id="qz-play">Start the quiz</button>'+(best?'<p class="qz-best">Your best score: <b>'+fmt(best)+' points</b></p>':'')+'</div><div class="qz-hr" aria-hidden="true">'+heroCards()+'</div></div>';
+function start(){
+ root.innerHTML='<div class="qz-box qz-start"><div class="qz-hr">'+heroCards()+'</div><button type="button" class="btn y qz-go" id="qz-play">Start – '+N+' questions</button></div>';
  el('qz-play').onclick=newGame}
 function place(){var b=root.querySelector('.qz-box');if(!b)return;var r=b.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0){window.scrollTo(0,Math.max(0,r.top+window.pageYOffset-(r.height<window.innerHeight-16?8:0)))}}
-function newGame(){S={qs:buildGame(),i:0,sel:-1,locked:false,life:{fifty:1},hid:[],done:false};render()}
-function ladder(){var h='<div class="qz-lad" role="img" aria-label="Question '+(S.i+1)+' of '+N+'">';for(var k=0;k<N;k++){h+='<i class="'+(k<S.i?'d':k===S.i?'c':'')+(SAFE.indexOf(k)>-1?' s':'')+'"></i>'}return h+'</div>'}
-function render(){var q=S.qs[S.i],won=S.i>0?PTS[S.i-1]:0,h='';
- h+='<div class="qz-box"><div class="qz-top"><span class="qz-n">Question <b>'+(S.i+1)+'</b> of '+N+'</span><span class="qz-p">Playing for <b>'+fmt(PTS[S.i])+'</b> points'+(S.i>0?' · <button type="button" class="qz-stop" id="qz-walk">Stop and keep '+fmt(won)+'</button>':'')+'</span></div>'+ladder();
+function newGame(){S={qs:buildGame(),i:0,sel:-1,locked:false,ok:0,wrong:[]};render()}
+function render(){var q=S.qs[S.i],h='';
+ h+='<div class="qz-box"><div class="qz-top"><span class="qz-n">Question <b>'+(S.i+1)+'</b> of '+N+'</span></div><div class="qz-prog" aria-hidden="true"><i style="width:'+(S.i/N*100)+'%"></i></div>';
  h+='<h2 class="qz-q" id="qz-q">'+esc(q.f[1])+'</h2><div class="qz-opts" id="qz-opts" role="group" aria-labelledby="qz-q">';
  q.opts.forEach(function(o,k){h+='<button type="button" class="qz-o'+(Q.type==='space'?' dk':'')+'" data-k="'+k+'" aria-label="'+LET[k]+': '+esc(o.n)+'"><span class="qz-l">'+LET[k]+'</span><span class="qz-a">'+art(o)+'</span><span class="qz-nm">'+esc(o.n)+'</span>'+(Q.type==='elem'?'<span class="qz-fm" hidden>'+FAMN[o.fam]+'</span>':'')+'</button>'});
- h+='</div><div class="qz-bot"><div class="qz-act" id="qz-act"><button type="button" class="qz-fifty" id="qz-fifty">50 : 50</button><button type="button" class="btn y qz-fin" id="qz-final" disabled>Final answer</button></div><div id="qz-res" class="qz-res" role="status" aria-live="polite" hidden></div></div><p id="qz-help" class="qz-help" role="status" aria-live="polite" hidden></p></div>';
+ h+='</div><div class="qz-bot"><div class="qz-act" id="qz-act"><button type="button" class="btn y qz-fin" id="qz-final" disabled>Final answer</button></div><div id="qz-res" class="qz-res" role="status" aria-live="polite" hidden></div></div></div>';
  root.innerHTML=h;
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.onclick=function(){pick(+b.getAttribute('data-k'))}});
- el('qz-final').onclick=lock;el('qz-fifty').onclick=fifty;place();
- var w=el('qz-walk');if(w)w.onclick=function(){finish('walk',won)};
- syncLife()}
-function syncLife(){var b=el('qz-fifty');if(!b)return;var u=!S.life.fifty;b.disabled=u||S.locked;b.className='qz-fifty'+(u?' used':'')}
-function pick(k){if(S.locked||S.hid.indexOf(k)>-1)return;S.sel=k;[].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.classList.toggle('sel',+b.getAttribute('data-k')===k)});el('qz-final').disabled=false;el('qz-final').textContent='Final answer: '+LET[k]}
+ el('qz-final').onclick=lock;place()}
+function pick(k){if(S.locked)return;S.sel=k;[].forEach.call(root.querySelectorAll('.qz-o'),function(b){b.classList.toggle('sel',+b.getAttribute('data-k')===k)});el('qz-final').disabled=false;el('qz-final').textContent='Final answer: '+LET[k]}
 var FAMN={nonmetal:'nonmetal',noble:'noble gas',halogen:'halogen',alkali:'alkali metal',earth:'alkaline earth metal',trans:'transition metal',post:'post-transition metal',metalloid:'metalloid',actinide:'actinide'};
 function lock(){if(S.locked||S.sel<0)return;S.locked=true;var q=S.qs[S.i],ok=q.opts[S.sel]===q.it,cor=q.opts.indexOf(q.it);
  [].forEach.call(root.querySelectorAll('.qz-o'),function(b){var k=+b.getAttribute('data-k');b.disabled=true;b.classList.remove('sel');if(k===cor)b.classList.add('ok');else if(k===S.sel)b.classList.add('bad');var fm=b.querySelector('.qz-fm');if(fm)fm.hidden=false});
- syncLife();el('qz-act').hidden=true;var wk=el('qz-walk');if(wk)wk.hidden=true;el('qz-help').hidden=true;
+ if(ok)S.ok++;else S.wrong.push({n:S.i+1,q:q});
+ el('qz-act').hidden=true;
  var r=el('qz-res'),last=S.i===N-1,it=q.it,extra=Q.type==='elem'?' <span class="qz-tag">'+esc(it.sym)+' · no. '+it.num+' · '+FAMN[it.fam]+'</span>':'';
  r.hidden=false;r.className='qz-res '+(ok?'ok':'bad');
- r.innerHTML='<p class="qz-fact"><b>'+(ok?'✔ Correct!':'✘ Not this time.')+'</b> '+esc(it.n)+' – '+esc(q.f[2])+extra+'</p><button type="button" class="btn y" id="qz-next">'+(ok?(last?'See my score':'Next question'):'See my score')+'</button>';
- el('qz-next').onclick=function(){if(ok){if(last)finish('win',PTS[N-1]);else{S.i++;S.sel=-1;S.locked=false;S.hid=[];render()}}else finish('lose',S.i>=15?PTS[14]:S.i>=10?PTS[9]:S.i>=5?PTS[4]:0)};
+ r.innerHTML='<p class="qz-fact"><b>'+(ok?'✔ Correct!':'✘ Not this time.')+'</b> '+esc(it.n)+' – '+esc(q.f[2])+extra+'</p><button type="button" class="btn y" id="qz-next">'+(last?'See my results':'Next question')+'</button>';
+ el('qz-next').onclick=function(){if(last)finish();else{S.i++;S.sel=-1;S.locked=false;render()}};
  el('qz-next').focus({preventScroll:true})}
-function finish(kind,pts){var b=+lsGet(BEST)||0;if(pts>b)lsSet(BEST,pts);
- var T=kind==='win'?'Brilliant – you reached the top!':kind==='walk'?'You stopped and kept your points.':'Game over – but you learned something new.';
- root.innerHTML='<div class="qz-box qz-end"><h2 class="qz-q qz-endh">'+T+'</h2><p class="qz-score"><b>'+fmt(pts)+'</b> points</p><p class="qz-best">Your best score: <b>'+fmt(Math.max(b,pts))+' points</b></p><div class="qz-act"><button type="button" class="btn y" id="qz-again">Play again</button><a class="btn o" href="/puzzles">← All puzzles</a></div></div>';
- el('qz-again').onclick=newGame}
-/* ---------- helper: 50:50 ---------- */
-function fifty(){if(!S.life.fifty||S.locked)return;S.life.fifty=0;var q=S.qs[S.i],cor=q.opts.indexOf(q.it),keepIdx=q.opts.indexOf(q.dn[rnd(2)]);
- q.opts.forEach(function(o,k){if(k!==cor&&k!==keepIdx){S.hid.push(k);var b=root.querySelector('.qz-o[data-k="'+k+'"]');b.classList.add('gone');b.disabled=true}});
- if(S.sel>-1&&S.hid.indexOf(S.sel)>-1){S.sel=-1;el('qz-final').disabled=true;el('qz-final').textContent='Final answer'}
- var h=el('qz-help');h.hidden=false;h.textContent='Two wrong answers have been taken away.';syncLife()}
+function answer(q){var it=q.it;
+ if(Q.type==='pres'&&it.y){var vp=it.vp||[],v=!vp.length?'He had no Vice President.':vp.length===1?'His Vice President was '+vp[0]+'.':'His Vice Presidents were '+vp.slice(0,-1).join(', ')+' and '+vp[vp.length-1]+'.';
+  return it.n+', president '+(/^\d{4} to|and/.test(it.y)?'from ':'in ')+it.y+'. '+v+' '+it.k}
+ var f=q.f[2];return it.n+'. '+f}
+function finish(){
+ var h='<div class="qz-box qz-end"><p class="qz-score">Correct answers: <b>'+S.ok+'</b></p>';
+ if(!S.wrong.length)h+='<p class="qz-perfect">Perfect – every answer correct!</p>';
+ else{h+='<h2 class="qz-revh">The answers you missed</h2><ol class="qz-rev">';
+  S.wrong.forEach(function(w){h+='<li><p class="qz-rq"><b>Q'+w.n+':</b> '+esc(w.q.f[1])+'</p><p class="qz-ra"><b>A'+w.n+':</b> '+esc(answer(w.q))+'</p></li>'});h+='</ol>'}
+ h+='<div class="qz-act"><button type="button" class="btn y" id="qz-again">Play again</button><a class="btn o" href="/puzzles">← All puzzles</a></div></div>';
+ root.innerHTML=h;el('qz-again').onclick=newGame;var b=root.querySelector('.qz-box');if(b)window.scrollTo(0,Math.max(0,b.getBoundingClientRect().top+window.pageYOffset-8))}
 if(location.hash==="#qzdebug")window.__qzc=function(){return S.qs[S.i].opts.indexOf(S.qs[S.i].it)};window.__qzs=function(){return S.qs.map(function(q){return {lv:q.lv,q:q.f[1],o:q.opts.map(function(o){return o.id}),c:q.it.id}})};
 start();
 })();

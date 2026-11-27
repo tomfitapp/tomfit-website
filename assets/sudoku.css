@@ -59,3 +59,6 @@
 #sd[data-game="killer"] .sd-c.g{color:#0b3a85}
 #sd[data-game="killer"] .sd-c.sel{color:#10294f}
 #sd[data-game="killer"] .sd-c.bad{color:#9a1f1f}
+/* 27 Nov 2026: wrong numbers show at once in red; the square keeps its colour */
+.sd-c.bad,.sd-c.bad.same{background:#fff;color:#d21f1f}
+.sd-c.bad.sel{background:#f5c400;color:#c01818}

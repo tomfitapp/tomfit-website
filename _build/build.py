@@ -375,10 +375,10 @@ def QZLD(slug, name, t, d):
            "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1}, "audience": {"@type": "PeopleAudience", "suggestedMinAge": 50}, "publisher": {"@id": SITE + "/#org"}},
           CRUMB(("Puzzles", "/puzzles"), (name, "/" + slug)))
 QUIZZES = [
- ('presidential-quiz', 'presidents', 'Presidential Quiz', 'Presidential Quiz – US Presidents Trivia, Free | TOMfit.app', 'Free US presidents quiz: 20 questions about famous firsts, quotes and deeds, with a 50:50 helper and safe points. Learn as you play. No sign-up.'),
- ('space-quiz', 'space', 'Space Quiz', 'Space Quiz – Planets, Moons and the Solar System | TOMfit.app', 'Free space quiz: 20 questions about the Sun, planets, dwarf planets and moons, with a 50:50 helper and safe points. Learn as you play. No sign-up.'),
- ('usa-states-quiz', 'usa-states', 'USA States Quiz', 'USA States Quiz – Capitals, Nicknames and Maps | TOMfit.app', 'Free US states quiz: spot the state from its outline and learn capitals, nicknames and landmarks. 20 questions, a 50:50 helper, safe points. No sign-up.'),
- ('elemental-quiz', 'elements', 'Elemental Quiz', 'Elemental Quiz – The Periodic Table Elements | TOMfit.app', 'Free chemical elements quiz: 20 questions about metals, gases and more, with a 50:50 helper and safe points. Learn as you play. No sign-up.'),
+ ('presidential-quiz', 'presidents', 'Presidential Quiz', 'Presidential Quiz – US Presidents Trivia, Free | TOMfit.app', 'Free US presidents quiz: 20 questions about famous firsts, quotes and deeds, with a short fact after each answer and a full review of the ones you missed. No sign-up.'),
+ ('space-quiz', 'space', 'Space Quiz', 'Space Quiz – Planets, Moons and the Solar System | TOMfit.app', 'Free space quiz: 20 questions about the Sun, planets, dwarf planets and moons, with a short fact after each answer and a full review of the ones you missed. No sign-up.'),
+ ('usa-states-quiz', 'usa-states', 'USA States Quiz', 'USA States Quiz – Capitals, Nicknames and Maps | TOMfit.app', 'Free US states quiz: spot the state from its outline and learn capitals, nicknames and landmarks. 20 questions with a review of the ones you missed. No sign-up.'),
+ ('elemental-quiz', 'elements', 'Elemental Quiz', 'Elemental Quiz – The Periodic Table Elements | TOMfit.app', 'Free chemical elements quiz: 20 questions about metals, gases and more, with a short fact after each answer and a full review of the ones you missed. No sign-up.'),
 ]
 for _slug, _data, _name, _t, _d in QUIZZES:
     page(_slug + '.html', '/' + _slug, _t, _d, 'puzzles', 'puzzles', src_main(_slug).replace('<!--FEAT-->', FEATH) + QZ_JS(_data), QZ_CSS + QZLD(_slug, _name, _t, _d))

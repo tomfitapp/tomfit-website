@@ -48,7 +48,7 @@ function render(){
   if(c%m.bw===m.bw-1&&c<N-1)cls+=' bR';
   if(r%m.bh===m.bh-1&&r<N-1)cls+=' bB';
   if(sel>=0){if(i===sel)cls+=' sel';else if(S.v[sel]&&S.v[i]===S.v[sel])cls+=' same'}
-  if(S.bad&&S.bad[i])cls+=' bad';
+  if(S.v[i]&&!S.giv[i]&&S.v[i]!==sol(i))cls+=' bad';
   var inner='';
   if(m.kl){var k=P.cg[i],st='';
    var nb=function(rr,cc){return rr<0||cc<0||rr>=N||cc>=N||P.cg[rr*N+cc]!==k};
