@@ -104,3 +104,8 @@
 .qz-rq b{color:#0b4ba8}.qz-ra b{color:#1f9e55}
 .qz-end{text-align:left}.qz-end .qz-act{justify-content:center;margin-top:6px}
 .qz+.pzh{margin-top:26px}
+/* Space Quiz pictures (27 Nov 2026): one navy background for cards and images */
+.dk,.qz-o.dk,.qz-hc.dk{background:#0b1530;border-color:#0b1530}
+.dk.ok{background:#0b1530}
+.qz-sp{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%}
+.qz-ha .qz-sp{object-fit:contain}

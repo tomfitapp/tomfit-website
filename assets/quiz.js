@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 var Q=window.TF_QUIZ,root=document.getElementById('qz');if(!Q||!root)return;
-var N=20,LVN=[7,7,6];
+var N=20,LVN=[4,6,6,4];
 var LET=['A','B','C','D'],uid=0,S=null;
 var byId={};Q.items.forEach(function(it,i){byId[it.id]=it;it._i=i});
 function rnd(n){return Math.floor(Math.random()*n)}
@@ -28,7 +28,8 @@ function elemArt(it){return '<div class="qz-el" style="background:'+it.col+'"><b
 function stateArt(it){var v=it.vb,pad=Math.max(v[2],v[3])*.06,m=Math.max(v[2],v[3])/70;return '<svg viewBox="'+[v[0]-pad,v[1]-pad,v[2]+2*pad,v[3]+2*pad].join(' ')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="'+it.d+'" fill="#dbe8ff" stroke="#0b4ba8" stroke-width="2.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>'}
 function initials(n){var w=n.replace(/\./g,'').split(' ').filter(Boolean);return (w[0][0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase()}
 function presArt(it){return '<img src="/img/quiz/presidents/'+it.id+'.jpg" alt="" onerror="this.outerHTML=\'<div class=&quot;qz-ph&quot;><b>'+esc(initials(it.n))+'</b></div>\'">'}
-function art(it){return Q.type==='space'?planetArt(it):Q.type==='elem'?elemArt(it):Q.type==='state'?stateArt(it):presArt(it)}
+function spaceArt(it){return '<img class="qz-sp" src="/img/quiz/space/'+it.id+'.jpg" alt="" loading="lazy">'}
+function art(it){return Q.type==='space'?spaceArt(it):Q.type==='elem'?elemArt(it):Q.type==='state'?stateArt(it):presArt(it)}
 
 /* ---------- building a game ---------- */
 function pool(fact,cor){var q=fact[1],t=Q.type,it=Q.items;
@@ -44,7 +45,7 @@ function distractors(cor,fact){var P=pool(fact,cor).filter(function(x){return x.
  if(!far.length)far=shuf(P).filter(function(x){return ch.indexOf(x)<0});
  return {near:ch,far:far[0]}}
 function buildGame(){var used={},qs=[];
- for(var lv=1;lv<=3;lv++){var NEED=LVN[lv-1],cand=[];Q.items.forEach(function(it){it.f.forEach(function(f,k){if(f[0]===lv)cand.push([it,f])})});
+ for(var lv=1;lv<=LVN.length;lv++){var NEED=LVN[lv-1],cand=[];Q.items.forEach(function(it){it.f.forEach(function(f,k){if(f[0]===lv)cand.push([it,f])})});
   var lst=shuf(cand),got=0;
   lst.forEach(function(c){if(got<NEED&&!used[c[0].id]){used[c[0].id]=1;qs.push({it:c[0],f:c[1],lv:lv});got++}});
   if(got<NEED){shuf(Q.items).forEach(function(it){if(got<NEED&&!used[it.id]){var f=it.f[rnd(it.f.length)];used[it.id]=1;qs.push({it:it,f:f,lv:lv});got++}})}}
