@@ -25,7 +25,7 @@ function planetArt(it){var a=it.a,id='g'+(++uid),c=a.c,r=40,s='<svg viewBox="0 0
  if(a.ring)s+='<g transform="rotate(-18 60 60)"><path d="M3 60A57 15 0 0 0 117 60" fill="none" stroke="'+a.ring+'" stroke-width="7"/></g>';
  return s+'</svg>'}
 function elemArt(it){return '<div class="qz-el" style="background:'+it.col+'"><b>'+esc(it.sym)+'</b></div>'}
-function stateArt(it){var v=it.vb,pad=Math.max(v[2],v[3])*.06,m=Math.max(v[2],v[3])/70;return '<svg viewBox="'+[v[0]-pad,v[1]-pad,v[2]+2*pad,v[3]+2*pad].join(' ')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="'+it.d+'" fill="#dbe8ff" stroke="#0b4ba8" stroke-width="2.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>'}
+function stateArt(it){var v=it.vb,pad=Math.max(v[2],v[3])*.06;return '<span class="qz-st"><img class="qz-sf" src="/img/quiz/state-flags/'+it.id+'.svg" alt="" loading="lazy"><svg viewBox="'+[v[0]-pad,v[1]-pad,v[2]+2*pad,v[3]+2*pad].join(' ')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="'+it.d+'" fill="#dbe8ff" stroke="#0b4ba8" stroke-width="2.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></span>'}
 function initials(n){var w=n.replace(/\./g,'').split(' ').filter(Boolean);return (w[0][0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase()}
 function presArt(it){return '<img src="/img/quiz/presidents/'+it.id+'.jpg" alt="" onerror="this.outerHTML=\'<div class=&quot;qz-ph&quot;><b>'+esc(initials(it.n))+'</b></div>\'">'}
 function spaceArt(it){return '<img class="qz-sp" src="/img/quiz/space/'+it.id+'.jpg" alt="" loading="lazy">'}
@@ -85,11 +85,16 @@ function answer(q){var it=q.it;
  if(Q.type==='pres'&&it.y){var vp=it.vp||[],v=!vp.length?'He had no Vice President.':vp.length===1?'His Vice President was '+vp[0]+'.':'His Vice Presidents were '+vp.slice(0,-1).join(', ')+' and '+vp[vp.length-1]+'.';
   return it.n+', president '+(/^\d{4} to|and/.test(it.y)?'from ':'in ')+it.y+'. '+v+' '+it.k}
  var f=q.f[2];return it.n+'. '+f}
+function usaMap(){var ok={},bad={};S.qs.forEach(function(q,k){var w=S.wrong.some(function(x){return x.q===q});(w?bad:ok)[q.it.id]=1});
+ var h='<div class="qz-map"><h2 class="qz-revh">Your 20 states on the map</h2><svg viewBox="-64 6 1028 608" role="img" aria-label="Map of the USA: green states you answered correctly, red states you missed">';
+ Q.items.forEach(function(it){var c=ok[it.id]?'#1f9e55':bad[it.id]?'#d94a4a':'#e8f0fb';h+='<path d="'+it.d+'" fill="'+c+'" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round"><title>'+esc(it.n)+'</title></path>'});
+ return h+'</svg><p class="qz-key"><i style="background:#1f9e55"></i>Correct <i style="background:#d94a4a"></i>Missed <i style="background:#e8f0fb"></i>Not asked this time</p></div>'}
 function finish(){
  var h='<div class="qz-box qz-end"><p class="qz-score">Correct answers: <b>'+S.ok+'</b></p>';
  if(!S.wrong.length)h+='<p class="qz-perfect">Perfect – every answer correct!</p>';
  else{h+='<h2 class="qz-revh">The answers you missed</h2><ol class="qz-rev">';
   S.wrong.forEach(function(w){h+='<li><p class="qz-rq"><b>Q'+w.n+':</b> '+esc(w.q.f[1])+'</p><p class="qz-ra"><b>A'+w.n+':</b> '+esc(answer(w.q))+'</p></li>'});h+='</ol>'}
+ if(Q.type==='state')h+=usaMap();
  h+='<div class="qz-act"><button type="button" class="btn y" id="qz-again">Play again</button><a class="btn o" href="/puzzles">← All puzzles</a></div></div>';
  root.innerHTML=h;el('qz-again').onclick=newGame;var b=root.querySelector('.qz-box');if(b)window.scrollTo(0,Math.max(0,b.getBoundingClientRect().top+window.pageYOffset-8))}
 if(location.hash==="#qzdebug")window.__qzc=function(){return S.qs[S.i].opts.indexOf(S.qs[S.i].it)};window.__qzs=function(){return S.qs.map(function(q){return {lv:q.lv,q:q.f[1],o:q.opts.map(function(o){return o.id}),c:q.it.id}})};
