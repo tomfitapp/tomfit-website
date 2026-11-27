@@ -136,3 +136,12 @@
 .qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{left:50%;right:auto;transform:translateX(-50%)}
 .qz-a .qz-st .qz-sf,.qz-ha .qz-st .qz-sf{width:62%;max-width:112px}
 .qz-a .qz-st svg,.qz-ha .qz-st svg{top:40%;height:60%}
+
+/* Explained: the 50 state flags */
+.sfx-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:6px}
+.sfx-c{background:#fff;border:2px solid #c9dcf7;border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start;justify-items:center;text-align:center}
+.sfx-c img{width:150px;height:100px;object-fit:contain;border-radius:4px;box-shadow:0 0 0 1px #c9dcf7}
+.sfx-c h3{margin:2px 0 0;font-size:19px;color:#1a56b0}
+.sfx-c p{margin:0;font-size:16px;line-height:1.5;color:#10294f;text-align:left}
+@media (max-width:1000px){.sfx-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.sfx-g{grid-template-columns:1fr}}
