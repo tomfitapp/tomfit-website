@@ -415,27 +415,50 @@ BUNDLE_URL = 'https://payhip.com/b/SBiJl'
 CARDS = [('guide-bundle', 'Both guides: Brisk walking and Kettlebells after 50', 'Bundle', '', 'Brisk walk, basic core &amp; kettlebells after 50', '£4.95', '$5.95 · both guides', BUNDLE_URL),
          ('guide-walking', 'First page of Brisk walking and basic core exercises after 50', 'Exercises', ' b', 'Brisk walking and basic core exercises after 50', '£2.95', '$3.95 · 17 pages', PR[0][4]),
          ('guide-kettlebells', 'First page of Kettlebells after 50', 'Exercises', ' b', 'Kettlebells after 50', '£2.95', '$3.95 · 12 pages', PR[1][4])]
+ETSY = 'https://www.etsy.com/shop/TOMfitApp'   # TODO: swap each product for its own Etsy listing link
+CALS = [('a', 'Collection A', 'Old Town Kraków, Eiffel Tower, Big Ben, Venice and 8 more', ETSY, ETSY),
+        ('b', 'Collection B', 'St Peter’s Square, Bruges, Pisa, Neuschwanstein and 8 more', ETSY, ETSY),
+        ('c', 'Collection C', 'Royal Castle Warsaw, Sacré-Cœur, Schönbrunn, Charles Bridge and 8 more', ETSY, ETSY)]
+PRINTS = [('etsy-puzzle-bundle', 'Christmas Puzzle Bundle', '60 puzzles · A4 + US Letter', 'Bundle', '', '£5.99', ETSY),
+          ('etsy-word-search', 'Christmas Word Search', '30 puzzles · A4 + US Letter', 'Puzzles', ' b', '£3.99', ETSY),
+          ('etsy-sudoku', 'Christmas Sudoku with jokes', '30 puzzles · A4 + US Letter', 'Puzzles', ' b', '£3.99', ETSY),
+          ('etsy-walking-calendar', '2027 Walking & Health Calendar', '12 months · A4 + US Letter', 'Calendar', ' y', '£4.99', ETSY)]
+EB = '<span class="ee" aria-hidden="true">↗</span>'
 shop = f'''<main id="main" class="pg">
   <div class="shophd">
     <div>
-      <div class="eyebrow">TOMfit shop · printable guides</div>
-      <h1 class="h2">Detailed guides you can keep and print</h1>
-      <p class="lead">Clear, step-by-step PDF guides for adults over 50 – written in plain language, with pictures, plans and checklists.</p>
+      <div class="eyebrow">TOMfit shop</div>
+      <h1 class="h2">Calendars, puzzles and guides</h1>
+      <p class="lead">2027 wall calendars, large-print Christmas puzzles and step-by-step guides for adults over 50. Calendars and printables are sold safely through our Etsy shop.</p>
     </div>
-    <a class="deal" href="{BUNDLE_URL}" target="_blank" rel="noopener" style="display:block;text-decoration:none"><div class="t">Both guides</div><div class="p">£4.95 · $5.95</div><div class="s">instead of £5.90 · $7.90</div><div class="t" style="margin-top:6px;color:#0b4ba8">Buy both guides</div></a>
+    <a class="deal etsy" href="{ETSY}" target="_blank" rel="noopener" style="display:block;text-decoration:none"><div class="t">Our Etsy shop</div><div class="p">TOMfitApp</div><div class="s">see everything in one place</div><div class="t" style="margin-top:6px;color:#0b4ba8">Visit shop {EB}</div></a>
   </div>
-  <div class="sg" aria-label="Guides">{"".join(f'<div class="sc"><img src="/img/{im}.jpg" alt="{E(al)}" width="520" height="736" loading="lazy"><span class="chip{cc}">{ch}</span><h2>{t}</h2><div class="pr">{pr} <small>{sm}</small></div><a class="bn" href="{u}" target="_blank" rel="noopener">Buy now</a></div>' for im, al, ch, cc, t, pr, sm, u in CARDS)}</div>
-  <p class="small" style="margin:14px 0 6px">All guides are printable PDFs with instant download. More guides are coming soon.</p>
+
+  <section class="shs" aria-labelledby="sh-cal">
+    <div class="shh"><h2 id="sh-cal">2027 wall calendars</h2><p>“Beauty of Old Europe” – 12 famous places, printed on quality paper and posted to you. Choose the week to start on Monday or Sunday.</p></div>
+    <div class="sg sg3">{"".join(f'<div class="sc"><img src="/img/cal-2027-{k}.jpg" alt="Cover of the 2027 Beauty of Old Europe wall calendar, {n}" width="520" height="723" loading="lazy"><span class="chip">Wall calendar</span><h3>Beauty of Old Europe 2027 · {n}</h3><p class="sd">{d}</p><div class="pr">£22.50 <small>$29.50 · printed &amp; posted · 28 × 43 cm</small></div><div class="bn2"><a class="bn" href="{um}" target="_blank" rel="noopener">Monday start {EB}</a><a class="bn" href="{us}" target="_blank" rel="noopener">Sunday start {EB}</a></div></div>' for k, n, d, um, us in CALS)}</div>
+  </section>
+
+  <section class="shs" aria-labelledby="sh-pr">
+    <div class="shh"><h2 id="sh-pr">Printables – download and print at home</h2><p>Big, clear print that is easy on the eyes. Buy once, print as many copies as you like.</p></div>
+    <div class="sg sgl">{"".join(f'<div class="sc"><img class="ls" src="/img/{im}.jpg" alt="{E(t)}" width="800" height="600" loading="lazy"><span class="chip{cc}">{ch}</span><h3>{t}</h3><p class="sd">{d}</p><div class="pr">{pr} <small>instant download</small></div><a class="bn" href="{u}" target="_blank" rel="noopener">View on Etsy {EB}</a></div>' for im, t, d, ch, cc, pr, u in PRINTS)}</div>
+  </section>
+
+  <section class="shs" aria-labelledby="sh-gd">
+    <div class="shh"><h2 id="sh-gd">Guides – instant PDF download</h2><p>Clear, step-by-step guides with pictures, plans and checklists. <b>Both guides £4.95 · $5.95</b> instead of £5.90.</p></div>
+    <div class="sg sg3">{"".join(f'<div class="sc"><img src="/img/{im}.jpg" alt="{E(al)}" width="520" height="736" loading="lazy"><span class="chip{cc}">{ch}</span><h3>{t}</h3><div class="pr">{pr} <small>{sm}</small></div><a class="bn" href="{u}" target="_blank" rel="noopener">Buy now</a></div>' for im, al, ch, cc, t, pr, sm, u in CARDS)}</div>
+  </section>
+
   <div class="g2 trust">
-    <div class="box"><b>Instant download</b><div>Your PDF is ready straight after payment, and the link is emailed to you too.</div></div>
-    <div class="box"><b>Secure payment</b><div>Card or PayPal through Payhip, our secure checkout.</div></div>
+    <div class="box"><b>Safe checkout</b><div>Calendars and printables: through Etsy. Guides: card or PayPal through Payhip, with the download link emailed to you.</div></div>
+    <div class="box"><b>Help with an order</b><div>If a download does not arrive or will not open, email <a href="mailto:hello@tomfit.app">hello@tomfit.app</a> and we will fix it or refund you.</div></div>
   </div>
   <p class="small" style="margin:-10px 0 0">{CURRENCY}</p>
-  <p class="small" style="margin:-10px 0 0;font-size:15px">Digital downloads cannot be returned once delivered. If your PDF does not arrive or will not open, we will fix it or refund you. <a href="/legal#terms">Terms of sale</a></p>
+  <p class="small" style="margin:-10px 0 0;font-size:15px">Digital downloads cannot be returned once delivered. <a href="/legal#terms">Terms of sale</a></p>
 </main>
 '''
-SH_T = 'Walking & Kettlebell Guides for Over-50s (Printable PDF) | TOMfit Shop'
-SH_D = 'Printable step-by-step exercise guides for adults over 50: brisk walking with core exercises, and kettlebells for beginners. Instant PDF download – £2.95 each, or both for £4.95.'
+SH_T = '2027 Wall Calendars, Large-Print Christmas Puzzles & Guides for Over-50s | TOMfit Shop'
+SH_D = 'Beauty of Old Europe 2027 wall calendars (£22.50, printed and posted), large-print Christmas word search and sudoku, a printable walking calendar, and step-by-step walking and kettlebell guides for adults over 50.'
 def PROD(name, img, desc, price, url):
     return {"@type": "Product", "name": name, "image": SITE + "/img/" + img + ".jpg", "description": desc, "brand": {"@type": "Brand", "name": "TOMfit"}, "category": "Digital download (PDF guide)",
             "offers": {"@type": "Offer", "price": price, "priceCurrency": "GBP", "availability": "https://schema.org/InStock", "url": url, "seller": {"@id": SITE + "/#org"}}}
