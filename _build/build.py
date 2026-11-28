@@ -123,10 +123,12 @@ FEATS = [('Walk', '01_walk', 'Time, distance, steps and speed, with simple daily
          ('Meds &amp; supps', '05_meds', 'Your list, daily times and a tick when you have taken them.', 'meds'),
          ('Exercises', '07_exercise_daily_core_chair_squats', '10 easy exercises with large pictures, at your own pace.', 'exercises'),
          ('Settings', '09_settings', 'Switch parts on or off, set your goals. Data stays on your phone.', 'settings')]
-steps = [('1', '', 'Register by email', 'Send your name and the Gmail address on your Android phone to hello@tomfit.app.'),
-         ('2', '', 'Get the test app', 'We send you a link to install TOMfit from Google Play.'),
-         ('3', '', 'Open it every day', 'Use it as you like and answer one short question each week.'),
-         ('4', ' y', 'Finish all 8 weeks', 'Complete the evaluation and your free 1 year subscription is activated after launch.')]
+steps = [('1', '', 'Register', 'Scan the QR code or email hello@tomfit.app. All we ask for is your first name, age and the Gmail address on your Android phone.'),
+         ('2', '', 'Receive the app', 'We send you a link to install TOMfit from Google Play. The app is free of charge.'),
+         ('3', '', 'Use the app', 'Use it as you like, as much as you want, for 2 weeks.'),
+         ('4', '', 'Tell us what you think', 'After week 1 and week 2 we email you 3 short questions: what would you like to change, remove or introduce? Just reply.'),
+         ('5', '', 'End of test', 'We consider all your feedback, make changes to the app and submit it to Google Play. We will let you know what we changed.'),
+         ('6', ' y', 'Your reward', 'On the Official Launch Day you receive <b>1 full year of TOMfit free of charge</b>, as our thank you.')]
 HOME_T = 'TOMfit.app – Simple Health App, Free Health Tools & Puzzles for 50+'
 HOME_D = 'Walk more, track blood pressure, blood sugar and weight, and never miss your meds with the TOMfit app for over-50s. Plus a free BMI calculator, plain-English health guides and brain puzzles.'
 HOME_LD = LD(ORG, {"@type": "WebSite", "@id": SITE + "/#site", "name": "TOMfit.app", "alternateName": "TOMfit", "url": SITE + "/", "description": "Health and fitness for adults over 50: a simple health app, free health tools, free health guides and free puzzles.", "inLanguage": "en-GB", "publisher": {"@id": SITE + "/#org"}},
@@ -160,7 +162,7 @@ WEL = [('Walk, Health, Meds &amp; Supps, Exercises, Settings', 'The five parts o
        ('Tools', 'A free BMI calculator, a health-numbers checker and a unit converter.', '/tools', ''),
        ('Shop', 'Printable step-by-step guides with instant download.', '/shop', ''),
        ('Puzzles', 'Free memory and concentration exercises for your brain. Games and puzzles keep you sharp and engaged.', '/puzzles', ''),
-       ('Test TOMfit', 'Test the app for 8 weeks and earn 1 year free.', '/test-tomfit', ' y')]
+       ('Test TOMfit', 'Test the app for 2 weeks and earn 1 year free.', '/test-tomfit', ' y')]
 welcome = f'''<section class="sec wide" id="welcome" role="tabpanel" data-name="Welcome">
     <div class="col">
       <h2>Welcome to TOM<span style="color:#d99a00">fit</span></h2>
@@ -271,23 +273,24 @@ testpage = f'''<main id="main" class="pg home">
   <div class="tcols">
     <div>
       <span class="tag">We are looking for testers</span>
-      <h2 id="th" class="bigh">Test TOM<span class="fit">fit</span> for 8 weeks.<br><span class="b">Earn 1 year free.</span></h2>
-      <p style="font-size:20px;line-height:1.55">Help us make TOMfit the best simple health app for people over 50. Use it every day for 8 weeks, tell us what you think, and when you finish, a free 1 year subscription is yours, <b>worth £29.95 / US$39.95</b>.</p>
+      <h2 id="th" class="bigh">Test TOM<span class="fit">fit</span> for 2 weeks.<br><span class="b">Earn 1 year free.</span></h2>
+      <p style="font-size:20px;line-height:1.55">We need your help to test and improve our app. Use the app free of charge for 2 weeks, tell us what you think, and receive <b>a full year's subscription to TOMfit, free of charge</b>, as a thank you for your valuable contribution.</p>
       <div class="steps">{"".join(f'<div class="step"><span class="{c.strip()}">{n}</span><div><b>{t}</b><div>{d}</div></div></div>' for n, c, t, d in steps)}</div>
-      <p class="why"><b>Why a reward?</b> Testing takes real time and care. The free 1 year subscription is our thank you for a job well done. It is earned by completing the full 8 weeks, not given for signing up.</p>
+      <p class="why"><b>We value your feedback.</b> Your contribution will help us improve the TOMfit app. Testing takes 2 weeks, and a full year's subscription to TOMfit, free of charge, is our thank you for your valuable contribution.</p>
+      <p style="font-size:15px;color:#33496b;line-height:1.5;margin-top:10px">Your details: we keep only your first name, age and email address, and use them only for the test. To give you the test version, we add your Gmail address to TOMfit's private tester list on Google Play, which Google handles under its own privacy policy. We delete your details on request, or 30 days after the test ends. <a href="/legal#privacy">Privacy &amp; tester terms</a></p>
     </div>
     <div class="qrbox">
       <img src="/img/tester-qr.png" alt="QR code: scan to email us and register as a TOMfit tester" width="240" height="240">
       <div style="font-size:17px;line-height:1.45">Scan with your phone camera,<br>or tap the button:</div>
       <a class="btn y" href="{MAILTO}">Register as a tester</a>
-      <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Gmail address.<br>Places are limited.</div>
+      <div style="font-size:15px;color:#33496b;line-height:1.45">You need an Android phone and a Google (Gmail) account.<br>Places are limited.</div>
     </div>
   </div>
 </section>
 </main>
 '''
-TT_T = 'Test the TOMfit App for 8 Weeks – Earn 1 Year Free | TOMfit.app'
-TT_D = 'Test the TOMfit health app for 8 weeks and earn a free 1 year subscription. For adults over 50 with an Android phone. Register by email.'
+TT_T = 'Test the TOMfit App for 2 Weeks – Earn 1 Year Free | TOMfit.app'
+TT_D = 'Test the TOMfit health app for 2 weeks and earn a full year free from Launch Day. For adults over 50 with an Android phone. Register by email.'
 page('test-tomfit.html', '/test-tomfit', TT_T, TT_D, 'test', 'none', testpage, LD(PAGE("/test-tomfit", TT_T, TT_D), CRUMB(("Test TOMfit", "/test-tomfit"))))
 
 # ------------------------------------------------------------------ INFO-BANK (panels + archives; articles live in assets/articles.js)
