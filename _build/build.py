@@ -8,7 +8,13 @@ V = lambda f: hashlib.md5(open(os.path.join(OUT, f), 'rb').read()).hexdigest()[:
 E = html.escape
 import datetime, re as _re
 TODAY = datetime.date.today().isoformat()
-ORG = {"@type": "Organization", "@id": SITE + "/#org", "name": "TOMfit.app", "alternateName": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"]}
+# Shop policies for Google (all shop items are instant digital downloads)
+POL_COUNTRIES = ["GB", "US", "IE", "FR", "DE", "PL", "NL", "ES", "IT"]
+RETURNS = {"@type": "MerchantReturnPolicy", "applicableCountry": POL_COUNTRIES, "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted", "url": SITE + "/legal#terms"}
+SHIPPING = {"@type": "OfferShippingDetails", "shippingRate": {"@type": "MonetaryAmount", "value": 0, "currency": "GBP"},
+            "shippingDestination": [{"@type": "DefinedRegion", "addressCountry": c} for c in POL_COUNTRIES],
+            "deliveryTime": {"@type": "ShippingDeliveryTime", "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}, "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}}}
+ORG = {"@type": "Organization", "@id": SITE + "/#org", "name": "TOMfit.app", "alternateName": "TOMfit", "url": SITE + "/", "logo": SITE + "/img/logo.png", "email": "hello@tomfit.app", "sameAs": ["https://tomtech.news"], "hasMerchantReturnPolicy": RETURNS}
 def LD(*nodes):
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": list(nodes)}, ensure_ascii=False) + '</script>\n'
 def CRUMB(*pairs):
@@ -431,16 +437,11 @@ shop = f'''<main id="main" class="pg">
   <div class="shophd">
     <div>
       <div class="eyebrow">TOMfit shop</div>
-      <h1 class="h2">Calendars, puzzles and guides</h1>
-      <p class="lead">2027 wall calendars, large-print Christmas puzzles and step-by-step guides for adults over 50. Calendars and printables are sold safely through our Etsy shop.</p>
+      <h1 class="h2">Puzzles, printables and guides</h1>
+      <p class="lead">Large-print Christmas puzzles, printables and step-by-step guides for adults over 50. Printables are sold safely through our Etsy shop.</p>
     </div>
     <a class="deal etsy" href="{ETSY}" target="_blank" rel="noopener" style="display:block;text-decoration:none"><div class="t">Our Etsy shop</div><div class="p">TOMfitApp</div><div class="s">see everything in one place</div><div class="t" style="margin-top:6px;color:#0b4ba8">Visit shop {EB}</div></a>
   </div>
-
-  <section class="shs" aria-labelledby="sh-cal">
-    <div class="shh"><h2 id="sh-cal">2027 wall calendars</h2><p>“Beauty of Old Europe” – 12 famous places, printed on quality paper and posted to you. Choose the week to start on Monday or Sunday.</p></div>
-    <div class="sg sg3">{"".join(f'<div class="sc"><img src="/img/cal-2027-{k}.jpg" alt="Cover of the 2027 Beauty of Old Europe wall calendar, {n}" width="520" height="723" loading="lazy"><span class="chip">Wall calendar</span><h3>Beauty of Old Europe 2027 · {n}</h3><p class="sd">{d}</p><div class="pr">£22.50 <small>$29.50 · printed &amp; posted · 28 × 43 cm</small></div><div class="bn2"><a class="bn" href="{um}" target="_blank" rel="noopener">Monday start {EB}</a><a class="bn" href="{us}" target="_blank" rel="noopener">Sunday start {EB}</a></div></div>' for k, n, d, um, us in CALS)}</div>
-  </section>
 
   <section class="shs" aria-labelledby="sh-pr">
     <div class="shh"><h2 id="sh-pr">Printables – download and print at home</h2><p>Big, clear print that is easy on the eyes. Buy once, print as many copies as you like.</p></div>
@@ -453,18 +454,18 @@ shop = f'''<main id="main" class="pg">
   </section>
 
   <div class="g2 trust">
-    <div class="box"><b>Safe checkout</b><div>Calendars and printables: through Etsy. Guides: card or PayPal through Payhip, with the download link emailed to you.</div></div>
+    <div class="box"><b>Safe checkout</b><div>Printables: through Etsy. Guides: card or PayPal through Payhip, with the download link emailed to you.</div></div>
     <div class="box"><b>Help with an order</b><div>If a download does not arrive or will not open, email <a href="mailto:hello@tomfit.app">hello@tomfit.app</a> and we will fix it or refund you.</div></div>
   </div>
   <p class="small" style="margin:-10px 0 0">{CURRENCY}</p>
   <p class="small" style="margin:-10px 0 0;font-size:15px">Digital downloads cannot be returned once delivered. <a href="/legal#terms">Terms of sale</a></p>
 </main>
 '''
-SH_T = '2027 Wall Calendars, Large-Print Christmas Puzzles & Guides for Over-50s | TOMfit Shop'
-SH_D = 'Beauty of Old Europe 2027 wall calendars (£22.50, printed and posted), large-print Christmas word search and sudoku, a printable walking calendar, and step-by-step walking and kettlebell guides for adults over 50.'
+SH_T = 'Large-Print Christmas Puzzles, Printables & Guides for Over-50s | TOMfit Shop'
+SH_D = 'Large-print Christmas word search and sudoku, a printable walking calendar, and step-by-step walking and kettlebell guides for adults over 50. Instant download.'
 def PROD(name, img, desc, price, url):
     return {"@type": "Product", "name": name, "image": SITE + "/img/" + img + ".jpg", "description": desc, "brand": {"@type": "Brand", "name": "TOMfit"}, "category": "Digital download (PDF guide)",
-            "offers": {"@type": "Offer", "price": price, "priceCurrency": "GBP", "availability": "https://schema.org/InStock", "url": url, "seller": {"@id": SITE + "/#org"}}}
+            "offers": {"@type": "Offer", "price": price, "priceCurrency": "GBP", "availability": "https://schema.org/InStock", "url": url, "seller": {"@id": SITE + "/#org"}, "shippingDetails": SHIPPING, "hasMerchantReturnPolicy": RETURNS}}
 page('shop.html', '/shop', SH_T, SH_D, 'shop', 'shop', shop, f'<link rel="stylesheet" href="/assets/shop.css?v={V("assets/shop.css")}">\n'
      + LD(PAGE("/shop", SH_T, SH_D, "CollectionPage"), CRUMB(("Shop", "/shop")),
           PROD(PR[0][0] + " (PDF guide)", "guide-walking", PR[0][3], "2.95", PR[0][4]),
